@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomeTrainingDetailActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/todaydairy_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="7dp"
+            android:background="@drawable/arrow_backward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:text="스쿼트"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/training_web_search"
+            android:layout_width="44dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/web_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/exercise_imageicon"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:src="@drawable/squat"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"/>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:orientation="horizontal"
+       android:layout_marginBottom="35dp">
+       <TextView
+           android:id="@+id/homet_timenum"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="6dp"
+           android:text="3"
+           android:textSize="23sp"
+           android:textColor="#228E81"/>
+
+       <TextView
+           android:id="@+id/homet_timetext"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="분"
+           android:textColor="#228E81"
+           android:textSize="18sp" />
+
+       <TextView
+           android:id="@+id/homet_timenum2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="20"
+           android:textSize="23sp"
+           android:textColor="#228E81"/>
+
+       <TextView
+           android:id="@+id/homet_timetext2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="초"
+           android:textSize="18sp"
+           android:textColor="#228E81"/>
+
+
+   </LinearLayout>
+        <Button
+            android:id="@+id/start_buttom"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="Start"
+            android:textSize="20sp"
+            android:textColor="#FF1A1A"
+            android:layout_marginHorizontal="10dp"
+            android:background="#58DACA"
+            android:layout_marginBottom="15sp"/>
+
+    <LinearLayout
+        android:id="@+id/training_repeat"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rotate"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="반복 횟수"
+            android:textSize="17sp"
+            android:layout_marginLeft="25dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/training_repeat_spinner_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="2"
+                android:textColor="#228E81"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="회"
+                android:textColor="#228E81"
+                android:textSize="18sp" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/training_repeat_spinner"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/반복횟수"
+                android:spinnerMode="dialog" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/training_level"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/clock"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="난이도 조절"
+            android:textSize="17sp"
+            android:layout_marginLeft="25dp"/>
+
+
+        <LinearLayout
+            android:layout_width="165dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/training_level_spinner_text"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="easy"
+            android:textColor="#228E81"
+            android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/training_level_spinner"
+                android:entries="@array/난이도"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/training_music"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/music"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="음악 선택"
+            android:textSize="17sp"
+            android:layout_marginLeft="25dp"/>
+
+        <TextView
+            android:id="@+id/training_song_spinner_text"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="song title"
+            android:textColor="#228E81"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/training_song_spinner"
+            android:entries="@array/노래선택"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="반복횟수">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="난이도">
+        <item>easy</item>
+        <item>normal</item>
+        <item>hard</item>
+    </string-array>
+
+    <string-array name="노래선택">
+        <item>catch_up</item>
+        <item>after_you</item>
+        <item>everything_you_wanted</item>
+        <item>노래 가져오기</item>
+    </string-array>
+
+    <string-array name="일기선택">
+        <item>나의 일기</item>
+        <item>공유 일기</item>
+    </string-array>
+</resources>
+

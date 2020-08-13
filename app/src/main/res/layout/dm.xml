@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DmActivity">
+
+    <LinearLayout
+        android:id="@+id/otherpeople_dairy_nicknamebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/mainColor"
+        android:padding="7dp"
+        app:layout_constraintBottom_toTopOf="@+id/otherpeople_dairy_image"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/profile"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:text="nickname"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dm_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        />
+
+
+
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="8.4">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dm_massage1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:background="@drawable/btn_lightgreen"-->
+<!--            android:inputType="textMultiLine|textNoSuggestions"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="내용내용내용내용"-->
+<!--            android:textSize="18dp"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/dm_massage2"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dm_massage2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:background="@drawable/btn_lightgreen"-->
+<!--            android:inputType="textMultiLine|textNoSuggestions"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="더 많은 내용내용내용내용"-->
+<!--            android:textSize="18dp"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/dm_massage1" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dm_massage3"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:background="@drawable/btn_green"-->
+<!--            android:inputType="textMultiLine|textNoSuggestions"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="내가 쓴 내용내용내용내용"-->
+<!--            android:textSize="18dp"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/dm_massage2" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dm_massage4"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:background="@drawable/btn_green"-->
+<!--            android:inputType="textMultiLine|textNoSuggestions"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="내가 쓴 더 많은 내용내용내용내용"-->
+<!--            android:textSize="18dp"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/dm_massage3" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/btn_greengray"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/send_my_dm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:hint="메세지 보내기..."
+            android:layout_weight="1"
+            android:maxHeight="180dp"/>
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="보내기"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#297E74"
+            android:visibility="visible"
+            android:background="#00FFFFFF"
+            android:layout_gravity="start" />
+
+        <ImageButton
+            android:id="@+id/send_camera"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/camera"
+            android:visibility="visible"
+            android:layout_gravity="top"
+            android:layout_marginTop="6dp"/>
+
+        <ImageButton
+            android:id="@+id/send_picture"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="7.5dp"
+            android:background="@drawable/picture"
+            android:visibility="visible"
+            android:layout_gravity="top"
+            android:layout_marginTop="10dp"/>
+
+        <ImageButton
+            android:id="@+id/send_emoticon"
+            android:layout_width="36dp"
+            android:layout_height="38dp"
+            android:background="@drawable/emoticon"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="8dp"
+            android:visibility="visible"
+            android:layout_gravity="top"
+            android:layout_marginTop="6dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item> //상태를 나타냄 (눌려지거나 하지 않은 상태)
+        <shape> //형태를 나타냄
+            <solid android:color="#54CDC1"> //색을 나타냄
+
+
+            </solid>
+            <corners android:radius="10dp"> //모서리를 둘글기를 나타냄
+            </corners>
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape> //형태를 나타냄
+            <solid android:color="#16554F">
+
+
+            </solid>
+            <corners android:radius="10dp">
+            </corners>
+        </shape>
+    </item>
+
+
+    <item android:state_enabled="false">
+        <shape> //형태를 나타냄
+            <solid android:color="#16554F">
+
+
+            </solid>
+            <corners android:radius="10dp">
+            </corners>
+        </shape>
+    </item>
+
+</selector>

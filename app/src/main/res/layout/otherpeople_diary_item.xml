@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+
+    <ImageView
+        android:id="@+id/my_profile"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/profileimage"
+        android:padding="5dp"
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/my_massage"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:text="보내는 메세지"
+        android:textSize="20sp"
+        android:gravity="left"
+        android:paddingLeft="16sp"
+        android:layout_gravity="center_vertical"/>
+
+
+    <ImageView
+        android:id="@+id/my_massage_remove"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/trash"
+        android:clickable="true"/>
+</LinearLayout>

@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomeTrainingActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/todaydairy_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton"-->
+<!--            android:layout_width="35dp"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:layout_marginLeft="7dp"-->
+<!--            android:background="@drawable/arrow_backward"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:text="홈트레이닝"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/training_search"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/magnifier"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/training_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="3dp"
+        android:visibility="gone">
+
+
+        <EditText
+            android:id="@+id/otherpeople_dairy_wrightingcomment"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:hint="검색해 주세요"
+            android:layout_marginVertical="3dp"
+            android:paddingLeft="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="#E4E4E4"/>
+
+        <Button
+            android:id="@+id/otherpeople_dairy_post"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="#50B1A8"
+            android:text="검색"
+            android:textSize="18dp"
+            android:layout_marginVertical="3dp"
+            app:layout_constraintLeft_toRightOf="@+id/otherpeople_dairy_wrightingcomment"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="즐겨 찾는 운동"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="#ECECEC"/>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/squat"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="10"-->
+<!--        android:clickable="true"-->
+<!--        android:gravity="center_vertical">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/squat_image"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:background="@drawable/squat"/>-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="6.5"-->
+<!--            android:paddingLeft="10dp">-->
+<!--            <TextView-->
+<!--                android:id="@+id/squat_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/squat_level_text"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"-->
+<!--                android:text="스쿼트"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/squat_level_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/squat_title"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="난이도"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/squat_level_star"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                android:layout_marginLeft="7dp"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/squat_level_text"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/squat_level_text"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/squat_level_text"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/squat_level_star2"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/squat_level_star"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/squat_level_star"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/squat_level_star"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/squat_level_star3"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/squat_level_star2"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/squat_level_star2"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/squat_level_star2"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/squat_level_star4"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/squat_level_star3"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/squat_level_star3"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/squat_level_star3"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/squat_level_star5"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/squat_level_star4"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/squat_level_star4"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/squat_level_star4"-->
+<!--                android:visibility="invisible"-->
+<!--                />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_weight="3.5"-->
+<!--            android:gravity="center_vertical">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:background="@drawable/clock"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="6dp"-->
+<!--                android:text="4"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="분"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+<!--    <LinearLayout-->
+<!--        android:id="@+id/push_up"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="10"-->
+<!--        android:clickable="true"-->
+<!--        android:gravity="center_vertical">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/push_up_image"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:background="@drawable/push_up"/>-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="6.5"-->
+<!--            android:paddingLeft="10dp">-->
+<!--            <TextView-->
+<!--                android:id="@+id/push_up_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/push_up_level_text"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"-->
+<!--                android:text="푸쉬업"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/push_up_level_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/push_up_title"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="난이도"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/push_up_level_star"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                android:layout_marginLeft="7dp"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/push_up_level_text"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/push_up_level_text"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/push_up_level_text"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/push_up_level_star2"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/push_up_level_star"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/push_up_level_star"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/push_up_level_star"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/push_up_level_star3"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/push_up_level_star2"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/push_up_level_star2"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/push_up_level_star2"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/push_up_level_star4"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/push_up_level_star3"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/push_up_level_star3"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/push_up_level_star3"-->
+<!--                android:visibility="invisible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/push_up_level_star5"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/push_up_level_star4"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/push_up_level_star4"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/push_up_level_star4"-->
+<!--                android:visibility="invisible"-->
+<!--                />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_weight="3.5"-->
+<!--            android:gravity="center_vertical">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:background="@drawable/clock"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="6dp"-->
+<!--                android:text="3"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="분"-->
+<!--                android:textColor="#228E81"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="20"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="초"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homet_recyclerview_bookmark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:text="운동 종류"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="#ECECEC"/>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/lunge"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="10"-->
+<!--        android:clickable="true"-->
+<!--        android:gravity="center_vertical">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/lunge_image"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:background="@drawable/lunge"/>-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="6.5"-->
+<!--            android:paddingLeft="10dp">-->
+<!--            <TextView-->
+<!--                android:id="@+id/lunge_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/lunge_level_text"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"-->
+<!--                android:text="런지"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/lunge_level_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/lunge_title"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="난이도"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/lunge_level_star"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                android:layout_marginLeft="7dp"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/lunge_level_text"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/lunge_level_text"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/lunge_level_text"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/lunge_level_star2"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/lunge_level_star"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/lunge_level_star"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/lunge_level_star"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/lunge_level_star3"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/lunge_level_star2"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/lunge_level_star2"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/lunge_level_star2"-->
+<!--                android:visibility="invisible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/lunge_level_star4"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/lunge_level_star3"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/lunge_level_star3"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/lunge_level_star3"-->
+<!--                android:visibility="invisible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/lunge__level_star5"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/lunge_level_star4"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/lunge_level_star4"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/lunge_level_star4"-->
+<!--                android:visibility="invisible"-->
+<!--                />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_weight="3.5"-->
+<!--            android:gravity="center_vertical">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:background="@drawable/clock"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="6dp"-->
+<!--                android:text="3"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="분"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="40"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="초"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/side_plank"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="10"-->
+<!--        android:clickable="true"-->
+<!--        android:gravity="center_vertical">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/side_plank_image"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:background="@drawable/side_plank"/>-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="6.5"-->
+<!--            android:paddingLeft="10dp">-->
+<!--            <TextView-->
+<!--                android:id="@+id/side_plank_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/side_plank_level_text"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"-->
+<!--                android:text="사이드 프랭크"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/side_plank_level_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/side_plank_title"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="난이도"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_marginLeft="10dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/side_plank_level_star"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                android:layout_marginLeft="7dp"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/side_plank_level_text"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/side_plank_level_text"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/side_plank_level_text"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/side_plank_level_star2"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/side_plank_level_star"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/side_plank_level_star"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/side_plank_level_star"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/side_plank_level_star3"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/side_plank_level_star2"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/side_plank_level_star2"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/side_plank_level_star2"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/side_plank_level_star4"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/side_plank_level_star3"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/side_plank_level_star3"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/side_plank_level_star3"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/side_plank__level_star5"-->
+<!--                android:layout_width="18dp"-->
+<!--                android:layout_height="18dp"-->
+<!--                android:background="@drawable/star_click"-->
+<!--                app:layout_constraintLeft_toRightOf="@+id/side_plank_level_star4"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/side_plank_level_star4"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/side_plank_level_star4"-->
+<!--                android:visibility="visible"-->
+<!--                />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_weight="3.5"-->
+<!--            android:gravity="center_vertical">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:background="@drawable/clock"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="6dp"-->
+<!--                android:text="2"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="분"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="30"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="초"-->
+<!--                android:textSize="15sp"-->
+<!--                android:textColor="#228E81"/>-->
+
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homet_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical" />
+
+
+</LinearLayout>

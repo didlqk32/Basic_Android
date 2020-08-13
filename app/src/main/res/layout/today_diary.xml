@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".TodayDiaryActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/todaydairy_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton"-->
+<!--            android:layout_width="35dp"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:layout_marginLeft="7dp"-->
+<!--            android:background="@drawable/arrow_backward"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/diary_choice_text"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:text="나의 일기"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/diary_choice_spinner"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/diary_choice_spinner"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/일기선택"
+            android:spinnerMode="dialog"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/diary_choice_text"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/btn_green"
+            android:text="save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/todaydairy_contentbox"
+        android:layout_width="match_parent"
+        android:layout_height="570dp"
+        android:background="#ffffff"
+        app:layout_constraintTop_toBottomOf="@+id/todaydairy_bar">
+
+        <ImageView
+            android:id="@+id/report_todaydairy_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:padding="5dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/report_todaydairy_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/report_todaydairy_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="현재 날짜"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="15dp"/>
+
+        <EditText
+            android:id="@+id/report_todaydairy_content_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="10sp"
+            android:hint="제목"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/report_todaydairy_date" />
+
+        <EditText
+            android:id="@+id/report_todaydairy_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/report_todaydairy_content_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginHorizontal="12dp"
+            android:background="#00FFFFFF"
+            android:padding="5dp"
+            android:hint="내용"
+            android:textSize="15dp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_setup"
+        android:background="#BFE0E1"
+        android:layout_marginBottom="1.5dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:text="크기"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bold"
+            android:layout_marginLeft="5dp"/>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/italic"
+            android:layout_marginLeft="5dp"/>
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/color_board"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+    
+    
+    <LinearLayout
+        android:id="@+id/text_setup"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        >
+
+        <ImageButton
+            android:id="@+id/todaydairy_camera"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/camera"
+            android:layout_margin="13dp"/>
+        <ImageButton
+            android:id="@+id/todaydairy_picture"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/picture"
+            android:layout_margin="5dp"/>
+        <ImageButton
+            android:id="@+id/todaydairy_font"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/text_format"
+            android:layout_margin="5dp"/>
+        <ImageButton
+            android:id="@+id/todaydairy_drawing"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/pen"
+            android:layout_margin="5dp"/>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

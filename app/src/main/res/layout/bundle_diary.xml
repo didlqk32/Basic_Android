@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BundleDiaryActivity"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/todaydairy_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/imageButton"-->
+<!--            android:layout_width="35dp"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:layout_marginLeft="7dp"-->
+<!--            android:layout_marginStart="7dp"-->
+<!--            android:background="@drawable/arrow_backward"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:text="다이어트 일기장"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+<!--        <ImageView-->
+<!--            android:id="@+id/todaydairy_delete2"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/trash"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:layout_marginRight="12dp"-->
+<!--            android:clickable="true"/>-->
+
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/magnifier"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/calendar_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <ImageButton
+            android:id="@+id/calendar_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/search_button"
+            android:layout_margin="5dp"
+
+            android:background="@drawable/calendar"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/training_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/todaydairy_bar"
+        app:layout_constraintBottom_toTopOf="@+id/calendar_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="3dp"
+        android:visibility="gone">
+
+
+        <EditText
+            android:id="@+id/today_dairy_searchbar"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="3dp"
+            android:background="#E4E4E4"
+            android:hint="검색해 주세요"
+            android:paddingLeft="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/today_dairy_searchbutton"
+            tools:layout_editor_absoluteY="6dp" />
+
+        <Button
+            android:id="@+id/today_dairy_searchbutton"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="#50B1A8"
+            android:text="검색"
+            android:textSize="18dp"
+            android:layout_marginVertical="3dp"
+            app:layout_constraintLeft_toRightOf="@+id/today_dairy_searchbar"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/calendar_view"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/training_search_bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:text="오늘"
+        android:gravity="center"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/diary_bundle_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/calendar_view"
+        />
+
+
+
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/todaydairy_sumnail1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="80dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/calendar_view"-->
+<!--        android:background="#ffffff"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginTop="2dp">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/diary_date"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/diary_week"-->
+<!--                android:text="24"-->
+<!--                android:textSize="25sp"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/diary_week"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/diary_date"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="금"-->
+<!--                android:textSize="15sp"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"/>-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:text="제목제목"-->
+<!--                android:textSize="15sp"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="내용내용내용더 긴 내용내용내용"-->
+<!--                android:textSize="12sp"/>//아래로 안내려감...-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="2020-07-25"/>-->
+
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+<!--    <LinearLayout-->
+<!--        android:id="@+id/todaydairy_sumnail2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="80dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/todaydairy_sumnail1"-->
+<!--        android:background="#ffffff"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginTop="2dp">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/diary_date2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/diary_week2"-->
+<!--                android:text="24"-->
+<!--                android:textSize="25sp"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/diary_week2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/diary_date2"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:text="금"-->
+<!--                android:textSize="15sp"-->
+<!--                app:layout_constraintVertical_chainStyle="packed"/>-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:text="제목제목"-->
+<!--                android:textSize="15sp"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="내용내용내용더 긴 내용내용내용"-->
+<!--                android:textSize="12sp"/>//아래로 안내려감...-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="2020-07-25"/>-->
+
+
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/calendar_view2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/diary_bundle_recyclerview"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:textSize="18sp"-->
+<!--        android:text="이전 일기"-->
+<!--        android:gravity="center"/>-->
+
+
+    <ImageButton
+        android:id="@+id/todaydairy_circlepen"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="20dp"
+        android:background="@drawable/circle_pen"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
