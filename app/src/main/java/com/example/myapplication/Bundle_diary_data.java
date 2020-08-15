@@ -9,8 +9,8 @@ public class Bundle_diary_data {
     public Bundle_diary_data(String diary_title, String diary_content, String diary_date, String diary_day, String diary_month, String diary_year) {
 //        this.diary_week = diary_week;
         this.diary_title = diary_title;
-        this.diary_day = diary_day;
         this.diary_content = diary_content;
+        this.diary_day = diary_day;
         this.diary_date = diary_date;
         this.diary_month = diary_month;
         this.diary_year = diary_year;

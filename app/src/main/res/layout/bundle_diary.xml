@@ -128,7 +128,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"
         android:textSize="18sp"
-        android:text="오늘"
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView

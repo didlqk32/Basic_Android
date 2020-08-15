@@ -42,7 +42,8 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
     private String choicegender;
     private Bitmap profile_bitmap;
     public static int profile_checkcount = 0;
-
+    public static String my_profile_nickname;
+    public static String my_profile_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,18 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
         profile_RadioGroup_gender = findViewById(R.id.profile_RadioGroup_gender);
         profile_RadioButton_female = findViewById(R.id.profile_RadioButton_female);
         profile_RadioButton_male = findViewById(R.id.profile_RadioButton_male);
+
+
+
+
+
+
+
+
+        // 나의 아이디에 따라 저장되는 값이 달라야 한다!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 
 
 
@@ -85,7 +98,6 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
         //라디오 버튼 체크 해야해!!!!!!!!!!!!
         //저장이 안돼!!!!!!!!!!!!!!!!!!
-
 
 
     }
@@ -124,30 +136,23 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view) { //프로필 저장하기
 
+                // if -> 회원가입 페이지에서 왔으면 static으로 조건을 받자
+
+
+
+
+
+                my_profile_nickname = setup_profile_nickname.getText().toString();//닉네임을 다른 클래스에서 사용하기 위해서 받아둠
+
+
+
+
+
+
                 String nickname = setup_profile_nickname.getText().toString();
                 String target_weightnumber = setup_target_weightnumber.getText().toString();
                 String heightnumber = setup_profile_heightnumber.getText().toString();
                 String profile_weightnumber = setup_profile_weightnumber.getText().toString();
-
-//                Log.e("nickname",setup_profile_nickname.getText().toString());
-
-//                if (!setup_profile_heightnumber.getText().toString().equals("")) {
-//                    Integer heightnumber = Integer.parseInt(setup_profile_heightnumber.getText().toString());
-//                    Intent intent = new Intent(ProfileEditActivity.this, ProfileActivity.class);
-//                    intent.putExtra("heightnumber", heightnumber);
-//                }
-//                if (!setup_profile_weightnumber.getText().toString().equals("")) {
-//                    Integer profile_weightnumber = Integer.parseInt(setup_profile_weightnumber.getText().toString());
-//                    Intent intent = new Intent(ProfileEditActivity.this, ProfileActivity.class);
-//                    intent.putExtra("profile_weightnumber", profile_weightnumber);
-//                }
-//                if (!setup_target_weightnumber.getText().toString().equals("")) {
-//                    Integer target_weightnumber = Integer.parseInt(setup_target_weightnumber.getText().toString());
-//                    Intent intent = new Intent(ProfileEditActivity.this, ProfileActivity.class);
-//                    intent.putExtra("target_weightnumber", target_weightnumber);
-//                }
-
-
 
                 Intent intent = new Intent(ProfileEditActivity.this, ProfileActivity.class); //프로필 ProfileActivity에 보내기
                 intent.putExtra("nickname", nickname); //닉네임 보내기
@@ -173,7 +178,6 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
             }
         });
-
 
         ImageButton setup_my_profileimage = (ImageButton) findViewById(R.id.setup_my_profileimage);
         setup_my_profileimage.setOnClickListener(this); //프로필 이미지 선택 버튼 누르기

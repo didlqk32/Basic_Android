@@ -18,8 +18,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainpageHomeActivity extends AppCompatActivity {
+    private Button temb;
 
     private DrawerLayout drawerLayout;
     private View drawerView;
@@ -36,6 +38,20 @@ public class MainpageHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainpage_home);
+
+        temb = findViewById(R.id.temb);
+        temb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ProfileEditActivity.my_profile_nickname==null) {
+                    Log.e("메세지","null");
+                } else if (ProfileEditActivity.my_profile_nickname.equals("")){
+                    Log.e("메세지2", "없다");
+                } else if (!ProfileEditActivity.my_profile_nickname.equals("")){
+                    Log.e("메세지3", ProfileEditActivity.my_profile_nickname);
+                }
+            }
+        });
 
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerView = findViewById(R.id.drawer);

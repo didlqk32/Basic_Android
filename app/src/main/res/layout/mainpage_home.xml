@@ -38,11 +38,12 @@
                 android:text="Daily Dieter"
                 android:textSize="25dp" />
 
-<!--            <ImageButton-->
-<!--                android:layout_width="28dp"-->
-<!--                android:layout_height="33dp"-->
-<!--                android:layout_marginLeft="155dp"-->
-<!--                android:background="@drawable/share" />-->
+            <Button
+                android:id="@+id/temb"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="155dp"
+                android:text="B"/>
 
         </LinearLayout>
 

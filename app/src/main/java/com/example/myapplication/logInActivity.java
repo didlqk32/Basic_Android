@@ -23,6 +23,7 @@ public class logInActivity extends AppCompatActivity {
     private Boolean Login_ok = false;
     //LinearLayout btn_sign_up;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,6 @@ public class logInActivity extends AppCompatActivity {
         btn_loginpage_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { //로그인 버튼 누르기
-
 
 
                 if (id_text.getText().toString().equals("")){
@@ -62,15 +62,22 @@ public class logInActivity extends AppCompatActivity {
                             if (password_text.getText().toString().equals(temporary_passwordList[i])) {
 //                            Log.e("i 확인2", String.valueOf(i)); //같은 값인지 확인하기!
                                 Toast.makeText(logInActivity.this, "로그인 되었습니다", Toast.LENGTH_SHORT).show();
-                                my_id = temporary_idList[i];
-                                my_password = temporary_passwordList[i];
+                                my_id = temporary_idList[i]; //현재 로그인 한 아이디가 변수로 들어간다 (내 일기인지 파악하기 위해서)
+                                my_password = temporary_passwordList[i]; //현재 로그인 한 비밀번호가 변수로 들어간다
                                 Intent intent = new Intent(logInActivity.this, MainpageHomeActivity.class);
                                 startActivity(intent);
+
+
+
+
+
+
                                 wrong_password = 0; // 패스워드 비교하는 변수 초기화
                                 wrong_id = 0; // 아이디 비교하는 변수 초기화
                                 Login_ok = true; //로그인이 되었다
                             } else {
                                 wrong_password = 1; // 아이디는 있고 패스워드가 틀렸을 때
+
 
                             }
                         } else {

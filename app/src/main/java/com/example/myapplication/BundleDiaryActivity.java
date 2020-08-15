@@ -44,15 +44,11 @@ public class BundleDiaryActivity extends AppCompatActivity {
     androidx.constraintlayout.widget.ConstraintLayout training_search_bar;
 
 
-
-    private ImageView todaydairy_delete2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bundle_diary);
 
-//        todaydairy_delete2 = findViewById(R.id.todaydairy_delete2);
 
         imageButton = findViewById(R.id.imageButton);
         todaydairy_circlepen = findViewById(R.id.todaydairy_circlepen);
@@ -70,7 +66,6 @@ public class BundleDiaryActivity extends AppCompatActivity {
             }
         });
 
-
         diary_bundle_recyclerview = findViewById(R.id.diary_bundle_recyclerview); //다이어리 번들 리사이클러뷰
         linearLayoutManager = new LinearLayoutManager(this);
         diary_bundle_recyclerview.setLayoutManager(linearLayoutManager);
@@ -79,25 +74,28 @@ public class BundleDiaryActivity extends AppCompatActivity {
         bundle_diary_adapter = new Bundle_diary_adapter(diaryArrayList, this);
         diary_bundle_recyclerview.setAdapter(bundle_diary_adapter);
 
-            Intent intent1 = getIntent(); //값을 받아 온다
-            String strtitle = intent1.getStringExtra("content_title");
-            String strcontent = intent1.getStringExtra("content");
-            String strdate = intent1.getStringExtra("dairy_date");
-//        String strweek = intent1.getStringExtra("weekday");
-            String strday = intent1.getStringExtra("day");
-            String strmonth = intent1.getStringExtra("month");
-            String stryear = intent1.getStringExtra("year");
 
-//        Log.e("strtitle 확인",bundle_diary_data.getDiary_title());
-//        diary_bundle_recyclerview.setVisibility(View.VISIBLE); // diary_bundle_recyclerview 보이도록
 
-        if (TodayDiaryCompleteActivity.checkcount == 1) { //나의 일기에서 글을 작성 완료 했을 때, TodayDiaryCompleteActivity 에서 자료가 왔을 때에만
-            Bundle_diary_data bundle_diary_data = new Bundle_diary_data(strtitle, strcontent, strdate, strday, strmonth, stryear);
-            diaryArrayList.add(0, bundle_diary_data);
-            bundle_diary_adapter.notifyDataSetChanged();
-            TodayDiaryCompleteActivity.checkcount = 0; //TodayDiaryCompleteActivity.checkcount 값 초기화
-//            TodayDiaryActivity.check_diary = 0; //TodayDiaryActivity.check_diary 값 초기화
-        }
+
+//            Intent intent1 = getIntent(); //값을 받아 온다
+//            String strtitle = intent1.getStringExtra("content_title");
+//            String strcontent = intent1.getStringExtra("content");
+//            String strdate = intent1.getStringExtra("dairy_date");
+////        String strweek = intent1.getStringExtra("weekday");
+//            String strday = intent1.getStringExtra("day");
+//            String strmonth = intent1.getStringExtra("month");
+//            String stryear = intent1.getStringExtra("year");
+//
+////        Log.e("strtitle 확인",bundle_diary_data.getDiary_title());
+////        diary_bundle_recyclerview.setVisibility(View.VISIBLE); // diary_bundle_recyclerview 보이도록
+//
+//        if (TodayDiaryCompleteActivity.checkcount == 1) { //나의 일기에서 글을 작성 완료 했을 때, TodayDiaryCompleteActivity 에서 자료가 왔을 때에만
+//            Bundle_diary_data bundle_diary_data = new Bundle_diary_data(strtitle, strcontent, strdate, strday, strmonth, stryear);
+//            diaryArrayList.add(0, bundle_diary_data);
+//            bundle_diary_adapter.notifyDataSetChanged();
+//            TodayDiaryCompleteActivity.checkcount = 0; //TodayDiaryCompleteActivity.checkcount 값 초기화
+////            TodayDiaryActivity.check_diary = 0; //TodayDiaryActivity.check_diary 값 초기화
+//        }
 
     }
 
@@ -109,7 +107,7 @@ public class BundleDiaryActivity extends AppCompatActivity {
         super.onStart();
         search_button.setOnClickListener(new View.OnClickListener() { //검색 버튼 누름
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // 검색 아이콘을 누른다
                 if (clickcount == 1) {
                     training_search_bar.setVisibility(View.VISIBLE);
                     clickcount = 2;
@@ -123,7 +121,7 @@ public class BundleDiaryActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         calendar_button.setOnClickListener(new View.OnClickListener() { //달력 버튼 누름
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //캘린더 아이콘을 누른다
                 year = calendar.get(Calendar.YEAR);
                 month = calendar.get(Calendar.MONTH);
                 day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -132,7 +130,7 @@ public class BundleDiaryActivity extends AppCompatActivity {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(BundleDiaryActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) { //달력을 보여준다
                         calendar_view.setText(SimpleDateFormat.getDateInstance().format(calendar.getTime()));
                     }
                 }, year, month, day);
@@ -141,51 +139,99 @@ public class BundleDiaryActivity extends AppCompatActivity {
         });
 
 
+        //shared에 작성한 일기 모두 보여주기
+        SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //일기 데이터 받아오기
+
+        String receive_diary_id = shared.getString("diary_id",""); // 작성한 일기들 데이터 받아서 문자열로 받기
+        String receive_diary_title = shared.getString("diary_title","");
+        String receive_diary_content = shared.getString("diary_content","");
+        String receive_diary_date = shared.getString("diary_date","");
+        String receive_diary_day = shared.getString("diary_day","");
+        String receive_diary_month = shared.getString("diary_month","");
+        String receive_diary_year = shared.getString("diary_year","");
+
+        String[] temporary_diary_id = receive_diary_id.split("@"); // 문자열 데어터들 각각의 배열에 넣기
+        String[] temporary_diary_title = receive_diary_title.split("@");
+        String[] temporary_diary_content = receive_diary_content.split("@");
+        String[] temporary_diary_date = receive_diary_date.split("@");
+        String[] temporary_diary_day = receive_diary_day.split("@");
+        String[] temporary_diary_month = receive_diary_month.split("@");
+        String[] temporary_diary_year = receive_diary_year.split("@");
 
 
-        SharedPreferences sharedPreferences = getSharedPreferences("bundlediary_file",MODE_PRIVATE); //"bundlediary_file"파일의 데이터 받아오기
-        //bundlediary recycler view를 담는 데이터
-        String receive_bundlediary_title = sharedPreferences.getString("save_bundlediary_title",""); //받아온 데이터 String 변수 안에 넣기
-        String receive_bundlediary_content = sharedPreferences.getString("save_bundlediary_content",""); //받아온 데이터 String 변수 안에 넣기
-        String receive_bundlediary_date = sharedPreferences.getString("save_bundlediary_date",""); //받아온 데이터 String 변수 안에 넣기
-        String receive_bundlediary_day = sharedPreferences.getString("save_bundlediary_day",""); //받아온 데이터 String 변수 안에 넣기
-        String receive_bundlediary_month = sharedPreferences.getString("save_bundlediary_month",""); //받아온 데이터 String 변수 안에 넣기
-        String receive_bundlediary_year = sharedPreferences.getString("save_bundlediary_year",""); //받아온 데이터 String 변수 안에 넣기
-//        Log.e("receive_bundlediary_title",receive_bundlediary_title);
-
-
-
-        if (!receive_bundlediary_title.equals("")&&!receive_bundlediary_content.equals("")&&!receive_bundlediary_date.equals("")&&!receive_bundlediary_day.equals("")&&!receive_bundlediary_month.equals("")&&!receive_bundlediary_year.equals("")){
-            String[] Array_bundlediary_title = receive_bundlediary_title.split("/"); //receive_dm_content 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-            String[] Array_bundlediary_content = receive_bundlediary_content.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-            String[] Array_bundlediary_date = receive_bundlediary_date.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-            String[] Array_bundlediary_day = receive_bundlediary_day.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-            String[] Array_bundlediary_month = receive_bundlediary_month.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-            String[] Array_bundlediary_year = receive_bundlediary_year.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-
-            for (int i=0; i < Array_bundlediary_title.length; i++) {
-                if (Array_bundlediary_title[i]==null){ //Array_bundlediary_title[i] 값이 화면상에 null로 표현 안되도록
-                    Array_bundlediary_title[i] = "";
-                }
-                if (Array_bundlediary_content[i]==null){ //Array_bundlediary_content[i] 값이 화면상에 null로 표현 안되도록
-                    Array_bundlediary_content[i] = "";
-                }
-                Bundle_diary_data bundle_diary_data = new Bundle_diary_data(Array_bundlediary_title[i], Array_bundlediary_content[i], Array_bundlediary_date[i], Array_bundlediary_day[i], Array_bundlediary_month[i], Array_bundlediary_year[i]); //내용들을 bundle_diary_data에 담는다
-                diaryArrayList.add(bundle_diary_data); //리스트에 bundle_diary_data 내용을 추가 한다
+        for (int i=0; i < temporary_diary_id.length; i++){ //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
+            if (temporary_diary_id[i].equals(logInActivity.my_id)){ //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
+                Bundle_diary_data bundle_diary_data = new Bundle_diary_data(temporary_diary_title[i], temporary_diary_content[i], temporary_diary_date[i], temporary_diary_day[i], temporary_diary_month[i], temporary_diary_year[i]); //내용들을 bundle_diary_data에 담는다
+                diaryArrayList.add(0,bundle_diary_data);
             }
-            bundle_diary_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
+            bundle_diary_adapter.notifyDataSetChanged(); // adapter에 들어간 데이터 정리하여 새로 고침 한다
         }
 
 
 
 
-//        Log.e("리스트 길이",String.valueOf(diaryArrayList.size()));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        SharedPreferences sharedPreferences = getSharedPreferences("bundlediary_file",MODE_PRIVATE); //"bundlediary_file"파일의 데이터 받아오기
+//        //bundlediary recycler view를 담는 데이터
+//        String receive_bundlediary_title = sharedPreferences.getString("save_bundlediary_title",""); //받아온 데이터 String 변수 안에 넣기
+//        String receive_bundlediary_content = sharedPreferences.getString("save_bundlediary_content",""); //받아온 데이터 String 변수 안에 넣기
+//        String receive_bundlediary_date = sharedPreferences.getString("save_bundlediary_date",""); //받아온 데이터 String 변수 안에 넣기
+//        String receive_bundlediary_day = sharedPreferences.getString("save_bundlediary_day",""); //받아온 데이터 String 변수 안에 넣기
+//        String receive_bundlediary_month = sharedPreferences.getString("save_bundlediary_month",""); //받아온 데이터 String 변수 안에 넣기
+//        String receive_bundlediary_year = sharedPreferences.getString("save_bundlediary_year",""); //받아온 데이터 String 변수 안에 넣기
+////        Log.e("receive_bundlediary_title",receive_bundlediary_title);
+//
+////        String[] Array_title = receive_bundlediary_title.split("/");
+////        Log.e("초기 배열 값", receive_bundlediary_title);
+////        Log.e("배열 길이", String.valueOf(Array_title.length));
+//
+//        if (!receive_bundlediary_title.equals("")&&!receive_bundlediary_content.equals("")&&!receive_bundlediary_date.equals("")&&!receive_bundlediary_day.equals("")&&!receive_bundlediary_month.equals("")&&!receive_bundlediary_year.equals("")){
+//            String[] Array_bundlediary_title = receive_bundlediary_title.split("/"); //receive_dm_content 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//            String[] Array_bundlediary_content = receive_bundlediary_content.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//            String[] Array_bundlediary_date = receive_bundlediary_date.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//            String[] Array_bundlediary_day = receive_bundlediary_day.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//            String[] Array_bundlediary_month = receive_bundlediary_month.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//            String[] Array_bundlediary_year = receive_bundlediary_year.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//
+//            for (int i=0; i < Array_bundlediary_title.length; i++) {
+//                if (Array_bundlediary_title[i]==null){ //Array_bundlediary_title[i] 값이 화면상에 null로 표현 안되도록
+//                    Array_bundlediary_title[i] = "";
+//                }
+//                if (Array_bundlediary_content[i]==null){ //Array_bundlediary_content[i] 값이 화면상에 null로 표현 안되도록
+//                    Array_bundlediary_content[i] = "";
+//                }
+//                Bundle_diary_data bundle_diary_data = new Bundle_diary_data(Array_bundlediary_title[i], Array_bundlediary_content[i], Array_bundlediary_date[i], Array_bundlediary_day[i], Array_bundlediary_month[i], Array_bundlediary_year[i]); //내용들을 bundle_diary_data에 담는다
+//                diaryArrayList.add(bundle_diary_data); //리스트에 bundle_diary_data 내용을 추가 한다
+//            }
+//            bundle_diary_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
+//        }
+
+
+
+
+
+
+
         if (TodayDiaryCompleteActivity.delete_boolean == true){ //TodayDiaryCompleteActivity 에서 삭제 버튼 눌렀을 때 해당 아이템 삭제
 
             Intent intent = getIntent();
             int position2 = intent.getIntExtra("position1",0);
-
-//            Log.e("position 2",String.valueOf(position2));
 
             diaryArrayList.remove(position2);
             bundle_diary_adapter.notifyDataSetChanged();
@@ -193,16 +239,6 @@ public class BundleDiaryActivity extends AppCompatActivity {
         }
 
 
-
-//        todaydairy_delete2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                diaryArrayList.remove(0);
-////                Log.e("리스트 길이",String.valueOf(diaryArrayList.size()));
-//                bundle_diary_adapter.notifyDataSetChanged();
-//            }
-//        });
 
     }
 
@@ -218,29 +254,30 @@ public class BundleDiaryActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-//        Log.e("리스트 길이",String.valueOf(diaryArrayList.size()));
 
-        for (int i=0; i < diaryArrayList.size(); i++){
-            //타이틀, 컨텐츠, 데이트, 데이, 먼스 ,이어
-            save_bundlediary_title = save_bundlediary_title + diaryArrayList.get(i).getDiary_title() + "/"; //diaryArrayList.size 안에 있는 데이터 변수에 넣기
-            save_bundlediary_content = save_bundlediary_content + diaryArrayList.get(i).getDiary_content() + "/";
-            save_bundlediary_date = save_bundlediary_date + diaryArrayList.get(i).getDiary_date() + "/";
-            save_bundlediary_day = save_bundlediary_day + diaryArrayList.get(i).getDiary_day() + "/";
-            save_bundlediary_month = save_bundlediary_month + diaryArrayList.get(i).getDiary_month() + "/";
-            save_bundlediary_year = save_bundlediary_year + diaryArrayList.get(i).getDiary_year() + "/";
-        }
-//        Log.e("onstop","나갔다");
 
-        SharedPreferences sharedPreferences = getSharedPreferences("bundlediary_file",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("save_bundlediary_title",save_bundlediary_title); //diaryArrayList.size 안에 있는 데이터 파일에 저장하기
-        editor.putString("save_bundlediary_content",save_bundlediary_content);
-        editor.putString("save_bundlediary_date",save_bundlediary_date);
-        editor.putString("save_bundlediary_day",save_bundlediary_day);
-        editor.putString("save_bundlediary_month",save_bundlediary_month);
-        editor.putString("save_bundlediary_year",save_bundlediary_year);
 
-//        editor.clear(); //sharedPreferences 저장되어 있는 파일 지우기
-        editor.apply(); //동기,세이브를 완료 해라
+
+//        for (int i=0; i < diaryArrayList.size(); i++){
+//            //타이틀, 컨텐츠, 데이트, 데이, 먼스 ,이어
+//            save_bundlediary_title = save_bundlediary_title + diaryArrayList.get(i).getDiary_title() + "/"; //diaryArrayList.size 안에 있는 데이터 변수에 넣기
+//            save_bundlediary_content = save_bundlediary_content + diaryArrayList.get(i).getDiary_content() + "/";
+//            save_bundlediary_date = save_bundlediary_date + diaryArrayList.get(i).getDiary_date() + "/";
+//            save_bundlediary_day = save_bundlediary_day + diaryArrayList.get(i).getDiary_day() + "/";
+//            save_bundlediary_month = save_bundlediary_month + diaryArrayList.get(i).getDiary_month() + "/";
+//            save_bundlediary_year = save_bundlediary_year + diaryArrayList.get(i).getDiary_year() + "/";
+//        }
+//
+//        SharedPreferences sharedPreferences = getSharedPreferences("bundlediary_file",MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("save_bundlediary_title",save_bundlediary_title); //diaryArrayList.size 안에 있는 데이터 파일에 저장하기
+//        editor.putString("save_bundlediary_content",save_bundlediary_content);
+//        editor.putString("save_bundlediary_date",save_bundlediary_date);
+//        editor.putString("save_bundlediary_day",save_bundlediary_day);
+//        editor.putString("save_bundlediary_month",save_bundlediary_month);
+//        editor.putString("save_bundlediary_year",save_bundlediary_year);
+//
+////        editor.clear(); //sharedPreferences 저장되어 있는 파일 지우기
+//        editor.apply(); //동기,세이브를 완료 해라
     }
 }

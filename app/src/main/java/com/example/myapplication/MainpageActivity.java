@@ -218,9 +218,7 @@ public class MainpageActivity extends AppCompatActivity {
 //            Log.e("이미지확인3",String.valueOf(Array_mainpage_diary_bitmapimage[0].contains("@")));
 
             for (int i=0; i < Array_mainpage_diary_title.length; i++) {
-
 //                Log.e("i",String.valueOf(i));
-
                 byte[] encodeByte = Base64.decode(Array_mainpage_diary_bitmapimage[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
                 Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
 
@@ -266,6 +264,7 @@ public class MainpageActivity extends AppCompatActivity {
 
 
             //리스트로 만들어야 하나?!! //비트맵리스트 안되니 어레이리스트로 하자
+
             temporary_bitmap = mainpage_dataArrayList.get(i).getDiary_image(); //임시적으로 이미지를 받아온다
 //            if (temporary_bitmap == null){
 //                temporary_bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.profileimage);
