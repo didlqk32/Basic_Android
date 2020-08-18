@@ -36,6 +36,7 @@ public class MainpageActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout; //메뉴바 레이아웃
     private View drawerView; //메뉴바 뷰
     private ImageButton menubar_open;
+    private Button logout; //로그아웃 버튼
     LinearLayout menubar_my_profile, menubar_exercise_report; //네비게이션 레이아웃 안에 있는 요소들
 
     private Button home, diary, home_training;
@@ -76,6 +77,7 @@ public class MainpageActivity extends AppCompatActivity {
         menubar_open = findViewById(R.id.menubar_open);
         menubar_exercise_report = findViewById(R.id.menubar_exercise_report); //네비게이션 메뉴바의 운동기록 버튼
         menubar_my_profile = findViewById(R.id.menubar_my_profile); //나의 프로필 연결
+        logout = findViewById(R.id.logout); //로그아웃 버튼
 
         home = findViewById(R.id.home);
         diary = findViewById(R.id.diary);
@@ -201,6 +203,16 @@ public class MainpageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) { //네비게이션 메뉴에서 운동기록 선택
                 Intent intent = new Intent(MainpageActivity.this, ExerciseReportActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //네비게이션 메뉴에서 로그아웃 선택
+                Intent intent = new Intent(MainpageActivity.this, logInActivity.class);
+                logInActivity.my_id = ""; //내 아이디 값 초기화
                 startActivity(intent);
                 finish();
             }

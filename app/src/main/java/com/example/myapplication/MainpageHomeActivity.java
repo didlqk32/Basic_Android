@@ -26,6 +26,7 @@ public class MainpageHomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private View drawerView;
     private ImageButton menubar_open;
+    private Button logout; //로그아웃 버튼
 
     private Button diary,otherpeople_dairy_button,home_training;
     LinearLayout menubar_my_profile,menubar_exercise_report;
@@ -62,7 +63,7 @@ public class MainpageHomeActivity extends AppCompatActivity {
 
         menubar_profile_nickname = findViewById(R.id.menubar_profile_nickname);//메뉴바에서 나의 닉네임 연결
         menubar_profile_image = findViewById(R.id.menubar_profile_image);//메뉴바에서 나의 닉네임 이미지 연결
-
+        logout = findViewById(R.id.logout); //로그아웃 버튼
 
         diary = findViewById(R.id.diary);
         otherpeople_dairy_button = findViewById(R.id.otherpeople_dairy_button);
@@ -91,7 +92,6 @@ public class MainpageHomeActivity extends AppCompatActivity {
         });
 
 
-
         drawerLayout.setDrawerListener(listner);
         drawerView.setOnTouchListener(new View.OnTouchListener() { //네비게이션 메뉴 적용
             @Override
@@ -100,10 +100,9 @@ public class MainpageHomeActivity extends AppCompatActivity {
             }
         });
 
-
         menubar_my_profile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // 메뉴바에서 나의 프로필 선택
                 Intent intent = new Intent(MainpageHomeActivity.this,ProfileActivity.class);
                 startActivity(intent);
                 finish();
@@ -112,8 +111,18 @@ public class MainpageHomeActivity extends AppCompatActivity {
 
         menubar_exercise_report.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // 메뉴바에서 운동 기록 선택
                 Intent intent = new Intent(MainpageHomeActivity.this,ExerciseReportActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //네비게이션 메뉴에서 로그아웃 선택
+                Intent intent = new Intent(MainpageHomeActivity.this, logInActivity.class);
+                logInActivity.my_id = ""; //내 아이디 값 초기화
                 startActivity(intent);
                 finish();
             }

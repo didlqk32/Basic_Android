@@ -34,7 +34,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/training_time_text"
-            android:text="40"
             android:textSize="60sp"
             android:textColor="#228E81"/>
         <TextView

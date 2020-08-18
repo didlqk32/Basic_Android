@@ -118,6 +118,9 @@ public class HomeTraningStartActivity extends AppCompatActivity implements View.
         training_time.setText(String.valueOf(count-1));
         thread.start();
 
+
+        Log.e("운동 시간",String.valueOf(exercise_time * HomeTrainingDetailActivity.exercise_temporary_count));
+
     }
 
 
@@ -155,25 +158,61 @@ public class HomeTraningStartActivity extends AppCompatActivity implements View.
 //                        Log.e("종료","확인");
 //                        Toast.makeText(HomeTraningStartActivity.this,"운동이 끝났습니다",Toast.LENGTH_SHORT).show();
 
-
-                        //여기에 칼로리 소모 기록?!!!!!!!!!!!!!!!!!! shared 써서!!!!!!!!!! //여기도 날짜 기록??? //운동 시간!!!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         Date currentTime = Calendar.getInstance().getTime(); //현재 날짜 구하기
                         String date_text = new SimpleDateFormat("yyyy.M.dd", Locale.getDefault()).format(currentTime);  //날짜 형태 정해서 변수에 넣기
+
+
+
+
+                        //여기에 칼로리 소모 기록?!!!!!!!!!!!!!!!!!! shared 써서!!!!!!!!!! //여기도 날짜 기록??? //운동 시간!!!
+                        //운동 완료 기록!!!! //쉐어드는 항상 아이디랑 같이 기록 해야 한다!!! 날짜도 기록!!!! // 운동 횟수?!!!!!!!!!!!-> 그냥 length로 하면 될 거 같고
+                        SharedPreferences sharedPreferences = getSharedPreferences("Total_Exercise_report_file", MODE_PRIVATE); //운동이 끝나면 운동 내용을 기록한다
+                        SharedPreferences.Editor sharededitor = sharedPreferences.edit();
+
+                        String receive_Total_report_id = sharedPreferences.getString("Total_report_id", "");
+                        String receive_Total_report_date = sharedPreferences.getString("Total_report_date", "");
+                        String receive_Total_report_time = sharedPreferences.getString("Total_report_time", "");
+                        String receive_Total_report_kcal = sharedPreferences.getString("Total_report_kcal", "");
+
+
+                        receive_Total_report_id = receive_Total_report_id + logInActivity.my_id + "@"; //기존 저장된 데이터에서 현재 데이터 더하기
+                        receive_Total_report_date = receive_Total_report_date + date_text + "@";
+
+                        int this_time = exercise_time * HomeTrainingDetailActivity.exercise_temporary_count;//한 사이클동안 운동한 시간
+                        receive_Total_report_time = receive_Total_report_time + this_time + "@"; //한 사이클동안 운동한 시간 저장(단위 초)
+
+                        Log.e("저장하는 쪽 시간",receive_Total_report_time);
+
+                        if (homet_title_item.equals("스쿼트")){
+                            int kcal_reduce = (this_time / 60) * 8; //1분당 8kcal 소모
+                            receive_Total_report_kcal = receive_Total_report_kcal + kcal_reduce + "@";
+                        } else if (homet_title_item.equals("푸쉬업")) {
+                            int kcal_reduce = (this_time / 60) * 5; //1분당 6kcal 소모
+                            receive_Total_report_kcal = receive_Total_report_kcal + kcal_reduce + "@";
+                        } else if (homet_title_item.equals("런지")) {
+                            int kcal_reduce = (this_time / 60) * 6; //1분당 6kcal 소모
+                            receive_Total_report_kcal = receive_Total_report_kcal + kcal_reduce + "@";
+                        } else if (homet_title_item.equals("사이드 프랭크")) {
+                            int kcal_reduce = (this_time / 60) * 18; //1분당 18kcal 소모
+                            receive_Total_report_kcal = receive_Total_report_kcal + kcal_reduce + "@";
+                        }
+
+
+                        sharededitor.putString("Total_report_id", receive_Total_report_id);
+                        sharededitor.putString("Total_report_date", receive_Total_report_date);
+                        sharededitor.putString("Total_report_time", receive_Total_report_time);
+                        sharededitor.putString("Total_report_kcal", receive_Total_report_kcal);
+//                        sharededitor.clear();
+                        sharededitor.apply(); //동기,세이브를 완료 해라
+
+
+
+
+
+
+
+
+
 
                         //운동 완료 기록!!!! //쉐어드는 항상 아이디랑 같이 기록 해야 한다!!! 날짜도 기록!!!! // 운동 횟수?!!!!!!!!!!!-> 그냥 length로 하면 될 거 같고
                         SharedPreferences shared = getSharedPreferences("Exercise_report_file", MODE_PRIVATE); //운동이 끝나면 운동 내용을 기록한다
@@ -197,7 +236,7 @@ public class HomeTraningStartActivity extends AppCompatActivity implements View.
 //                        editor.clear();
                         editor.apply(); //동기,세이브를 완료 해라
 
-                        Log.e("운동 종료 되면 값 저장 되나?!",receive_report_date);
+//                        Log.e("운동 종료시 일자 저장 여부",receive_report_date);
 
 
                         Intent intent = new Intent(HomeTraningStartActivity.this,HomeTrainingDetailActivity.class); //다음 휴식 화면으로 현재 운동,시간 정보를 보내준다

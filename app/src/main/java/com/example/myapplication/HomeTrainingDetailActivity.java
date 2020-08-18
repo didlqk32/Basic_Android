@@ -41,6 +41,7 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
     static String choice_music;
 
     static int exercise_count_number;  //운동을 몇회에 나눠서 하는지에 대한 변수
+    static int exercise_temporary_count;  //운동을 몇회에 나눠서 하는지에 대한 변수(HomeTraningStart 에서 계산값으로 쓰임)
     static int exercise_level_plus;  //운동 선택 난이도에 따라 한 사이클에 운동하는 시간이 늘어남
 
     @Override
@@ -142,16 +143,16 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
                 }
                 mediaPlayer.start();
 
-                if (training_level_spinner_text.getText().toString().equals("easy")){
+                if (training_level_spinner_text.getText().toString().equals("초급")){
                     exercise_level_plus = 0;
-                } else if (training_level_spinner_text.getText().toString().equals("normal")) {
+                } else if (training_level_spinner_text.getText().toString().equals("중급")) {
                     exercise_level_plus = 5;
-                } else if (training_level_spinner_text.getText().toString().equals("hard")) {
+                } else if (training_level_spinner_text.getText().toString().equals("고급")) {
                     exercise_level_plus = 10;
                 }
 
                 exercise_count_number = 4 * Integer.parseInt(training_repeat_spinner_text.getText().toString()); //운동을 몇회에 나눠서 하는지에 대한 변수
-
+                exercise_temporary_count = exercise_count_number;
 
 
                 intent.putExtra("homet_title_item",textView2.getText()); //타이틀 전달하기
@@ -203,15 +204,15 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 training_level_spinner_text.setText(adapterView.getItemAtPosition(i).toString()); // 난이도 텍스트에 집어넣기
 
-                if (training_level_spinner_text.getText().toString().equals("easy")){
+                if (training_level_spinner_text.getText().toString().equals("초급")){
                     int temporary = Integer.parseInt(homet_timenum_item)*60 + Integer.parseInt(homet_timenum_item2);
                     homet_timenum.setText(String.valueOf(temporary/60));
                     homet_timenum2.setText(String.valueOf(temporary%60));
-                } else if (training_level_spinner_text.getText().toString().equals("normal")) {
+                } else if (training_level_spinner_text.getText().toString().equals("중급")) {
                     int temporary = Integer.parseInt(homet_timenum_item)*60 + Integer.parseInt(homet_timenum_item2) + 20;
                     homet_timenum.setText(String.valueOf(temporary/60));
                     homet_timenum2.setText(String.valueOf(temporary%60));
-                } else if (training_level_spinner_text.getText().toString().equals("hard")) {
+                } else if (training_level_spinner_text.getText().toString().equals("고급")) {
                     int temporary = Integer.parseInt(homet_timenum_item)*60 + Integer.parseInt(homet_timenum_item2) + 40;
                     homet_timenum.setText(String.valueOf(temporary/60));
                     homet_timenum2.setText(String.valueOf(temporary%60));

@@ -78,6 +78,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
         //방금 등록된 일기 보여주기
         SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //일기 데이터 받아오기
 
+        String receive_diary_id = shared.getString("diary_id",""); //파일에서 받은 데이터 string 변수에 넣는다
         String receive_diary_title = shared.getString("diary_title","");
         String receive_diary_content = shared.getString("diary_content","");
         String receive_diary_date = shared.getString("diary_date","");
@@ -89,6 +90,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 
 //        Log.e("이미지 내용",receive_diary_image);
 
+        String[] temporary_diary_id = receive_diary_id.split("@"); //string으로 되어 있는 데이터 split을 잘라서 배열에 하나씩 넣는다
         String[] temporary_diary_title = receive_diary_title.split("@");
         String[] temporary_diary_content = receive_diary_content.split("@");
         String[] temporary_diary_date = receive_diary_date.split("@");
@@ -116,34 +118,39 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 
         }
         else { //일기를 수정하는 경우
-            //포지션 값은 -1 해야한다
 
 
 
 
 
-            //!!!!!!!!!!!!!!!!!!!단순히 포지션 값으로만 쉐어드 배열값을 비교하면 안된다!!!!!!!!!!!!!!!!!!!! 나의 일기중에 내 일기만 보이기 때문에 포지션 값이 다를 수 있다!!!!
+            for (int i=0; i < temporary_diary_id.length; i++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
+                if (temporary_diary_id[i].equals(logInActivity.my_id)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
 
 
+                    todaydairy_content_title.setText(temporary_diary_title[i - position]); //배열 길이는 1부터 시작하고 배열 인덱스 값은 0부터 시작하기 때문에 길이에 -1 해야 가장 최근 등록 된 것
+                    todaydairy_content.setText(temporary_diary_content[i - position]);
+                    todaydairy_date.setText(temporary_diary_date[i - position]);
 
-
-
-
-
-            todaydairy_content_title.setText(temporary_diary_title[temporary_diary_title.length-1-position]); //배열 길이는 1부터 시작하고 배열 인덱스 값은 0부터 시작하기 때문에 길이에 -1 해야 가장 최근 등록 된 것
-            todaydairy_content.setText(temporary_diary_content[temporary_diary_content.length-1-position]);
-            todaydairy_date.setText(temporary_diary_date[temporary_diary_date.length-1-position]);
-
-            //String 이미지를 bitmap으로 바꾸는 작업
-            byte[] encodeByte = Base64.decode(temporary_diary_image[temporary_diary_image.length-1-position], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
-            Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+                    //String 이미지를 bitmap으로 바꾸는 작업
+                    byte[] encodeByte = Base64.decode(temporary_diary_image[i - position], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+                    Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
 
 //            Log.e("포지션 값",String.valueOf(position));
 //            Log.e("이미지",temporary_diary_image[temporary_diary_image.length-1-position]);
-            if (!temporary_diary_image[temporary_diary_image.length-1-position].equals("null")) { //선택한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
-                todaydairy_image.setVisibility(View.VISIBLE);
-                todaydairy_image.setImageBitmap(bitmapimage);
+                    if (!temporary_diary_image[i - position].equals("null")) { //선택한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
+                        todaydairy_image.setVisibility(View.VISIBLE);
+
+                        todaydairy_image.setImageBitmap(bitmapimage);
+                    }
+
+
+
+
+                }
             }
+
+
+
         }
 
 
@@ -216,77 +223,98 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
                             String[] temporary_diary_profile_nickname = receive_diary_profile_nickname.split("@");
                             String[] temporary_diary_profile_image = receive_diary_profile_image.split("@");
 
-                            ArrayList<String> Arraylist_id = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
-                            for (String temp : temporary_diary_id) {
-                                Arraylist_id.add(temp);
-                            }
-                            Arraylist_id.remove(Arraylist_id.size() - position - 1); // ArrayList 에서 해당 포지션 제거
 
-                            ArrayList<String> Arraylist_title = new ArrayList<>();
-                            for (String temp : temporary_diary_title) {
-                                Arraylist_title.add(temp);
-                            }
-                            Arraylist_title.remove(Arraylist_title.size() - position - 1);
 
-                            ArrayList<String> Arraylist_content = new ArrayList<>();
-                            for (String temp : temporary_diary_content) {
-                                Arraylist_content.add(temp);
-                            }
-                            Arraylist_content.remove(Arraylist_content.size() - position - 1);
 
-                            ArrayList<String> Arraylist_date = new ArrayList<>();
-                            for (String temp : temporary_diary_date) {
-                                Arraylist_date.add(temp);
-                            }
-                            Arraylist_date.remove(Arraylist_date.size() - position - 1);
 
-                            ArrayList<String> Arraylist_day = new ArrayList<>();
-                            for (String temp : temporary_diary_day) {
-                                Arraylist_day.add(temp);
-                            }
-                            Arraylist_day.remove(Arraylist_day.size() - position - 1);
 
-                            ArrayList<String> Arraylist_month = new ArrayList<>();
-                            for (String temp : temporary_diary_month) {
-                                Arraylist_month.add(temp);
-                            }
-                            Arraylist_month.remove(Arraylist_month.size() - position - 1);
 
-                            ArrayList<String> Arraylist_year = new ArrayList<>();
-                            for (String temp : temporary_diary_year) {
-                                Arraylist_year.add(temp);
-                            }
-                            Arraylist_year.remove(Arraylist_year.size() - position - 1);
+                            for (int j=0; j < temporary_diary_id.length; j++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
+                                if (temporary_diary_id[j].equals(logInActivity.my_id)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
 
-                            ArrayList<String> Arraylist_image = new ArrayList<>();
-                            for (String temp : temporary_diary_image) {
-                                Arraylist_image.add(temp);
+                                    ArrayList<String> Arraylist_id = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
+                                    for (String temp : temporary_diary_id) {
+                                        Arraylist_id.add(temp);
+                                    }
+                                    Arraylist_id.remove(j - position); // ArrayList 에서 해당 포지션 제거
+                                }
                             }
-                            Arraylist_image.remove(Arraylist_image.size() - position - 1);
 
-                            ArrayList<String> Arraylist_heart_count = new ArrayList<>();
-                            for (String temp : temporary_diary_heart_count) {
-                                Arraylist_heart_count.add(temp);
-                            }
-                            Arraylist_heart_count.remove(Arraylist_heart_count.size() - position - 1);
 
-                            ArrayList<String> Arraylist_comment_count = new ArrayList<>();
-                            for (String temp : temporary_diary_comment_count) {
-                                Arraylist_comment_count.add(temp);
-                            }
-                            Arraylist_comment_count.remove(Arraylist_comment_count.size() - position - 1);
 
-                            ArrayList<String> Arraylist_profile_nickname = new ArrayList<>();
-                            for (String temp : temporary_diary_profile_nickname) {
-                                Arraylist_profile_nickname.add(temp);
-                            }
-                            Arraylist_profile_nickname.remove(Arraylist_profile_nickname.size() - position - 1);
 
-                            ArrayList<String> Arraylist_profile_image = new ArrayList<>();
-                            for (String temp : temporary_diary_profile_image) {
-                                Arraylist_profile_image.add(temp);
-                            }
-                            Arraylist_profile_image.remove(Arraylist_profile_image.size() - position - 1);
+
+
+                                    ArrayList<String> Arraylist_title = new ArrayList<>();
+                                    for (String temp : temporary_diary_title) {
+                                        Arraylist_title.add(temp);
+                                    }
+                                    Arraylist_title.remove(Arraylist_title.size() - position - 1);
+
+
+                                    ArrayList<String> Arraylist_content = new ArrayList<>();
+                                    for (String temp : temporary_diary_content) {
+                                        Arraylist_content.add(temp);
+                                    }
+                                    Arraylist_content.remove(Arraylist_content.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_date = new ArrayList<>();
+                                    for (String temp : temporary_diary_date) {
+                                        Arraylist_date.add(temp);
+                                    }
+                                    Arraylist_date.remove(Arraylist_date.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_day = new ArrayList<>();
+                                    for (String temp : temporary_diary_day) {
+                                        Arraylist_day.add(temp);
+                                    }
+                                    Arraylist_day.remove(Arraylist_day.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_month = new ArrayList<>();
+                                    for (String temp : temporary_diary_month) {
+                                        Arraylist_month.add(temp);
+                                    }
+                                    Arraylist_month.remove(Arraylist_month.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_year = new ArrayList<>();
+                                    for (String temp : temporary_diary_year) {
+                                        Arraylist_year.add(temp);
+                                    }
+                                    Arraylist_year.remove(Arraylist_year.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_image = new ArrayList<>();
+                                    for (String temp : temporary_diary_image) {
+                                        Arraylist_image.add(temp);
+                                    }
+                                    Arraylist_image.remove(Arraylist_image.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_heart_count = new ArrayList<>();
+                                    for (String temp : temporary_diary_heart_count) {
+                                        Arraylist_heart_count.add(temp);
+                                    }
+                                    Arraylist_heart_count.remove(Arraylist_heart_count.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_comment_count = new ArrayList<>();
+                                    for (String temp : temporary_diary_comment_count) {
+                                        Arraylist_comment_count.add(temp);
+                                    }
+                                    Arraylist_comment_count.remove(Arraylist_comment_count.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_profile_nickname = new ArrayList<>();
+                                    for (String temp : temporary_diary_profile_nickname) {
+                                        Arraylist_profile_nickname.add(temp);
+                                    }
+                                    Arraylist_profile_nickname.remove(Arraylist_profile_nickname.size() - position - 1);
+
+                                    ArrayList<String> Arraylist_profile_image = new ArrayList<>();
+                                    for (String temp : temporary_diary_profile_image) {
+                                        Arraylist_profile_image.add(temp);
+                                    }
+                                    Arraylist_profile_image.remove(Arraylist_profile_image.size() - position - 1);
+
+
+
+
 
 
                             if (Arraylist_id.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정

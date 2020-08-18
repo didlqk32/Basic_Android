@@ -90,8 +90,6 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
-
-
 //        SharedPreferences sharedPreferences = getSharedPreferences("profile_edit_file", MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
 //        String receive_profile_nickname = sharedPreferences.getString("nickname", ""); //받아온 데이터 String 변수 안에 넣기
 //        String receive_profile_choicegender = sharedPreferences.getString("choicegender", "");
@@ -261,7 +259,12 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
+
+                        //!!!!!!!!!!!!!!!!!
                         // 프로필 이미지 바뀐것에 대해서도!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!수정 적용 하자!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 
 
 

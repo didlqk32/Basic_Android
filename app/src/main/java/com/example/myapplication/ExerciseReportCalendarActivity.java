@@ -116,6 +116,9 @@ public class ExerciseReportCalendarActivity extends AppCompatActivity {
                 exerciseReport_adapter.notifyDataSetChanged(); // adapter에 들어간 데이터 정리하여 새로 고침 한다
                 select_date = String.valueOf(i)+"."+ (i1+1)+"."+ i2;
 
+
+
+
                 for (int j=0; j < temporary_report_id.length; j++){ //배열 크기만큼 운동 기록 보여주기(배열 인덱스값 1당 일기 1개)
                     if (temporary_report_id[j].equals(logInActivity.my_id)){ //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
 //                        Log.e("조건문 안으로 들어 왔나요?!", "확인");
@@ -126,17 +129,19 @@ public class ExerciseReportCalendarActivity extends AppCompatActivity {
                             exerciseReport_ArrayList.add(0, exerciseReport_graph_data);
                             exerciseReport_adapter.notifyDataSetChanged(); // adapter에 들어간 데이터 정리하여 새로 고침 한다
 //                            Log.e("선택한 날짜?!! 문제인가", String.valueOf(temporary_report_date[j]));
-                            break;
                         } else { // 선택한 날짜로 작성한 일기가 없으면 안보여 준다
-                            exerciseReport_ArrayList.clear();
-                            exerciseReport_adapter.notifyDataSetChanged(); // adapter에 들어간 데이터 정리하여 새로 고침 한다
+//                            exerciseReport_ArrayList.clear();
+//                            exerciseReport_adapter.notifyDataSetChanged(); // adapter에 들어간 데이터 정리하여 새로 고침 한다
                         }
                     } else { //내 아이디로 작성한 일기가 없으면 안보여 준다
-                        exerciseReport_ArrayList.clear();
-                        exerciseReport_adapter.notifyDataSetChanged(); // adapter에 들어간 데이터 정리하여 새로 고침 한다
+//                        exerciseReport_ArrayList.clear();
+//                        exerciseReport_adapter.notifyDataSetChanged(); // adapter에 들어간 데이터 정리하여 새로 고침 한다
                     }
 
                 }
+
+
+
 
 //                Log.e("날짜 확인",select_date);
             }

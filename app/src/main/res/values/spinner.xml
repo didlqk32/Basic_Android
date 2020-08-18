@@ -9,9 +9,9 @@
     </string-array>
 
     <string-array name="난이도">
-        <item>easy</item>
-        <item>normal</item>
-        <item>hard</item>
+        <item>초급</item>
+        <item>중급</item>
+        <item>고급</item>
     </string-array>
 
     <string-array name="노래선택">
