@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },2500);
+        },2200);
     }
 
     @Override

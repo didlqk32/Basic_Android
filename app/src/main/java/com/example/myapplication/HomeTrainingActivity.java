@@ -83,7 +83,7 @@ public class HomeTrainingActivity extends AppCompatActivity {
 //            }
 //        }
 
-        HomeTraining_data homeTraining_data_squat = new HomeTraining_data(bookmarkboolean1, "스쿼트", "난이도", "4", "분", "", "", R.drawable.squat, R.drawable.clock, R.drawable.star_click, R.drawable.star_click, R.drawable.star_click, R.drawable.star_click); //dm_text내용을 dm_data에 담는다
+        HomeTraining_data homeTraining_data_squat = new HomeTraining_data(bookmarkboolean1, "스쿼트", "난이도", "3", "분", "40", "초", R.drawable.squat, R.drawable.clock, R.drawable.star_click, R.drawable.star_click, R.drawable.star_click, R.drawable.star_click); //dm_text내용을 dm_data에 담는다
         HomeTrainingArrayList.add(homeTraining_data_squat); //리스트에 dm_data내용을 추가 한다
         HomeTraining_data homeTraining_data_pushup = new HomeTraining_data(bookmarkboolean2, "푸쉬업", "난이도", "3", "분", "20", "초", R.drawable.push_up, R.drawable.clock, R.drawable.star_click, R.drawable.star_click, R.drawable.star_click); //dm_text내용을 dm_data에 담는다
         HomeTrainingArrayList.add(homeTraining_data_pushup); //리스트에 dm_data내용을 추가 한다

@@ -40,6 +40,9 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
     static MediaPlayer mediaPlayer;
     static String choice_music;
 
+    static int exercise_count_number;  //운동을 몇회에 나눠서 하는지에 대한 변수
+    static int exercise_level_plus;  //운동 선택 난이도에 따라 한 사이클에 운동하는 시간이 늘어남
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,8 +142,24 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
                 }
                 mediaPlayer.start();
 
+                if (training_level_spinner_text.getText().toString().equals("easy")){
+                    exercise_level_plus = 0;
+                } else if (training_level_spinner_text.getText().toString().equals("normal")) {
+                    exercise_level_plus = 5;
+                } else if (training_level_spinner_text.getText().toString().equals("hard")) {
+                    exercise_level_plus = 10;
+                }
+
+                exercise_count_number = 4 * Integer.parseInt(training_repeat_spinner_text.getText().toString()); //운동을 몇회에 나눠서 하는지에 대한 변수
+
+
 
                 intent.putExtra("homet_title_item",textView2.getText()); //타이틀 전달하기
+                intent.putExtra("homet_timenum_item",homet_timenum_item);
+                intent.putExtra("homet_timetext_item",homet_timetext_item);
+                intent.putExtra("homet_timenum_item2",homet_timenum_item2);
+                intent.putExtra("homet_timetext_item2",homet_timetext_item2);
+                intent.putExtra("homet_level",training_level_spinner_text.getText().toString());
 
 //                Bitmap sendBitmap = BitmapFactory.decodeResource(this, image); // 이미지 전달하기
 //                ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -151,6 +170,7 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
                 //약간 우회적으로 해서 위에 BitmapFactory 코드 다시 이해해야 한다
                 byte[] sendbyte = getIntent().getByteArrayExtra("image");
                 intent.putExtra("image",sendbyte); //바이트로 변환 된 이미지 파일 전달
+
 
                 startActivity(intent);
                 break;
@@ -167,6 +187,7 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 training_repeat_spinner_text.setText(adapterView.getItemAtPosition(i).toString()); // 반복 횟 수 텍스트에 집어넣기
+
             }
 
             @Override
@@ -181,6 +202,20 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 training_level_spinner_text.setText(adapterView.getItemAtPosition(i).toString()); // 난이도 텍스트에 집어넣기
+
+                if (training_level_spinner_text.getText().toString().equals("easy")){
+                    int temporary = Integer.parseInt(homet_timenum_item)*60 + Integer.parseInt(homet_timenum_item2);
+                    homet_timenum.setText(String.valueOf(temporary/60));
+                    homet_timenum2.setText(String.valueOf(temporary%60));
+                } else if (training_level_spinner_text.getText().toString().equals("normal")) {
+                    int temporary = Integer.parseInt(homet_timenum_item)*60 + Integer.parseInt(homet_timenum_item2) + 20;
+                    homet_timenum.setText(String.valueOf(temporary/60));
+                    homet_timenum2.setText(String.valueOf(temporary%60));
+                } else if (training_level_spinner_text.getText().toString().equals("hard")) {
+                    int temporary = Integer.parseInt(homet_timenum_item)*60 + Integer.parseInt(homet_timenum_item2) + 40;
+                    homet_timenum.setText(String.valueOf(temporary/60));
+                    homet_timenum2.setText(String.valueOf(temporary%60));
+                }
             }
 
             @Override
@@ -225,5 +260,12 @@ public class HomeTrainingDetailActivity extends AppCompatActivity implements Vie
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(HomeTrainingDetailActivity.this,HomeTrainingActivity.class);
+        startActivity(intent);
     }
 }

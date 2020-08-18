@@ -150,14 +150,15 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
-            <TextView
-                android:id="@+id/training_repeat_spinner_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="2"
-                android:textColor="#228E81"
-                android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/training_repeat_spinner_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="1"
+                    android:textColor="#228E81"
+                    android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"

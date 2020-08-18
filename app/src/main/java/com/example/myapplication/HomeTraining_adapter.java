@@ -126,19 +126,19 @@ public class HomeTraining_adapter extends RecyclerView.Adapter<HomeTraining_adap
                 Intent intent = new Intent(view.getContext(), HomeTrainingDetailActivity.class); //view.getContext()는 view(현재) 클래스 context를 가져오는것
                 intent.putExtra("homet_title_item", HomeTrainingArrayList.get(position).getHomet_title());
 
-//                intent.putExtra("homet_timenum_item",HomeTrainingArrayList.get(position).getHomet_timenum());
-//                intent.putExtra("homet_timetext_item",HomeTrainingArrayList.get(position).getHomet_timetext());
-//                intent.putExtra("homet_timenum_item2",HomeTrainingArrayList.get(position).getHomet_timenum2());
-//                intent.putExtra("homet_timetext_item2",HomeTrainingArrayList.get(position).getHomet_timetext2());
-//
-//                Bitmap sendBitmap = BitmapFactory.decodeResource(context.getResources(), HomeTrainingArrayList.get(position).getThumbnail_image());
-//                //Activity가 아닌 다른 클래스에서 getResources()를 사용하려면 자기 자신(this)을 인자값으로 넘겨 주시면 된다
-//                //Activity에서는 생략해도 Activity.this 가 있는것과 같은 기능을 한다
-//                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                sendBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//                byte[] byteArray = stream.toByteArray();
-//                intent.putExtra("image",byteArray);
+                intent.putExtra("homet_timenum_item",HomeTrainingArrayList.get(position).getHomet_timenum());
+                intent.putExtra("homet_timetext_item",HomeTrainingArrayList.get(position).getHomet_timetext());
+                intent.putExtra("homet_timenum_item2",HomeTrainingArrayList.get(position).getHomet_timenum2());
+                intent.putExtra("homet_timetext_item2",HomeTrainingArrayList.get(position).getHomet_timetext2());
 
+                Bitmap sendBitmap = BitmapFactory.decodeResource(context.getResources(), HomeTrainingArrayList.get(position).getThumbnail_image());
+                //Activity가 아닌 다른 클래스에서 getResources()를 사용하려면 자기 자신(this)을 인자값으로 넘겨 주시면 된다
+                //Activity에서는 생략해도 Activity.this 가 있는것과 같은 기능을 한다
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                sendBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+
+                intent.putExtra("image",byteArray);
                 view.getContext().startActivity(intent);
                 Toast.makeText(view.getContext(), "운동 준비", Toast.LENGTH_SHORT).show();
             }

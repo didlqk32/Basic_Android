@@ -60,15 +60,16 @@ public class Mainpage_adapter extends RecyclerView.Adapter<Mainpage_adapter.Main
         holder.main_diary_title.setText(mainpage_dataArrayList.get(position).getDiary_title()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
         holder.main_diary_content.setText(mainpage_dataArrayList.get(position).getDiary_content()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
         holder.main_heart_count.setText(mainpage_dataArrayList.get(position).getHeartcount()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
-
-
         holder.otherpeople_dairy_sumnail.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), TodayDiaryActivity.class); //화면 전환하기 (view의 현재 context에서 넘거가기)
+            public void onClick(View view) { //공유일기 선택 했을 때 화면 전환
+
+                Intent intent = new Intent(view.getContext(), OtherpeopleDiaryActivity.class); //화면 전환하기 (view의 현재 context에서 넘거가기)
+                intent.putExtra("position", position); //포지션값 넘기기
+
                 view.getContext().startActivity(intent); //해당 뷰에서 넘어가기 (view.getContext() 코드가 매우 중요)
 
-                Log.e("position",String.valueOf(position));
+//                Log.e("position",String.valueOf(position));
             }
         });
     }

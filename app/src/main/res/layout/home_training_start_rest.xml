@@ -25,22 +25,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
         <TextView
-            android:id="@+id/training_time"
+            android:id="@+id/rest_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/training_time_text"
+            app:layout_constraintRight_toLeftOf="@+id/rest_time_text"
             android:text="10"
             android:textSize="60sp"
             android:textColor="#228E81"/>
         <TextView
-            android:id="@+id/training_time_text"
+            android:id="@+id/rest_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@+id/training_time"
-            app:layout_constraintLeft_toRightOf="@+id/training_time"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rest_time"
+            app:layout_constraintLeft_toRightOf="@+id/rest_time"
             android:text="초"
             android:textSize="25sp"
             android:textColor="#228E81"/>
@@ -51,6 +51,9 @@
         android:layout_height="60dp"
         android:layout_marginTop="80dp">
 
+
+
+
         <ImageButton
             android:id="@+id/training_speaker"
             android:layout_width="50dp"
@@ -59,7 +62,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:background="@drawable/speaker"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:visibility="visible"/>
+
+        <ImageButton
+            android:id="@+id/training_no_speaker"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/no_speaker"
+            android:layout_marginLeft="20dp"
+            android:visibility="gone"/>
+
         <ImageButton
             android:id="@+id/training_pause"
             android:layout_width="60dp"
@@ -69,6 +85,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
         <ImageButton
             android:id="@+id/training_stop"
             android:layout_width="50dp"

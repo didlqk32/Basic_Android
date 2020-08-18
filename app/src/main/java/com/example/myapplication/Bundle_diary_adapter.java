@@ -171,7 +171,6 @@ public class Bundle_diary_adapter extends RecyclerView.Adapter<Bundle_diary_adap
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bundle_diary_item, parent, false);
         DiaryViewHolder holder = new DiaryViewHolder(view);
         return holder;
-
     }
 
 
@@ -181,6 +180,7 @@ public class Bundle_diary_adapter extends RecyclerView.Adapter<Bundle_diary_adap
     public void onBindViewHolder(@NonNull DiaryViewHolder holder, final int position) {
         this.position = position; //position 값을 다른 메소드에서도 쓸 수 있도록 전역변수에 연결해줌
 
+//        Log.e("채크 다이어리",String.valueOf(Bundle_diary_adapter.check_diary));
 //        Log.e("position",String.valueOf(position));
 
 //        if (diaryArrayList.get(position).getDiary_title().length()>16) {
@@ -204,7 +204,6 @@ public class Bundle_diary_adapter extends RecyclerView.Adapter<Bundle_diary_adap
                 Intent intent = new Intent(view.getContext(), TodayDiaryCompleteActivity.class); //화면 전환하기 (view의 현재 context에서 넘거가기)
                 check_diary = 1; //BundleDiaryActivity 에서 TodayDiaryCompleteActivity 넘어 갈 때 데이터 전달이 없어서 생기는 오류 없애기 위한 변수
                 intent.putExtra("position", position); //포지션값 넘기기
-//                Log.e("position값",String.valueOf(position));
 
                 view.getContext().startActivity(intent); //해당 뷰에서 넘어가기 (view.getContext() 코드가 매우 중요)
             }

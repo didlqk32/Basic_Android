@@ -308,8 +308,6 @@
         </TableRow>
     </TableLayout>
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recyclerview"
         android:layout_width="match_parent"

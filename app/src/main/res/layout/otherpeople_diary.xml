@@ -30,12 +30,13 @@
 <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ImageView
+            android:id="@+id/otherpeople_dairy_profile_image"
             android:layout_width="46dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/profile" />
+            android:layout_height="46dp"
+            android:layout_marginLeft="10dp" />
 
         <TextView
+            android:id="@+id/other_diary_nickname"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
@@ -48,9 +49,8 @@
     <ImageView
         android:id="@+id/otherpeople_dairy_image"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/dumbbell_large"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="240dp"
+        android:paddingVertical="4dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/otherpeople_dairy_nicknamebar"
@@ -59,7 +59,7 @@
     <LinearLayout
         android:id="@+id/otherpeople_dairy_like"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="42dp"
         android:orientation="horizontal"
         android:padding="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -68,28 +68,30 @@
 
         <ImageButton
             android:layout_width="38dp"
-            android:layout_height="41dp"
+            android:layout_height="38dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/heart_outline" />
 
         <TextView
+            android:id="@+id/other_diary_heart_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:gravity="bottom"
             android:text="35"
             android:textSize="16dp" />
 
         <ImageButton
             android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_height="32dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/speech_bubble" />
 
         <TextView
+            android:id="@+id/other_diary_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:gravity="bottom"
             android:text="6"
             android:textSize="16dp" />
@@ -102,25 +104,36 @@
 
         <ImageButton
             android:id="@+id/otherpeople_letter"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
+            android:layout_width="37dp"
+            android:layout_height="32.5dp"
             android:layout_gravity="right"
             android:layout_marginRight="8dp"
+            android:visibility="visible"
             android:background="@drawable/chatting" />
 
     </LinearLayout>
 
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/other_diary_title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:text="다이어트 일기 제목"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/otherpeople_dairy_like"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/other_diary_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/top_bottom_line"
         android:padding="10dp"
-        android:text="다이어트 관련 일기 내용 쭉쭉쭉\n다이어트 관련 일기 내용 쭉쭉쭉\n다이어트 관련 일기 내용 쭉쭉쭉
-                    \n다이어트 관련 일기 내용 쭉쭉쭉"
+        android:text="다이어트 관련 일기 내용 쭉쭉쭉\n다이어트 관련 일기 내용 쭉쭉쭉"
         android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/otherpeople_recyclerview"
-        app:layout_constraintTop_toBottomOf="@+id/otherpeople_dairy_like"
+        app:layout_constraintTop_toBottomOf="@+id/other_diary_title"
         android:visibility="visible"/>
 
 
@@ -128,12 +141,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/otherpeople_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="100dp"
         android:scrollbars="vertical"
         android:scrollbarThumbVertical="@android:color/darker_gray"
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="5dp"
-
         app:layout_constraintBottom_toTopOf="@+id/otherpeople_dairy_commentbar" />
 
 
