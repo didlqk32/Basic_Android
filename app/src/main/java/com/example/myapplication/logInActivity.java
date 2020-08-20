@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -71,7 +72,6 @@ public class logInActivity extends AppCompatActivity {
 
 
 
-
                                 wrong_password = 0; // 패스워드 비교하는 변수 초기화
                                 wrong_id = 0; // 아이디 비교하는 변수 초기화
                                 Login_ok = true; //로그인이 되었다
@@ -102,8 +102,6 @@ public class logInActivity extends AppCompatActivity {
                     password_text.setText("");
                 }
 
-
-
             }
         });
 
@@ -128,6 +126,12 @@ public class logInActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCompat.finishAffinity(this);
+        System.exit(0);
     }
 }

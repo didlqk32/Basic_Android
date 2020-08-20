@@ -1,15 +1,20 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
@@ -22,7 +27,8 @@ public class SignUpActivity extends AppCompatActivity {
     private String save_signup_password = "";
     private String current_id = "";
     private String current_password = "";
-    private int overlap = 0 ;//중복 여부 파악하기 위한 변수
+    private int overlap = 0;//중복 여부 파악하기 위한 변수
+    private TextInputLayout signup_id_textinputlayout; //id 텍스트 인풋 레이아웃
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
         btn_sign_up = findViewById(R.id.btn_sign_up); //회원가입 버튼
         login = findViewById(R.id.login); //로그인 버튼
         btn_sign_up_overlapcheck = findViewById(R.id.btn_sign_up_overlapcheck);
+        signup_id_textinputlayout = findViewById(R.id.signup_id_textinputlayout);
 
         btn_sign_up_text = findViewById(R.id.btn_sign_up_text); // 이메일 기입란
         btn_password = findViewById(R.id.btn_password); // 패스워드 기입란
@@ -79,7 +86,6 @@ public class SignUpActivity extends AppCompatActivity {
 //                        Log.e("리스트 크기", String.valueOf(temporary_idList.length));
 
 
-
                         if (temporary_idList.length != 0) {
                             for (int i = 0; i < temporary_idList.length; i++) { //기록 되어 있는 아이디 나열하기
                                 save_signup_id = save_signup_id + temporary_idList[i] + "/";
@@ -93,7 +99,6 @@ public class SignUpActivity extends AppCompatActivity {
                             }
                         }
                         save_signup_password = save_signup_password + current_password + "/";
-
 
 
 //                        Log.e("아이디 값", save_signup_id);
@@ -115,7 +120,6 @@ public class SignUpActivity extends AppCompatActivity {
                         overlap = 0;//화면에서 나가면 값을 초기화 한다
 
 
-
                     } else { // 비밀번호가 비밀번호 확인하고 다를 때
                         Toast.makeText(SignUpActivity.this, "비밀 번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
                     }
@@ -124,14 +128,8 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
 
-
-
-
-
             }
         });
-
-
 
 
         btn_sign_up_overlapcheck.setOnClickListener(new View.OnClickListener() {
@@ -139,22 +137,23 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) { //중복 확인 버튼 누르기
                 overlap = 0; //중복 확인 계속 할 수 있도록 초기화 시킴
 
-                SharedPreferences sharedPreferences = getSharedPreferences("signup_file",MODE_PRIVATE); //"signup_file"파일의 데이터 받아오기
-                String receive_signup_id = sharedPreferences.getString("save_signup_id",""); //받아온 데이터 String 변수 안에 넣기
+                SharedPreferences sharedPreferences = getSharedPreferences("signup_file", MODE_PRIVATE); //"signup_file"파일의 데이터 받아오기
+                String receive_signup_id = sharedPreferences.getString("save_signup_id", ""); //받아온 데이터 String 변수 안에 넣기
 
 //                Log.e("아이디 중복 확인",receive_signup_id);
 //                Log.e("overlap",String.valueOf(overlap));
                 String[] Array_signup_id = receive_signup_id.split("/"); //receive_signup_id 내용물을 split "/"으로 쪼개고 String 배열에 넣음
 
+//                if (!btn_sign_up_text.getText().toString().contains("@")||!btn_sign_up_text.getText().toString().contains(".")) {
+//                    Toast.makeText(SignUpActivity.this, "이메일 형식으로 입력해주세요", Toast.LENGTH_SHORT).show();
                 if (!btn_sign_up_text.getText().toString().equals("")) { // 아이디 텍스트가 비어있지 않을 때 비교한다
-                   for (int i = 0; i < Array_signup_id.length; i++) {
+                    for (int i = 0; i < Array_signup_id.length; i++) {
                         if (Array_signup_id[i].equals(btn_sign_up_text.getText().toString())) {
                             overlap = 1;
                         }
                     }
 
 //                    Log.e("overlap2",String.valueOf(overlap));
-
                     if (overlap == 1) {
                         Toast.makeText(SignUpActivity.this, "중복된 아이디가 있습니다", Toast.LENGTH_SHORT).show();
                         overlap = 0; //중복 확인 다시 할 수 있도록 초기화 시킴
@@ -163,16 +162,35 @@ public class SignUpActivity extends AppCompatActivity {
                         overlap = 2; //회원 가입 할 수 있도록 값 변경
                     }
 
-
                 } else {
                     Toast.makeText(SignUpActivity.this, "아이디를 입력해 주세요", Toast.LENGTH_SHORT).show();
                 }
 
 
-
-
             }
         });
+
+
+//        btn_sign_up_text.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (btn_sign_up_text.toString().contains("@")) {
+//                    signup_id_textinputlayout.setError("이메일 형식에 맞춰 주세요");
+//                } else {
+//                    signup_id_textinputlayout.setError(null); // null은 에러 메시지를 지워주는 기능
+//                }
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) { //
+//
+//            }
+//        });
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -185,9 +203,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
     }
+
+
 }

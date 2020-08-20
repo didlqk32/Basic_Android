@@ -67,7 +67,6 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit);
 
-
         profile_save_button = findViewById(R.id.profile_save_button);
         setup_profile_nickname = findViewById(R.id.setup_profile_nickname);
         setup_profile_heightnumber = findViewById(R.id.setup_profile_heightnumber);
@@ -79,15 +78,7 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
         profile_RadioButton_male = findViewById(R.id.profile_RadioButton_male);
 
 
-
-
         // 나의 아이디에 따라 저장되는 값이 달라야 한다!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
 
 
 //        SharedPreferences sharedPreferences = getSharedPreferences("profile_edit_file", MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
@@ -153,6 +144,7 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
         String[] temporary_profile_target_weightnumber = receive_profile_target_weightnumber.split("@");
         String[] temporary_profile_image = receive_profile_image.split("@");
 
+
         for (int i=0; i < temporary_profile_id.length; i++) { //프로필을 저장한 id갯수 만큼 반복한다
             if (temporary_profile_id[i].equals(logInActivity.my_id)) { // 현재 나의 아이디와 저장된 프로필 데이터와 비교 했을 때 일치 하는 값이 있다면
 
@@ -189,11 +181,23 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
                     setup_target_weightnumber.setText(temporary_profile_target_weightnumber[i]);
                 }
 
+
+
+
+
+
                 if (!temporary_profile_image[i].equals("null")){
                     byte[] encodeByte = Base64.decode(temporary_profile_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
                     Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
                     setup_my_profileimage.setImageBitmap(bitmapimage); //프로필 이미지 저장
                 }
+
+
+
+
+
+
+
 
                 break; //하나라도 내 아이디로 작성한 프로필이 있으면 반복문 종료
             }
@@ -258,6 +262,62 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
+                        // 닉네임 수정이 일어나면 다 바껴야 한다
+                        // 닉네임 설정했다가 없애는 경우도 생각해야 한다
+                        SharedPreferences shared_diary = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //일기 데이터 받아오기
+                        SharedPreferences.Editor editor_diary = shared_diary.edit();
+
+                        String receive_diary_id = shared_diary.getString("diary_id", ""); // 작성한 일기들 데이터 받아서 문자열로 받기
+                        String receive_diary_profile_nickname = shared_diary.getString("diary_profile_nickname", "");
+                        String receive_diary_profile_image = shared.getString("diary_profile_image", "");
+
+
+                        String[] temporary_diary_id = receive_diary_id.split("@"); // 문자열 데어터들 각각의 배열에 넣기
+                        String[] temporary_diary_profile_nickname = receive_diary_profile_nickname.split("@"); // 문자열 데어터들 각각의 배열에 넣기
+                        String[] temporary_diary_profile_image = receive_diary_profile_image.split("@");
+
+
+
+
+
+
+                        ArrayList<String> Arraylist_diary_profile_nickname = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
+                        for (String temp : temporary_diary_profile_nickname) {
+                            Arraylist_diary_profile_nickname.add(temp);
+                        }
+
+                        ArrayList<String> Arraylist_diary_profile_image = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
+                        for (String temp : temporary_diary_profile_image) {
+                            Arraylist_diary_profile_image.add(temp);
+                        }
+
+
+
+
+                        for (int j = 0; j < temporary_diary_id.length; j++) { // 모든 일기 다 반복문으로 검사한다
+                            if (temporary_diary_id[j].equals(logInActivity.my_id)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
+
+
+
+
+
+
+
+                                Arraylist_diary_profile_nickname.set(j, Arraylist_profile_nickname.get(i)); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+//                                Arraylist_diary_profile_image.set(j,);
+
+
+
+
+
+
+
+                            }
+                        }
+                        for (int j = 0; j < Arraylist_diary_profile_nickname.size(); j++) { //기록 되어 있는 아이디 나열하기
+                            temporary_nickname_change = temporary_nickname_change + Arraylist_diary_profile_nickname.get(j) + "@";
+                        }
+
 
 
                         //!!!!!!!!!!!!!!!!!
@@ -269,43 +329,9 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
-                        // 닉네임 수정이 일어나면 다 바껴야 한다
-                        // 닉네임 설정했다가 없애는 경우도 생각해야 한다
-                        SharedPreferences shared_diary = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //일기 데이터 받아오기
-                        SharedPreferences.Editor editor_diary = shared_diary.edit();
-
-                        String receive_diary_id = shared_diary.getString("diary_id", ""); // 작성한 일기들 데이터 받아서 문자열로 받기
-                        String receive_diary_profile_nickname = shared_diary.getString("diary_profile_nickname", "");
-
-                        String[] temporary_diary_id = receive_diary_id.split("@"); // 문자열 데어터들 각각의 배열에 넣기
-                        String[] temporary_diary_profile_nickname = receive_diary_profile_nickname.split("@"); // 문자열 데어터들 각각의 배열에 넣기
-
-                        ArrayList<String> Arraylist_diary_profile_nickname = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
-                        for (String temp : temporary_diary_profile_nickname) {
-                            Arraylist_diary_profile_nickname.add(temp);
-                        }
-
-                        for (int j = 0; j < temporary_diary_id.length; j++) { // 모든 일기 다 반복문으로 검사한다
-                            if (temporary_diary_id[j].equals(logInActivity.my_id)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
-
-                                Arraylist_diary_profile_nickname.set(j, Arraylist_profile_nickname.get(i)); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
-
-                            }
-                        }
-                        for (int j = 0; j < Arraylist_diary_profile_nickname.size(); j++) { //기록 되어 있는 아이디 나열하기
-                            temporary_nickname_change = temporary_nickname_change + Arraylist_diary_profile_nickname.get(j) + "@";
-                        }
 
                         editor_diary.putString("diary_profile_nickname", temporary_nickname_change);
                         editor_diary.apply(); //동기,세이브를 완료 해라
-
-
-
-
-
-
-
-
 
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -16,7 +17,10 @@
             android:id="@+id/main_diary_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/dumbbell"/>
+            android:src="@drawable/dumbbell"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +32,7 @@
             android:background="#D9FFFFFF">
 
             <TextView
-                android:id="@+id/main_diary_title"
+                android:id="@+id/main_diary_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -37,7 +41,7 @@
                 android:textSize="12dp"/>
 
             <TextView
-                android:id="@+id/main_diary_content"
+                android:id="@+id/main_diary_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -66,6 +70,16 @@
                     android:text="54"
                     android:textSize="13dp"
                     android:layout_marginLeft="5dp"/>
+
+                <ImageView
+                    android:id="@+id/main_mydiary_check"
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_marginLeft="51dp"
+                    android:src="@drawable/star_bold"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
         </LinearLayout>

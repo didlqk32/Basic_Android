@@ -142,14 +142,37 @@ public class BundleDiaryActivity extends AppCompatActivity {
 
         if (TodayDiaryCompleteActivity.delete_boolean == true){ //TodayDiaryCompleteActivity 에서 삭제 버튼 눌렀을 때 해당 아이템 삭제
 
+
+
+
+
+
             Intent intent = getIntent();
             int position2 = intent.getIntExtra("position1",0);
 
+
+
+
+
+
+
+
+
             diaryArrayList.remove(position2);
+
+
+
+
+
+
+
+
+
+
+
             bundle_diary_adapter.notifyDataSetChanged();
             TodayDiaryCompleteActivity.delete_boolean = false;
         }
-
     }
 
     @Override

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -45,6 +46,10 @@ public class DmActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
 
+    private int position = 0;
+    private String title = "";
+    private String content = "";
+    private String date ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,12 @@ public class DmActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        final Intent intent = getIntent(); //intent 값을 Mainpage_adapter 에서 받아온다, Mainpage에서 클릭한 공유일기 보기 위해
+        position = intent.getIntExtra("position", -1); //Bundle_diary에서 선택한 일기의 포지션 값을 받고 처음 작성한 일기라면 초기값으로 -1을 받는다
+        title = intent.getStringExtra("title");
+        content = intent.getStringExtra("content");
+        date = intent.getStringExtra("date");
 
         send_my_dm.addTextChangedListener(new TextWatcher() { //edit text의 값이 변화했을 때 기능 구현(텍스트가 입력 되면 기능을 한다)
             @Override
@@ -140,7 +151,7 @@ public class DmActivity extends AppCompatActivity {
 
         send_camera.setOnClickListener(new View.OnClickListener() {   //임시로 만든 버튼 -> 상대방이 채팅할 경우
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //임시적으로 카메라 버튼에 상대방이 보낸 메세지 버튼 연결함!!!!!나중에 지워야해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                 Date current_time = Calendar.getInstance().getTime(); //현재 날짜 구하기
                 SimpleDateFormat current_dmtime_format = new SimpleDateFormat("a h시 m분", Locale.KOREA);// 현재 시간을 구화기 위한 객체 선언
@@ -223,4 +234,16 @@ public class DmActivity extends AppCompatActivity {
 //        Toast.makeText(DmActivity.this, ttt, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(DmActivity.this,OtherpeopleDiaryActivity.class);
+
+        intent.putExtra("position", position); //포지션값 넘기기
+        intent.putExtra("title", title); //제목값 넘기기
+        intent.putExtra("content", content); //내용값 넘기기
+        intent.putExtra("date", date); //날짜 값 넘기기
+
+        startActivity(intent);
+    }
 }

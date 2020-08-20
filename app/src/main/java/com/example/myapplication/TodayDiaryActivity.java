@@ -43,6 +43,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
     private ImageButton imageButton, todaydairy_camera, todaydairy_picture;
     private ImageView report_todaydairy_image;
     private TextView report_todaydairy_date;
+    private TextView diary_share_text2;//공유중인지 아닌지 보여주는 텍스트
     final String TAG = getClass().getSimpleName();
     final static int TAKE_PICTURE = 100;
     final static int get_gallery_image = 200;
@@ -55,7 +56,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
     private String temporary_content = ""; // shared 값을 임시적으로 담기 위한 변수
     private String temporary_image = ""; // shared 값을 임시적으로 담기 위한 변수
     private boolean image_setup = false;
-
+    int resetting_count = 0;
 
 
     @Override
@@ -72,6 +73,8 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
         report_todaydairy_image = findViewById(R.id.report_todaydairy_image);
         todaydairy_picture = findViewById(R.id.todaydairy_picture);
         report_todaydairy_date = findViewById(R.id.report_todaydairy_date);
+        diary_share_text2 = findViewById(R.id.diary_share_text2); //공유중인지 아닌지 보여주는 텍스트
+
 
         diary_choice_spinner = findViewById(R.id.diary_choice_spinner); //스피너 연결
         diary_choice_text = findViewById(R.id.diary_choice_text); //스피너 선택 적용될 텍스트
@@ -109,7 +112,14 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
         switch (requestCode) {
             case TAKE_PICTURE: // 카메라로 촬영한 영상을 가져오는 부분
                 if (resultCode == RESULT_OK && intent.hasExtra("data")) {
+
+
+
+
                     profile_bitmap = (Bitmap) intent.getExtras().get("data");
+
+
+
                     if (profile_bitmap != null) {
                         report_todaydairy_image.setVisibility(View.VISIBLE); //UI에서 화면 담당하는 부분 보이도록 함(초기값은 안보임)
                         report_todaydairy_image.setImageBitmap(profile_bitmap); //화면에 선택한 이미지 넣기
@@ -124,6 +134,19 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                     try {
                         InputStream in = getContentResolver().openInputStream(intent.getData());
                         profile_bitmap = BitmapFactory.decodeStream(in);
+
+
+
+
+
+
+
+
+
+
+
+
+
                         report_todaydairy_image.setVisibility(View.VISIBLE); //UI에서 화면 담당하는 부분 보이도록 함(초기값은 안보임)
                         report_todaydairy_image.setImageBitmap(profile_bitmap); //화면에 선택한 이미지 넣기
 
@@ -167,7 +190,6 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
         });
 
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //권한 설정하기
             if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "권한 설정 완료");
@@ -181,19 +203,22 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
         todaydairy_picture.setOnClickListener(this); //갤러리 버튼 클릭
 
 
-
         Intent intent = getIntent();
         final int position = intent.getIntExtra("position", -1); //TodayDiaryCompleteActivity 에서 아이템 선택했을 때 포지션 값을 받는다
+        final String title = intent.getStringExtra("title");
+        final String content = intent.getStringExtra("content");
+        final String date = intent.getStringExtra("date");
+
 
         // 처음 화면에 들어 왔을 때 작성 했던 일기가 있으면 화면에 띄워주기
         if (position == -2) { // position값이 -2 이면 방금 작성한 일기라는 뜻
 
             SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //"TodayDiaryComplete_file"파일의 데이터 받아오기
 
-            String receive_diary_id = shared.getString("diary_id",""); // 작성한 일기들 데이터 받아서 문자열로 받기
-            String receive_diary_title = shared.getString("diary_title","");
-            String receive_diary_content = shared.getString("diary_content","");
-            String receive_diary_date = shared.getString("diary_date","");
+            String receive_diary_id = shared.getString("diary_id", ""); // 작성한 일기들 데이터 받아서 문자열로 받기
+            String receive_diary_title = shared.getString("diary_title", "");
+            String receive_diary_content = shared.getString("diary_content", "");
+            String receive_diary_date = shared.getString("diary_date", "");
             String receive_diary_image = shared.getString("diary_image", "");
 
             String[] temporary_diary_title = receive_diary_title.split("@"); // 문자열 데어터들 각각의 배열에 넣기
@@ -201,15 +226,15 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
             String[] temporary_diary_date = receive_diary_date.split("@");
             String[] temporary_diary_image = receive_diary_image.split("@");
 
-            report_todaydairy_content_title.setText(temporary_diary_title[temporary_diary_title.length-1]); //받아온 포지션 값의 해당하는 일기 내용 보여주기 (bundle_diary_activity 에서 선택한)
-            report_todaydairy_content.setText(temporary_diary_content[temporary_diary_content.length-1]);
-            report_todaydairy_date.setText(temporary_diary_date[temporary_diary_date.length-1]);
+            report_todaydairy_content_title.setText(temporary_diary_title[temporary_diary_title.length - 1]); //받아온 포지션 값의 해당하는 일기 내용 보여주기 (bundle_diary_activity 에서 선택한)
+            report_todaydairy_content.setText(temporary_diary_content[temporary_diary_content.length - 1]);
+            report_todaydairy_date.setText(temporary_diary_date[temporary_diary_date.length - 1]);
 
-            byte[] encodeByte = Base64.decode(temporary_diary_image[temporary_diary_image.length-1], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+            byte[] encodeByte = Base64.decode(temporary_diary_image[temporary_diary_image.length - 1], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
             Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
 
             //!!!!! 아래 얘는 null인데 갤러리만 null이 아니게 수정됬다고 아래 얘까지 null 아닌 값으로 된것은 아니야!!!
-            if (!temporary_diary_image[temporary_diary_image.length-1].equals("null")) { //방금 작성한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
+            if (!temporary_diary_image[temporary_diary_image.length - 1].equals("null")) { //방금 작성한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
 
                 if (image_setup == false) { //이미지 수정 안했을 경우
                     report_todaydairy_image.setImageBitmap(bitmapimage);
@@ -222,48 +247,65 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 
                 }
             }
+
+
 
         } else if (position != -1) { //bundle diary에서 아이템 선택했을 때 포지션 값 비교 (-1이면 포지션값 못받은 것 -> 현재 작성한 일기라는 뜻)
             //나의 일기에서 저장 했던 데이터 받아오기
             SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //"TodayDiaryComplete_file"파일의 데이터 받아오기
 
-            String receive_diary_id = shared.getString("diary_id",""); // 작성한 일기들 데이터 받아서 문자열로 받기
-            String receive_diary_title = shared.getString("diary_title","");
-            String receive_diary_content = shared.getString("diary_content","");
-            String receive_diary_date = shared.getString("diary_date","");
+            String receive_diary_id = shared.getString("diary_id", ""); // 작성한 일기들 데이터 받아서 문자열로 받기
+            String receive_diary_title = shared.getString("diary_title", "");
+            String receive_diary_content = shared.getString("diary_content", "");
+            String receive_diary_date = shared.getString("diary_date", "");
             String receive_diary_image = shared.getString("diary_image", "");
+            String receive_diary_share = shared.getString("diary_share", "");
 
-            String[] temporary_diary_title = receive_diary_title.split("@"); // 문자열 데어터들 각각의 배열에 넣기
+
+            String[] temporary_diary_id = receive_diary_id.split("@"); // 문자열 데어터들 각각의 배열에 넣기
+            String[] temporary_diary_title = receive_diary_title.split("@");
             String[] temporary_diary_content = receive_diary_content.split("@");
             String[] temporary_diary_date = receive_diary_date.split("@");
             String[] temporary_diary_image = receive_diary_image.split("@");
+            String[] temporary_diary_share = receive_diary_share.split("@");
 
-            report_todaydairy_content_title.setText(temporary_diary_title[temporary_diary_title.length-1-position]); //받아온 포지션 값의 해당하는 일기 내용 보여주기 (bundle_diary_activity 에서 선택한)
-            report_todaydairy_content.setText(temporary_diary_content[temporary_diary_content.length-1-position]);
-            report_todaydairy_date.setText(temporary_diary_date[temporary_diary_date.length-1-position]);
 
-            byte[] encodeByte = Base64.decode(temporary_diary_image[temporary_diary_image.length-1-position], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
-            Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+            for (int i = 0; i < temporary_diary_id.length; i++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
+                if (temporary_diary_id[i].equals(logInActivity.my_id) && temporary_diary_title[i].equals(title) && temporary_diary_content[i].equals(content) && temporary_diary_date[i].equals(date)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
 
-            //!!!!! 아래 얘는 null인데 갤러리만 null이 아니게 수정됬다고 아래 얘까지 null 아닌 값으로 된것은 아니야!!!
-            if (!temporary_diary_image[temporary_diary_image.length-1-position].equals("null")) { //방금 작성한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
 
-                if (image_setup == false) { //이미지 수정 안했을 경우
-                    report_todaydairy_image.setImageBitmap(bitmapimage);
-                    report_todaydairy_image.setVisibility(View.VISIBLE);
-                    profile_bitmap = bitmapimage; // profile_bitmap 변수에 다시 비트맵을 저장한다
 
-                } else { //이미지 수정 했을 경우
-                    report_todaydairy_image.setImageBitmap(profile_bitmap);
-                    report_todaydairy_image.setVisibility(View.VISIBLE);
+                    report_todaydairy_content_title.setText(temporary_diary_title[i]); //받아온 포지션 값의 해당하는 일기 내용 보여주기 (bundle_diary_activity 에서 선택한)
+                    report_todaydairy_content.setText(temporary_diary_content[i]);
+                    report_todaydairy_date.setText(temporary_diary_date[i]);
+
+                    byte[] encodeByte = Base64.decode(temporary_diary_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+                    Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+
+                    //!!!!! 아래 얘는 null인데 갤러리만 null이 아니게 수정됬다고 아래 얘까지 null 아닌 값으로 된것은 아니야!!!
+                    if (!temporary_diary_image[i].equals("null")) { //방금 작성한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
+
+                        if (image_setup == false) { //이미지 수정 안했을 경우
+                            report_todaydairy_image.setImageBitmap(bitmapimage);
+                            report_todaydairy_image.setVisibility(View.VISIBLE);
+                            profile_bitmap = bitmapimage; // profile_bitmap 변수에 다시 비트맵을 저장한다
+
+                        } else { //이미지 수정 했을 경우
+                            report_todaydairy_image.setImageBitmap(profile_bitmap);
+                            report_todaydairy_image.setVisibility(View.VISIBLE);
+
+                        }
+                    }
+
+                    if (temporary_diary_share[i].equals("share")) { //현재 일기가 공유 하기 이면
+                        diary_share_text2.setText("(공유중)");
+                    }
+
+
 
                 }
             }
-
         }
-
-
-
 
 
         button_save.setOnClickListener(new View.OnClickListener() {
@@ -295,6 +337,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         String receive_diary_comment_count = shared.getString("diary_comment_count", "");
                         String receive_diary_profile_nickname = shared.getString("diary_profile_nickname", "");
                         String receive_diary_profile_image = shared.getString("diary_profile_image", "");
+                        String receive_diary_share = shared.getString("diary_share", ""); //공유 일기 할 지 안할지 선택 할 때 필요
 
 
                         receive_diary_id = receive_diary_id + logInActivity.my_id + "@"; //기존 저장된 데이터에서 현재 데이터 더하기
@@ -304,7 +347,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         receive_diary_day = receive_diary_day + day + "@";
                         receive_diary_month = receive_diary_month + month + "@";
                         receive_diary_year = receive_diary_year + year + "@";
-
+                        receive_diary_share = receive_diary_share + "null" + "@";
 
                         // 조건 걸어서 이미지가 있으면 그대로 적용, 없으면 "null" 을 넣자
                         // 나중에 사용 할 때 "null" 이면 기본 이미지로 사용한다고 하자
@@ -332,13 +375,14 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         } else {
                             receive_diary_profile_nickname = receive_diary_profile_nickname + ProfileEditActivity.my_profile_nickname + "@";
                         }
+
                         // 나중에 프로필에서 닉네임 바꾸면 적용 되는 곳에서도 바뀔 수 있도록 프로필 에디트 화면에서도 이 부분 수정해야한다
                         if (ProfileEditActivity.my_profile_image == null) { //프로필 이미지가 설정 안됐다면
                             receive_diary_profile_image = receive_diary_profile_image + "null" + "@";
                         } else {
                             receive_diary_profile_image = receive_diary_profile_image + ProfileEditActivity.my_profile_image + "@";
                         }
-                        // 나중에 프로필에서 닉네임 바꾸면 적용 되는 곳에서도 바뀔 수 있도록 프로필 에디트 화면에서도 이 부분 수정해야한다
+
 
 
                         editor.putString("diary_id", receive_diary_id); // 내 아이디는 처음 들어가면 변하지 않는다 // 로그 아웃시에는 파일 지워야 하나???
@@ -354,22 +398,30 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         editor.putString("diary_comment_count", receive_diary_comment_count);
                         editor.putString("diary_profile_nickname", receive_diary_profile_nickname);
                         editor.putString("diary_profile_image", receive_diary_profile_image);
+                        editor.putString("diary_share", receive_diary_share);
 
+//                        editor.clear();
                         editor.apply(); //동기,세이브를 완료 해라
 
-
                         Intent intent = new Intent(TodayDiaryActivity.this, TodayDiaryCompleteActivity.class);
+
+                        Log.e("포지션1",String.valueOf(position));
+
                         intent.putExtra("position", position); // TodayDiaryActivity 로 포지션 값 보내기
+                        intent.putExtra("title", report_todaydairy_content_title.getText().toString());
+                        intent.putExtra("content", report_todaydairy_content.getText().toString());
+                        intent.putExtra("date", report_todaydairy_date.getText().toString());
+
                         startActivity(intent);
 
-                    } else if (position == -2) { //방금 작성했던 글글
+                    } else if (position == -2) { //방금 작성했던 글
 
                         SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE);
                         SharedPreferences.Editor editor = shared.edit();
 
-                        String receive_diary_title = shared.getString("diary_title",""); // 작성한 일기들 데이터 받아서 문자열로 받기
-                        String receive_diary_content = shared.getString("diary_content","");
-                        String receive_diary_date = shared.getString("diary_date","");
+                        String receive_diary_title = shared.getString("diary_title", ""); // 작성한 일기들 데이터 받아서 문자열로 받기
+                        String receive_diary_content = shared.getString("diary_content", "");
+                        String receive_diary_date = shared.getString("diary_date", "");
                         String receive_diary_image = shared.getString("diary_image", "");
 
                         String[] temporary_diary_title = receive_diary_title.split("@"); // 문자열 데어터들 각각의 배열에 넣기
@@ -382,29 +434,29 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         for (String temp : temporary_diary_title) {
                             Arraylist_title.add(temp);
                         }
-                        Arraylist_title.set(Arraylist_title.size()-1, report_todaydairy_content_title.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                        Arraylist_title.set(Arraylist_title.size() - 1, report_todaydairy_content_title.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         ArrayList<String> Arraylist_content = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
                         for (String temp : temporary_diary_content) {
                             Arraylist_content.add(temp);
                         }
-                        Arraylist_content.set(Arraylist_content.size()-1, report_todaydairy_content.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                        Arraylist_content.set(Arraylist_content.size() - 1, report_todaydairy_content.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         ArrayList<String> Arraylist_image = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
                         for (String temp : temporary_diary_image) {
                             Arraylist_image.add(temp);
                         }
 
-                        if (temporary_diary_image[temporary_diary_image.length-1].equals("null")){
-                            if (image_setup == false){ //이미지 수정을 안했다면
+                        if (temporary_diary_image[temporary_diary_image.length - 1].equals("null")) {
+                            if (image_setup == false) { //이미지 수정을 안했다면
                                 String diary_image = "null";
-                                Arraylist_image.set(Arraylist_image.size()-1,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                                Arraylist_image.set(Arraylist_image.size() - 1, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
                             } else { //이미지 수정을 했다면
                                 ByteArrayOutputStream stream = new ByteArrayOutputStream(); //이미지를 바이트로 만들기 위해 스트림 객체 만들기
                                 profile_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream); //비트맵 이미지 stream형식으로
                                 byte[] bytes = stream.toByteArray(); //stream 이미지 바이트형식으로
                                 String diary_image = Base64.encodeToString(bytes, Base64.DEFAULT); // 바이트 형식 string으로 바꾸기
-                                Arraylist_image.set(Arraylist_image.size()-1,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                                Arraylist_image.set(Arraylist_image.size() - 1, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
                             }
 
                         } else if (profile_bitmap != null) {
@@ -412,11 +464,11 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                             profile_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream); //비트맵 이미지 stream형식으로
                             byte[] bytes = stream.toByteArray(); //stream 이미지 바이트형식으로
                             String diary_image = Base64.encodeToString(bytes, Base64.DEFAULT); // 바이트 형식 string으로 바꾸기
-                            Arraylist_image.set(Arraylist_image.size()-1,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                            Arraylist_image.set(Arraylist_image.size() - 1, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         } else {
                             String diary_image = "null";
-                            Arraylist_image.set(Arraylist_image.size()-1,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                            Arraylist_image.set(Arraylist_image.size() - 1, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         }
 
@@ -437,16 +489,22 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 
                         //!!!!!!!!!!!!!!!!!!!!!!!!!날짜는 처리 할지 안할지 고민하자!!!!
 
+
                         editor.putString("diary_title", temporary_title);
                         editor.putString("diary_content", temporary_content);
                         editor.putString("diary_image", temporary_image);
                         editor.apply(); //동기,세이브를 완료 해라
 
                         Intent intent = new Intent(TodayDiaryActivity.this, TodayDiaryCompleteActivity.class);
+
+//                        Log.e("포지션2",String.valueOf(position));
+
                         intent.putExtra("position", position);
+                        intent.putExtra("title", report_todaydairy_content_title.getText().toString());
+                        intent.putExtra("content", report_todaydairy_content.getText().toString());
+                        intent.putExtra("date", report_todaydairy_date.getText().toString());
+
                         startActivity(intent);
-
-
 
                     } else { // 포지션 값이 -1,-2가 아닐 때 -> 처음 글을 작성한 것이 아닐 때 수정한다
                         //세이버 버튼을 누르면 내용을 수정해서 shared에 넣는다
@@ -454,28 +512,41 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE);
                         SharedPreferences.Editor editor = shared.edit();
 
-                        String receive_diary_title = shared.getString("diary_title",""); // 작성한 일기들 데이터 받아서 문자열로 받기
-                        String receive_diary_content = shared.getString("diary_content","");
-                        String receive_diary_date = shared.getString("diary_date","");
+                        String receive_diary_id = shared.getString("diary_id", ""); // 작성한 일기들 데이터 받아서 문자열로 받기
+                        String receive_diary_title = shared.getString("diary_title", ""); // 작성한 일기들 데이터 받아서 문자열로 받기
+                        String receive_diary_content = shared.getString("diary_content", "");
+                        String receive_diary_date = shared.getString("diary_date", "");
                         String receive_diary_image = shared.getString("diary_image", "");
 
+                        String[] temporary_diary_id = receive_diary_id.split("@"); // 문자열 데어터들 각각의 배열에 넣기
                         String[] temporary_diary_title = receive_diary_title.split("@"); // 문자열 데어터들 각각의 배열에 넣기
                         String[] temporary_diary_content = receive_diary_content.split("@");
                         String[] temporary_diary_date = receive_diary_date.split("@");
                         String[] temporary_diary_image = receive_diary_image.split("@");
 
 
+
+
+
+                        for (int i = 0; i < temporary_diary_id.length; i++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
+                            if (temporary_diary_id[i].equals(logInActivity.my_id) && temporary_diary_title[i].equals(title) && temporary_diary_content[i].equals(content) && temporary_diary_date[i].equals(date)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
+                                resetting_count = i;
+                            }
+                        }
+
+
+
                         ArrayList<String> Arraylist_title = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
                         for (String temp : temporary_diary_title) {
                             Arraylist_title.add(temp);
                         }
-                        Arraylist_title.set(Arraylist_title.size()-1-position, report_todaydairy_content_title.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                        Arraylist_title.set(resetting_count, report_todaydairy_content_title.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         ArrayList<String> Arraylist_content = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
                         for (String temp : temporary_diary_content) {
                             Arraylist_content.add(temp);
                         }
-                        Arraylist_content.set(Arraylist_content.size()-1-position, report_todaydairy_content.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                        Arraylist_content.set(resetting_count, report_todaydairy_content.getText().toString()); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         ArrayList<String> Arraylist_image = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
                         for (String temp : temporary_diary_image) {
@@ -487,30 +558,36 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         //profile_bitmap 값이 "null" 일 수도 있다
                         //temporary_diary_image[temporary_diary_image.length-1-position] 는 해당 포지션 이미지를 string값으로 바꿨을 때 이다
                         // temporary_diary_image[temporary_diary_image.length-1-position] 가 "null"이면 값을 계속 저장 못한다!!!!!!!!!!!!!!!!!!!!!! 여기가 문제 였음!!! 확실함!!
-                        if (temporary_diary_image[temporary_diary_image.length-1-position].equals("null")){
-                            if (image_setup == false){ //이미지 수정을 안했다면
+                        if (temporary_diary_image[resetting_count].equals("null")) {
+                            if (image_setup == false) { //이미지 수정을 안했다면
                                 String diary_image = "null";
-                                Arraylist_image.set(Arraylist_image.size()-1-position,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                                Arraylist_image.set(resetting_count, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
                             } else { //이미지 수정을 했다면
                                 ByteArrayOutputStream stream = new ByteArrayOutputStream(); //이미지를 바이트로 만들기 위해 스트림 객체 만들기
                                 profile_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream); //비트맵 이미지 stream형식으로
                                 byte[] bytes = stream.toByteArray(); //stream 이미지 바이트형식으로
                                 String diary_image = Base64.encodeToString(bytes, Base64.DEFAULT); // 바이트 형식 string으로 바꾸기
-                                Arraylist_image.set(Arraylist_image.size()-1-position,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                                Arraylist_image.set(resetting_count, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
                             }
+
+
 
                         } else if (profile_bitmap != null) {
                             ByteArrayOutputStream stream = new ByteArrayOutputStream(); //이미지를 바이트로 만들기 위해 스트림 객체 만들기
                             profile_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream); //비트맵 이미지 stream형식으로
                             byte[] bytes = stream.toByteArray(); //stream 이미지 바이트형식으로
                             String diary_image = Base64.encodeToString(bytes, Base64.DEFAULT); // 바이트 형식 string으로 바꾸기
-                            Arraylist_image.set(Arraylist_image.size()-1-position,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                            Arraylist_image.set(resetting_count, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         } else {
                             String diary_image = "null";
-                            Arraylist_image.set(Arraylist_image.size()-1-position,diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
+                            Arraylist_image.set(resetting_count, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         }
+
+
+
+
 
 
                         for (int i = 0; i < Arraylist_title.size(); i++) { //기록 되어 있는 아이디 나열하기
@@ -526,7 +603,6 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                             temporary_image = temporary_image + Arraylist_image.get(i) + "@";
                         }
 
-
                         //!!!!!!!!!!!!!!!!!!!!!!!!!날짜는 처리 할지 안할지 고민하자!!!!
 
                         editor.putString("diary_title", temporary_title);
@@ -535,11 +611,15 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         editor.apply(); //동기,세이브를 완료 해라
 
                         Intent intent = new Intent(TodayDiaryActivity.this, TodayDiaryCompleteActivity.class);
+
+                        Log.e("포지션3",String.valueOf(position));
+
                         intent.putExtra("position", position);
+                        intent.putExtra("title", report_todaydairy_content_title.getText().toString());
+                        intent.putExtra("content", report_todaydairy_content.getText().toString());
+                        intent.putExtra("date", report_todaydairy_date.getText().toString());
                         startActivity(intent);
                     }
-
-
                 }
             }
         });
@@ -561,7 +641,6 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 //                editor.apply(); //동기,세이브를 완료 해라
 //            }
 //        });
-
     }
 
     @Override

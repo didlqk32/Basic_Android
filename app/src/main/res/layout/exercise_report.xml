@@ -105,10 +105,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:background="#ECECEC"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
@@ -332,7 +334,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:background="#ECECEC"
                 android:orientation="horizontal"
@@ -447,32 +449,28 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="300dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
-                    android:text="몸무게 변화"
+                    android:text="소모 칼로리"
                     android:textSize="17dp" />
 
-                <ImageView
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/report_linechart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/graph" />
+                    android:layout_height="280dp"/>
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:background="#ECECEC" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="37dp"
                 android:background="@drawable/top_bottom_line"
                 android:gravity="center_vertical"
                 android:paddingLeft="15sp"

@@ -203,7 +203,22 @@ public class Bundle_diary_adapter extends RecyclerView.Adapter<Bundle_diary_adap
             public void onClick(View view) { //나의 일기 아이템을 클릭 했을 때
                 Intent intent = new Intent(view.getContext(), TodayDiaryCompleteActivity.class); //화면 전환하기 (view의 현재 context에서 넘거가기)
                 check_diary = 1; //BundleDiaryActivity 에서 TodayDiaryCompleteActivity 넘어 갈 때 데이터 전달이 없어서 생기는 오류 없애기 위한 변수
+
+
+
+
+
+
+
                 intent.putExtra("position", position); //포지션값 넘기기
+                intent.putExtra("title", diaryArrayList.get(position).getDiary_title()); //제목값 넘기기
+                intent.putExtra("content", diaryArrayList.get(position).getDiary_content()); //내용값 넘기기
+                intent.putExtra("date", diaryArrayList.get(position).getDiary_date()); //날짜값 넘기기
+
+
+
+
+
 
                 view.getContext().startActivity(intent); //해당 뷰에서 넘어가기 (view.getContext() 코드가 매우 중요)
             }
