@@ -8,10 +8,13 @@ public class Mainpage_data {
     private String diary_title;
     private String diary_content;
     private String Heartcount;
-    private Bitmap diary_image;
     private String diary_id;
-
     private String diary_date;
+    private Bitmap diary_image;
+
+
+
+    private String diary_image_string;
 
     public Mainpage_data(String nickname, String diary_title, String heartcount, Bitmap diary_image, String diary_content, String diary_id, String diary_date) {
         this.nickname = nickname;
@@ -22,6 +25,36 @@ public class Mainpage_data {
         this.diary_id = diary_id;
         this.diary_date = diary_date;
     }
+
+
+
+
+
+
+
+
+    public Mainpage_data(String nickname, String diary_title, String heartcount, String diary_image_string, String diary_content, String diary_id, String diary_date) {
+        this.nickname = nickname;
+        this.diary_title = diary_title;
+        this.Heartcount = heartcount;
+        this.diary_image_string = diary_image_string;
+        this.diary_content = diary_content;
+        this.diary_id = diary_id;
+        this.diary_date = diary_date;
+    }
+
+
+    //다이어리 이미지를 스트링 형태로 받아두기 위한 게터/세터
+    public String getDiary_image_string() {
+        return diary_image_string;
+    }
+
+    public void setDiary_image_string(String diary_image_string) {
+        this.diary_image_string = diary_image_string;
+    }
+
+
+
 
     public String getDiary_date() {
         return diary_date;

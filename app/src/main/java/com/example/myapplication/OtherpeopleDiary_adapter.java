@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -56,8 +58,35 @@ public class OtherpeopleDiary_adapter extends RecyclerView.Adapter<OtherpeopleDi
         holder.my_massage_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                remove(holder.getAdapterPosition()); //해당 포지션 아이템 제거
-                notifyItemRangeChanged(holder.getAdapterPosition(), otherArrayList.size()); //리사이클러뷰 범위 새로고침
+
+
+
+                AlertDialog.Builder comment_delete = new AlertDialog.Builder(context); //댓글 삭제 여부 다이얼로그 생성
+                comment_delete.setIcon(R.drawable.trash);
+                comment_delete.setTitle("삭제 여부");
+                comment_delete.setMessage("댓글을 정말 지우시겠습니까?");
+
+
+                comment_delete.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                comment_delete.setNegativeButton("지우기", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        remove(holder.getAdapterPosition()); //해당 포지션 아이템 제거
+                        notifyItemRangeChanged(holder.getAdapterPosition(), otherArrayList.size()); //리사이클러뷰 범위 새로고침
+                    }
+                });
+                comment_delete.show();
+
+
+
+
+
+
             }
         });
     }

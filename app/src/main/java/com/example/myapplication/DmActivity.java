@@ -16,10 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.storage.FirebaseStorage;
+//import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,10 +41,10 @@ public class DmActivity extends AppCompatActivity {
     private String save_dm_current_time = ""; //current_time를 save 하기 위한 변수 생성
     private Boolean save_dm_booleans = false; //m_booleans를 save 하기 위한 변수 생성
 
-    private FirebaseDatabase firebaseDatabase; //데이터 베이스에 접근할 수 있도록 함
-    private DatabaseReference databaseReference; //데이터 베이스의 주소를 저장
-    private FirebaseStorage firebaseStorage;
-    private StorageReference storageReference;
+//    private FirebaseDatabase firebaseDatabase; //데이터 베이스에 접근할 수 있도록 함
+//    private DatabaseReference databaseReference; //데이터 베이스의 주소를 저장
+//    private FirebaseStorage firebaseStorage;
+//    private StorageReference storageReference;
 
     private int position = 0;
     private String title = "";

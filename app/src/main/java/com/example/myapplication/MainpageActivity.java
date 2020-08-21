@@ -83,17 +83,33 @@ public class MainpageActivity extends AppCompatActivity {
 //        otherpeople_dairy_sumnail = findViewById(R.id.otherpeople_dairy_sumnail);
 
 
+
+
+
         menubar_profile_nickname = findViewById(R.id.menubar_profile_nickname);//메뉴바에서 나의 닉네임 연결
         menubar_profile_image = findViewById(R.id.menubar_profile_image);//메뉴바에서 나의 닉네임 이미지 연결
 
-        SharedPreferences sharedPreferences = getSharedPreferences("profile_edit_file", MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
-        String receive_profile_nickname = sharedPreferences.getString("nickname", ""); //받아온 데이터 String 변수 안에 넣기
 
-        String receive_profile_image = sharedPreferences.getString("profile_image", "닉네임"); //받아온 이미지 데이터 String 변수 안에 넣기
-        byte[] encodeByte = Base64.decode(receive_profile_image, Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
-        memu_profile_bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
-        menubar_profile_nickname.setText(receive_profile_nickname);//닉네임 텍스트에 저장해놓은 텍스트 넣기
-        menubar_profile_image.setImageBitmap(memu_profile_bitmap);//닉네임 이미지에 저장해놓은 이미지 넣기
+
+
+
+        //프로필 이미지와, 닉네임 보여주기
+        // 좌측 메뉴바에서 보여줄 내용
+//        SharedPreferences sharedPreferences = getSharedPreferences("profile_edit_file", MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
+//        String receive_profile_nickname = sharedPreferences.getString("nickname", "닉네임"); //받아온 데이터 String 변수 안에 넣기
+//
+//        String receive_profile_image = sharedPreferences.getString("profile_image", "null"); //받아온 이미지 데이터 String 변수 안에 넣기
+//        byte[] encodeByte = Base64.decode(receive_profile_image, Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+//        memu_profile_bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+//        menubar_profile_nickname.setText(receive_profile_nickname);//닉네임 텍스트에 저장해놓은 텍스트 넣기
+//        menubar_profile_image.setImageBitmap(memu_profile_bitmap);//닉네임 이미지에 저장해놓은 이미지 넣기
+
+
+
+
+
+
+
 
 
     }
@@ -102,18 +118,6 @@ public class MainpageActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -167,18 +171,6 @@ public class MainpageActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-//        otherpeople_dairy_sumnail.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) { //다른 사람이 올린 다이어리로 이동
-//                Intent intent = new Intent(MainpageActivity.this, OtherpeopleDiaryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-        // 지울 내용
 
 
 
@@ -259,45 +251,67 @@ public class MainpageActivity extends AppCompatActivity {
         String[] temporary_diary_date = receive_diary_date.split("@");
 
 
-        String abc = temporary_diary_image[0];
-        Log.e("공유쪽 이미지 길이",String.valueOf(abc.length()));
 
-//        Log.e("길이 확인",String.valueOf(temporary_diary_title.length));
+
+
+
+
+
+
 
 
         for (int i=0; i < temporary_diary_title.length; i++) { // 모든 일기를 다 반복문으로 돌려보고
             if (temporary_diary_share[i].equals("share")) { //공유한 일기만 보여주기
 
 
-                Bitmap bitmapimage;
-                if (temporary_diary_image[i].equals("null")) {
-                    bitmapimage = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //이미지가 없으면 임시 이미지를 넣자!
 
-                } else {
-                    byte[] encodeByte = Base64.decode(temporary_diary_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
-                    bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
 
-                }
+//                Bitmap bitmapimage;
+//                if (temporary_diary_image[i].equals("null")) {
+//                    bitmapimage = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //이미지가 없으면 임시 이미지를 넣자!
+//                } else {
+//                    byte[] encodeByte = Base64.decode(temporary_diary_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+//                    bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+//
+//                }
 
-                Log.e("확인","확인");
+
+
                 if (!temporary_diary_profile_nickname[i].equals("")) { //값이 "" 이면 아직 일기를 안만들었다는 뜻
-                    Log.e("확인","확인");
                     if (!temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null" 이 아니면(값이 있다면) 닉네임을 보여주고
-                        Log.e("확인","확인");
-                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
-                        Log.e("확인","확인");
-                        mainpage_dataArrayList.add(0, mainpage_data); //차례대로 보일려면 0 값을 넣어야 한다
-                        Log.e("확인","확인");
-                    } else if (temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null"이면 (값이 없다면) "nickname"으로 보여준다
-                        Log.e("확인","확인");
 
-                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
-                        Log.e("확인","확인");
+                        //임시용
+                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+//                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+
+
+
+//                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
                         mainpage_dataArrayList.add(0, mainpage_data); //차례대로 보일려면 0 값을 넣어야 한다
-                        Log.e("확인","확인");
+
+                    } else if (temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null"이면 (값이 없다면) "nickname"으로 보여준다
+
+                        //임시용
+                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+//                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+
+
+
+
+//                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+                        mainpage_dataArrayList.add(0, mainpage_data); //차례대로 보일려면 0 값을 넣어야 한다
+
                     }
 
                 }
+
+
+
+
+
+
+
+
 
 
             }

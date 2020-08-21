@@ -49,7 +49,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
     final static int get_gallery_image = 200;
     private Bitmap profile_bitmap;
 
-    private Spinner diary_choice_spinner; //스피너
+    //    private Spinner diary_choice_spinner; //스피너
     private TextView diary_choice_text; //스피너 선택 적용될 텍스트
 
     private String temporary_title = ""; // shared 값을 임시적으로 담기 위한 변수
@@ -76,7 +76,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
         diary_share_text2 = findViewById(R.id.diary_share_text2); //공유중인지 아닌지 보여주는 텍스트
 
 
-        diary_choice_spinner = findViewById(R.id.diary_choice_spinner); //스피너 연결
+//        diary_choice_spinner = findViewById(R.id.diary_choice_spinner); //스피너 연결
         diary_choice_text = findViewById(R.id.diary_choice_text); //스피너 선택 적용될 텍스트
 
     }
@@ -106,6 +106,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) { //카메라 앱을 열거나, 갤러리 앱을 열었을 떄 어떤 결과값을 줄지에 대한 내용
         super.onActivityResult(requestCode, resultCode, intent);
@@ -114,42 +115,34 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                 if (resultCode == RESULT_OK && intent.hasExtra("data")) {
 
 
-
-
                     profile_bitmap = (Bitmap) intent.getExtras().get("data");
-
 
 
                     if (profile_bitmap != null) {
                         report_todaydairy_image.setVisibility(View.VISIBLE); //UI에서 화면 담당하는 부분 보이도록 함(초기값은 안보임)
                         report_todaydairy_image.setImageBitmap(profile_bitmap); //화면에 선택한 이미지 넣기
 
+
                         image_setup = true; // 이미지 수정을 했을 경우에는 true로 바뀜 수정 안하면 false
+
+
                     }
+
+
                 }
                 break;
             case get_gallery_image: //이미지 가져오는 부분
 
                 if (resultCode == RESULT_OK && intent != null) {
                     try {
+
+
                         InputStream in = getContentResolver().openInputStream(intent.getData());
                         profile_bitmap = BitmapFactory.decodeStream(in);
 
 
-
-
-
-
-
-
-
-
-
-
-
                         report_todaydairy_image.setVisibility(View.VISIBLE); //UI에서 화면 담당하는 부분 보이도록 함(초기값은 안보임)
                         report_todaydairy_image.setImageBitmap(profile_bitmap); //화면에 선택한 이미지 넣기
-
                         image_setup = true; // 이미지 수정을 했을 경우에는 true로 바뀜 수정 안하면 false
 
                     } catch (FileNotFoundException e) {
@@ -178,16 +171,16 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 
         report_todaydairy_date.setText(year + "년 " + month + "월 " + day + "일 "); //현재 날짜 표시하기
 
-        diary_choice_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { //일기 선택 스피너 버튼 눌렀을 때 기능 구현
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                diary_choice_text.setText(adapterView.getItemAtPosition(i).toString()); //스피너 선택 내용 diary_choice_text에 담기
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+//        diary_choice_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { //일기 선택 스피너 버튼 눌렀을 때 기능 구현
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                diary_choice_text.setText(adapterView.getItemAtPosition(i).toString()); //스피너 선택 내용 diary_choice_text에 담기
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//            }
+//        });
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //권한 설정하기
@@ -198,6 +191,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         }
+
 
         todaydairy_camera.setOnClickListener(this); //카메라 버튼 클릭
         todaydairy_picture.setOnClickListener(this); //갤러리 버튼 클릭
@@ -236,6 +230,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
             //!!!!! 아래 얘는 null인데 갤러리만 null이 아니게 수정됬다고 아래 얘까지 null 아닌 값으로 된것은 아니야!!!
             if (!temporary_diary_image[temporary_diary_image.length - 1].equals("null")) { //방금 작성한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
 
+
                 if (image_setup == false) { //이미지 수정 안했을 경우
                     report_todaydairy_image.setImageBitmap(bitmapimage);
                     report_todaydairy_image.setVisibility(View.VISIBLE);
@@ -246,8 +241,9 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                     report_todaydairy_image.setVisibility(View.VISIBLE);
 
                 }
-            }
 
+
+            }
 
 
         } else if (position != -1) { //bundle diary에서 아이템 선택했을 때 포지션 값 비교 (-1이면 포지션값 못받은 것 -> 현재 작성한 일기라는 뜻)
@@ -274,10 +270,10 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                 if (temporary_diary_id[i].equals(logInActivity.my_id) && temporary_diary_title[i].equals(title) && temporary_diary_content[i].equals(content) && temporary_diary_date[i].equals(date)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
 
 
-
                     report_todaydairy_content_title.setText(temporary_diary_title[i]); //받아온 포지션 값의 해당하는 일기 내용 보여주기 (bundle_diary_activity 에서 선택한)
                     report_todaydairy_content.setText(temporary_diary_content[i]);
                     report_todaydairy_date.setText(temporary_diary_date[i]);
+
 
                     byte[] encodeByte = Base64.decode(temporary_diary_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
                     Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
@@ -297,10 +293,10 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         }
                     }
 
+
                     if (temporary_diary_share[i].equals("share")) { //현재 일기가 공유 하기 이면
                         diary_share_text2.setText("(공유중)");
                     }
-
 
 
                 }
@@ -384,7 +380,6 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         }
 
 
-
                         editor.putString("diary_id", receive_diary_id); // 내 아이디는 처음 들어가면 변하지 않는다 // 로그 아웃시에는 파일 지워야 하나???
                         // 각 아이디에 맞게 다이어리 보여주기!! 는 어떻게 해야 하는거지...
                         editor.putString("diary_title", receive_diary_title);
@@ -405,7 +400,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 
                         Intent intent = new Intent(TodayDiaryActivity.this, TodayDiaryCompleteActivity.class);
 
-                        Log.e("포지션1",String.valueOf(position));
+//                        Log.e("포지션1",String.valueOf(position));
 
                         intent.putExtra("position", position); // TodayDiaryActivity 로 포지션 값 보내기
                         intent.putExtra("title", report_todaydairy_content_title.getText().toString());
@@ -446,6 +441,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         for (String temp : temporary_diary_image) {
                             Arraylist_image.add(temp);
                         }
+
 
                         if (temporary_diary_image[temporary_diary_image.length - 1].equals("null")) {
                             if (image_setup == false) { //이미지 수정을 안했다면
@@ -525,15 +521,11 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         String[] temporary_diary_image = receive_diary_image.split("@");
 
 
-
-
-
                         for (int i = 0; i < temporary_diary_id.length; i++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
                             if (temporary_diary_id[i].equals(logInActivity.my_id) && temporary_diary_title[i].equals(title) && temporary_diary_content[i].equals(content) && temporary_diary_date[i].equals(date)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
                                 resetting_count = i;
                             }
                         }
-
 
 
                         ArrayList<String> Arraylist_title = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
@@ -553,6 +545,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                             Arraylist_image.add(temp);
                         }
 
+
 //                        Log.e("다이어리쪽 이미지값",temporary_diary_image[temporary_diary_image.length-1-position]);
 
                         //profile_bitmap 값이 "null" 일 수도 있다
@@ -571,7 +564,6 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                             }
 
 
-
                         } else if (profile_bitmap != null) {
                             ByteArrayOutputStream stream = new ByteArrayOutputStream(); //이미지를 바이트로 만들기 위해 스트림 객체 만들기
                             profile_bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream); //비트맵 이미지 stream형식으로
@@ -584,10 +576,6 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                             Arraylist_image.set(resetting_count, diary_image); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 
                         }
-
-
-
-
 
 
                         for (int i = 0; i < Arraylist_title.size(); i++) { //기록 되어 있는 아이디 나열하기
@@ -612,7 +600,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 
                         Intent intent = new Intent(TodayDiaryActivity.this, TodayDiaryCompleteActivity.class);
 
-                        Log.e("포지션3",String.valueOf(position));
+//                        Log.e("포지션3",String.valueOf(position));
 
                         intent.putExtra("position", position);
                         intent.putExtra("title", report_todaydairy_content_title.getText().toString());

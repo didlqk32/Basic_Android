@@ -17,11 +17,14 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -68,6 +71,10 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
         other_diary_nickname = findViewById(R.id.other_diary_nickname);
         otherpeople_dairy_profile_image = findViewById(R.id.otherpeople_dairy_profile_image);
         otherdairy_share = findViewById(R.id.otherdairy_share); //공유 취소를 위한 버튼
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); //키보드가 띄워질 때 화면을 위로 올려주는 기능 ,WindowManager 를 인포트 해야 한다
+
+
     }
 
 
@@ -82,7 +89,7 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
         final String content = intent.getStringExtra("content");
         final String date = intent.getStringExtra("date");
 
-        Log.e("타이틀", title);
+
 
         // 내 일기랑 다른 사람 일기랑 차이점 있어야 한다
         SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //일기 데이터 받아오기
@@ -148,19 +155,32 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
         }
 
 
-        Bitmap bitmapimage_diary;
+
+
+
+
+
+
+
+
+
+        Bitmap bitmapimage_diary; //다이어리 이미지에 대한 부분
         if (temporary_diary_image[resetting_count].equals("null")) {
-            bitmapimage_diary = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //이미지가 없으면 임시 이미지를 넣자!
+//            bitmapimage_diary = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //이미지가 없으면 임시 이미지를 넣자!
+            otherpeople_dairy_image.setVisibility(View.GONE); //이미지가 없으면 공간을 없애자
         } else {
             byte[] encodeByte = Base64.decode(temporary_diary_image[resetting_count], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
             bitmapimage_diary = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+            otherpeople_dairy_image.setImageBitmap(bitmapimage_diary);
         }
-        otherpeople_dairy_image.setImageBitmap(bitmapimage_diary);
 
 
-        Bitmap bitmapimage_profile;
+
+
+
+        Bitmap bitmapimage_profile; //프로필 이미지에 대한 부분
         if (temporary_diary_profile_image[resetting_count].equals("null")) {
-            bitmapimage_profile = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //이미지가 없으면 임시 이미지를 넣자!
+            bitmapimage_profile = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //프로필 이미지가 없으면 임시 이미지를 넣자!
         } else {
             byte[] encodeByte = Base64.decode(temporary_diary_profile_image[resetting_count], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
             bitmapimage_profile = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
@@ -169,8 +189,16 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
 
 
 
+
         //좋아요 눌렀을 때!!!, 댓글 달렸을 때!!!!!! 적용하기!!!!!!!
         //단순히 포지션 값으로 계산 하면 안돼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
 
 
 
@@ -276,14 +304,24 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
 
         otherpeople_dairy_post.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //댓글 작성 버튼 누르기
 
-                String my_textmessage = otherpeople_dairy_wrightingcomment.getText().toString(); //dm_text에 edit text에서 썻던 내용을 받는다
+
+
+                if (otherpeople_dairy_wrightingcomment.getText().toString().equals("")){ //댓글을 작성 했는지 여부에 대한 내용
+                    Toast.makeText(getApplicationContext(),"댓글을 작성해 주세요",Toast.LENGTH_SHORT).show();
+                } else {
+                    String my_textmessage = otherpeople_dairy_wrightingcomment.getText().toString(); //dm_text에 edit text에서 썻던 내용을 받는다
 
                 OtherpeopleDiary_data OtherpeopleDiary_data = new OtherpeopleDiary_data(my_textmessage,R.drawable.profileimage); //dm_text내용을 dm_data에 담는다
                 otherArrayList.add(OtherpeopleDiary_data); //리스트에 dm_data내용을 추가 한다
                 OtherpeopleDiary_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
                 otherpeople_dairy_wrightingcomment.setText("");
+
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE); //키보드를 임의로 올리고 내릴 수 있도록 하는 기능, InputMethodManager 를 인포트 해야 한다
+                inputMethodManager.hideSoftInputFromWindow(otherpeople_dairy_wrightingcomment.getWindowToken(), 0);//키보드 내리기
+                }
+
             }
         });
 

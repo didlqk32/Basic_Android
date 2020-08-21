@@ -13,14 +13,13 @@
         android:layout_marginLeft="3.5dp"
         android:clickable="true">
 
+
         <ImageView
             android:id="@+id/main_diary_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/dumbbell"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
-
 
         <LinearLayout
             android:layout_width="match_parent"

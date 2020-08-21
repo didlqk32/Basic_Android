@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -20,6 +21,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 public class MainpageHomeActivity extends AppCompatActivity {
 
@@ -48,11 +69,19 @@ public class MainpageHomeActivity extends AppCompatActivity {
     private TextView exercise_total_reducecalorienum2;
     private TextView exercise_total_datenum2;
 
+
+    private TextView recommend_article_title;
+    private TextView recommend_article_explanation;
+    private SimpleDraweeView recommend_article; //fresco의 레이아웃 SimpleDraweeView 를 사용하겠다
+    RequestQueue queue ; //네트워크 통신을 하기 위해서 volley는 queue에 담아서 데이터를 처리, RequestQueue는 queue에게 요청 한다는 뜻
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mainpage_home);
 
+        Fresco.initialize(MainpageHomeActivity.this); //Fresco를 이 화면에서 사용하겠다 /setContentView()가 실행되기 전에 Fresco클래스를 초기화 해야 한다
+
+        setContentView(R.layout.mainpage_home);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerView = findViewById(R.id.drawer);
@@ -74,6 +103,16 @@ public class MainpageHomeActivity extends AppCompatActivity {
         exercise_total_reducecalorienum2 = findViewById(R.id.exercise_total_reducecalorienum2);
         exercise_total_datenum2 = findViewById(R.id.exercise_total_datenum2);
 
+        recommend_article_title = findViewById(R.id.recommend_article_title);
+        recommend_article_explanation = findViewById(R.id.recommend_article_explanation);
+        recommend_article = findViewById(R.id.recommend_article);
+
+
+        queue = Volley.newRequestQueue(this); //네트워크 통신을 하기 위해서 volley는 queue에 담아서 데이터를 처리
+        getNews();
+
+
+        getNaverNews("헬스");
     }
 
 
@@ -254,11 +293,196 @@ public class MainpageHomeActivity extends AppCompatActivity {
             }
         });
 
+    }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void getNews() {
+
+        // Instantiate the RequestQueue.
+//        RequestQueue queue = Volley.newRequestQueue(this); //네트워크 통신을 하기 위해서 volley는 queue에 담아서 데이터를 처리
+        String url ="http://newsapi.org/v2/top-headlines?country=kr&category=health&apiKey=5001bcd6fa2e4ff2a5df48a0412c6e40";  // API주소를 입력
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+//                        textView.setText("Response is: "+ response.substring(0,500));
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            final JSONArray arrayArticles = jsonObject.getJSONArray("articles");
+
+                            final JSONObject obj = arrayArticles.getJSONObject(3);
+
+//                            Log.e("뉴스 기사1",obj.toString());
+//                            Log.e("뉴스 기사1_제목",obj.getString("title"));
+//                            Log.e("뉴스 기사1_내용",obj.getString("content"));
+//                            Log.e("뉴스 기사1_이미지",obj.getString("urlToImage"));
+
+                            obj.getString("title");
+                            obj.getString("description");
+                            obj.getString("urlToImage");
+                            final String ArticleUrl = obj.getString("url");
+
+                            if (obj.getString("title")!=null) {
+                                recommend_article_title.setText(obj.getString("title"));
+                            } else if (obj.getString("title")==null){
+                                recommend_article_title.setText("-");
+                            }
+                            if (obj.getString("description")!=null) {
+                                recommend_article_explanation.setText(obj.getString("description"));
+                            } else if (obj.getString("description")==null){
+                                recommend_article_explanation.setText("-");
+                            }
+
+                            Uri uri = Uri.parse(obj.getString("urlToImage")); //fresco를 이용하여 이미지 보여주기
+                            recommend_article.setImageURI(uri);
+
+
+
+                            recommend_article.setOnClickListener(new View.OnClickListener() { //기사를 클릭 했을 때 웹상의 기사로 넘어가기
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ArticleUrl));
+                                    startActivity(intent);
+                                }
+                            });
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                textView.setText("That didn't work!");
+            }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void getNaverNews(final String searchObject) {
+
+        final String clientId = "npGw78ax5bfe8OQE3LXs";//애플리케이션 클라이언트 아이디값";
+        final String clientSecret = "bj4IrqOd7F";//애플리케이션 클라이언트 시크릿값";
+        final int display = 5; // 보여지는 검색결과의 수
+
+        // 네트워크 연결은 Thread 생성 필요
+        new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    String text = URLEncoder.encode(searchObject, "UTF-8");
+                    String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text + "&display=" + display + "&"; // json 결과
+                    // Json 형태로 결과값을 받아옴.
+                    URL url = new URL(apiURL);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    con.setRequestProperty("X-Naver-Client-Id", clientId);
+                    con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+                    con.connect();
+
+                    int responseCode = con.getResponseCode();
+
+
+                    BufferedReader br;
+                    if(responseCode==200) { // 정상 호출
+                        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    } else {  // 에러 발생
+                        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+                    }
+
+                    StringBuilder searchResult = new StringBuilder();
+                    String inputLine;
+                    while ((inputLine = br.readLine()) != null) {
+                        searchResult.append(inputLine + "\n");
+
+                    }
+                    br.close();
+                    con.disconnect();
+
+                    String data = searchResult.toString();
+                    String[] array;
+                    array = data.split("\"");
+                    String[] title = new String[display];
+                    String[] link = new String[display];
+                    String[] description = new String[display];
+                    String[] bloggername = new String[display];
+                    String[] postdate = new String[display];
+
+                    int k = 0;
+                    for (int i = 0; i < array.length; i++) {
+                        if (array[i].equals("title"))
+                            title[k] = array[i + 2];
+                        if (array[i].equals("link"))
+                            link[k] = array[i + 2];
+                        if (array[i].equals("description"))
+                            description[k] = array[i + 2];
+                        if (array[i].equals("bloggername"))
+                            bloggername[k] = array[i + 2];
+                        if (array[i].equals("postdate")) {
+                            postdate[k] = array[i + 2];
+                            k++;
+                        }
+                    }
+
+                    Log.d("확인1", "title잘나오니: " + title[0] + title[1] + title[2]);
+                    // title[0], link[0], bloggername[0] 등 인덱스 값에 맞게 검색결과를 변수화하였다.
+
+                } catch (Exception e) {
+                    Log.d("확인2", "error : " + e);
+                }
+
+            }
+        }.start();
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 

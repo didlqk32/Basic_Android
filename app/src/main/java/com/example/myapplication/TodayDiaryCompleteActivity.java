@@ -73,7 +73,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 //        shared_button = findViewById(R.id.shared_button);
 
 //        diary_choice_spinner2 = findViewById(R.id.diary_choice_spinner2); //스피너 연결
-        diary_choice_text2 = findViewById(R.id.diary_choice_text2); //스피너 선택 적용될 텍스트 //나의 일기 인지, 공유 일기 인지
+        diary_choice_text2 = findViewById(R.id.diary_choice_text2); //스피너 선택 적용될 텍스트 //나의 일기 인지, 공개 일기 인지
         todaydairy_delete = findViewById(R.id.todaydairy_delete); // 삭제 버튼(이미지 뷰)
 
     }
@@ -129,7 +129,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 
 
             String abc = temporary_diary_image[0];
-            Log.e("다이어리쪽 이미지 길이",String.valueOf(abc.length()));
+//            Log.e("다이어리쪽 이미지 길이",String.valueOf(abc.length()));
 
 
 
@@ -139,14 +139,30 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
             todaydairy_content.setText(temporary_diary_content[temporary_diary_content.length - 1]);
             todaydairy_date.setText(temporary_diary_date[temporary_diary_date.length - 1]);
 
+
+
+
+
+
 //            String 이미지르 bitmap으로 바꾸는 작업
             byte[] encodeByte = Base64.decode(temporary_diary_image[temporary_diary_image.length - 1], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
             Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+
+
+
 
             if (!temporary_diary_image[temporary_diary_image.length - 1].equals("null")) { //방금 작성한 일기의 이미지가 "null"이 아니면 이미지 보이도록 한다
                 todaydairy_image.setVisibility(View.VISIBLE);
                 todaydairy_image.setImageBitmap(bitmapimage);
             }
+
+
+
+
+
+
+
+
 
         } else { //일기를 수정하는 경우
 
@@ -164,9 +180,31 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
                     todaydairy_date.setText(temporary_diary_date[i]);
 
 
+
+
+
+
+
+
+
+
+
+
+
                     //String 이미지를 bitmap으로 바꾸는 작업
                     byte[] encodeByte = Base64.decode(temporary_diary_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
                     Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+
+
+
+
+
+
+
+
+
+
+
 
 
 //            Log.e("포지션 값",String.valueOf(position));
@@ -176,14 +214,14 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
                     }
 
 
-                    if (temporary_diary_share[i].equals("share")) { //현재 일기가 공유 하기 이면
-                        diary_share_text.setText("(공유중)");
+                    if (temporary_diary_share[i].equals("share")) { //현재 일기가 공개 하기 이면
+                        diary_share_text.setText("(공개중)");
                     }
 
 
 
-        }
-    }
+                }
+            }
 
 
         }
@@ -202,7 +240,6 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
                     intent.putExtra("date", date);
 
 
-
                 } else {
                     intent.putExtra("position", -2); // TodayDiaryActivity 로 포지션 값 보내기, 방금 작성했던 일기를 뜻 함
                 }
@@ -215,7 +252,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 
         todaydairy_delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // 일기를 삭제하는 경우
 
                 AlertDialog.Builder diary_delete = new AlertDialog.Builder(TodayDiaryCompleteActivity.this); //삭제 여부 다이얼로그 생성
                 diary_delete.setIcon(R.drawable.trash);
@@ -695,16 +732,16 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
         });
 
 
-        todaydairy_share.setOnClickListener(new View.OnClickListener() { //공유 하기 버튼 눌렀을 경우
+        todaydairy_share.setOnClickListener(new View.OnClickListener() { //공개 하기 버튼 눌렀을 경우
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //일기 공개 하기
 
                 AlertDialog.Builder diary_share = new AlertDialog.Builder(TodayDiaryCompleteActivity.this); //삭제 여부 다이얼로그 생성
                 diary_share.setIcon(R.drawable.share);
-                diary_share.setTitle("공유 여부");
+                diary_share.setTitle("공개 여부");
                 diary_share.setMessage("일기를 다른 사람들에게 공개 하시겠습니까?");
 
-                diary_share.setPositiveButton("공개 하기", new DialogInterface.OnClickListener() { //선택한 일기 공유하기
+                diary_share.setPositiveButton("공개 하기", new DialogInterface.OnClickListener() { //선택한 일기 공개하기
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -746,11 +783,11 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 
 
                         if (diary_share_text.getText().toString().equals("")){
-                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공유 되었습니다",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공개 되었습니다",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(TodayDiaryCompleteActivity.this,MainpageActivity.class);
                             startActivity(intent);
-                        } else if (diary_share_text.getText().toString().equals("(공유중)")) {
-                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 이미 공유중 입니다",Toast.LENGTH_SHORT).show();
+                        } else if (diary_share_text.getText().toString().equals("(공개중)")) {
+                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 이미 공개중 입니다",Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -801,13 +838,13 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 
 
                         if (diary_share_text.getText().toString().equals("")){
-                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공유중이 아닙니다",Toast.LENGTH_SHORT).show();
-                        } else if (diary_share_text.getText().toString().equals("(공유중)")) {
-                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공유 취소 되었습니다",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공개중이 아닙니다",Toast.LENGTH_SHORT).show();
+                        } else if (diary_share_text.getText().toString().equals("(공개중)")) {
+                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공개 취소 되었습니다",Toast.LENGTH_SHORT).show();
                         }
 
-//                        Intent intent = new Intent(TodayDiaryCompleteActivity.this,MainpageActivity.class);
-//                        startActivity(intent);
+                        Intent intent = new Intent(TodayDiaryCompleteActivity.this,MainpageActivity.class);
+                        startActivity(intent);
 
                     }
                 });
@@ -827,7 +864,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
             }
         });
 
-//        shared_button.setOnClickListener(new View.OnClickListener() { //공유하기 버튼 눌렀을 때
+//        shared_button.setOnClickListener(new View.OnClickListener() { //공개하기 버튼 눌렀을 때
 //            @Override
 //            public void onClick(View view) {
 //
@@ -845,7 +882,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 //        diary_choice_spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { //일기 선택 스피너 버튼 눌렀을 때 기능 구현
 //            @Override
 //            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                diary_choice_text2.setText(adapterView.getItemAtPosition(i).toString()); //나의 일기 인지, 공유 일기 인지
+//                diary_choice_text2.setText(adapterView.getItemAtPosition(i).toString()); //나의 일기 인지, 공개 일기 인지
 //            }
 //
 //            @Override
@@ -868,7 +905,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        switch (item.getItemId()) {
-//            case R.id.menu_share: // 일기 공유를 눌렀을 경우
+//            case R.id.menu_share: // 일기 공개를 눌렀을 경우
 //
 //                break;
 //            case R.id.menu_setup // 수정을 눌렀을 경우
@@ -930,7 +967,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 //            startActivity(intent);
 //
 //
-//        } else if (diary_choice_text2.getText().equals("공유 일기")) {  //공유 일기 선택 했을 때 데이터를 전달
+//        } else if (diary_choice_text2.getText().equals("공개 일기")) {  //공개 일기 선택 했을 때 데이터를 전달
 //
 //
 //            Intent intent = new Intent(TodayDiaryCompleteActivity.this, MainpageActivity.class);
