@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -26,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -99,7 +103,8 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                 startActivityForResult(cameraIntent, TAKE_PICTURE);
                 break;
             case R.id.todaydairy_picture: // 갤러리 앱을 여는 소스
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent, get_gallery_image);
                 break;
@@ -118,13 +123,13 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                     profile_bitmap = (Bitmap) intent.getExtras().get("data");
 
 
+
+
                     if (profile_bitmap != null) {
                         report_todaydairy_image.setVisibility(View.VISIBLE); //UI에서 화면 담당하는 부분 보이도록 함(초기값은 안보임)
                         report_todaydairy_image.setImageBitmap(profile_bitmap); //화면에 선택한 이미지 넣기
 
-
                         image_setup = true; // 이미지 수정을 했을 경우에는 true로 바뀜 수정 안하면 false
-
 
                     }
 
@@ -135,10 +140,42 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 
                 if (resultCode == RESULT_OK && intent != null) {
                     try {
-
-
+                        // Intent intent = new Intent(Intent.ACTION_GET_CONTENT); 이용해서 이미지 가져오는 방법
                         InputStream in = getContentResolver().openInputStream(intent.getData());
-                        profile_bitmap = BitmapFactory.decodeStream(in);
+//                        Bitmap profile_bitmap = BitmapFactory.decodeStream(in);
+
+
+                        profile_bitmap = resize(TodayDiaryActivity.this,intent.getData(),250);
+
+//                        //비트맵 리사이즈
+//                        BitmapFactory.Options options = new BitmapFactory.Options();
+//                        options.inSampleSize = 4;
+//                        Uri imageUri = intent.getData();
+//                        Bitmap bitmap= BitmapFactory.decodeStream(imageUri,null, options);
+//
+//                        int width = 300; // 축소시킬 너비
+//                        int height = 300; // 축소시킬 높이
+//                        float bmpWidth = bitmap.getWidth();
+//                        float bmpHeight = bitmap.getHeight();
+//
+//                        if (bmpWidth > width) {
+//                            // 원하는 너비보다 클 경우의 설정
+//                            float mWidth = bmpWidth / 100;
+//                            float scale = width/ mWidth;
+//                            bmpWidth *= (scale / 100);
+//                            bmpHeight *= (scale / 100);
+//                        } else if (bmpHeight > height) {
+//                            // 원하는 높이보다 클 경우의 설정
+//                            float mHeight = bmpHeight / 100;
+//                            float scale = height/ mHeight;
+//                            bmpWidth *= (scale / 100);
+//                            bmpHeight *= (scale / 100);
+//                        }
+//
+//                        profile_bitmap = Bitmap.createScaledBitmap(bitmap, (int) bmpWidth, (int) bmpHeight, true);
+
+
+
 
 
                         report_todaydairy_image.setVisibility(View.VISIBLE); //UI에서 화면 담당하는 부분 보이도록 함(초기값은 안보임)
@@ -151,6 +188,39 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                 }
         }
     }
+
+
+    //갤러리에서 uri로 가져왔을 때 리사이즈 해준다
+    private Bitmap resize(Context context, Uri uri, int resize){
+        Bitmap resizeBitmap=null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        try {
+            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options); // 1번
+
+            int width = options.outWidth;
+            int height = options.outHeight;
+            int samplesize = 1;
+
+            while (true) {//2번
+                if (width / 2 < resize || height / 2 < resize)
+                    break;
+                width /= 2;
+                height /= 2;
+                samplesize *= 2;
+            }
+
+            options.inSampleSize = samplesize;
+            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options); //3번
+            resizeBitmap=bitmap;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resizeBitmap;
+    }
+
+
 
 
     @Override

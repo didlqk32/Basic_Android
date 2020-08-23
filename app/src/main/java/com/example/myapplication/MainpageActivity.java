@@ -299,14 +299,13 @@ public class MainpageActivity extends AppCompatActivity {
 
 
 
-//                Bitmap bitmapimage;
-//                if (temporary_diary_image[i].equals("null")) {
-//                    bitmapimage = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //이미지가 없으면 임시 이미지를 넣자!
-//                } else {
-//                    byte[] encodeByte = Base64.decode(temporary_diary_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
-//                    bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
-//
-//                }
+                Bitmap bitmapimage;
+                if (temporary_diary_image[i].equals("null")) {
+                    bitmapimage = BitmapFactory.decodeResource(getResources(), R.drawable.profileimage); //이미지가 없으면 임시 이미지를 넣자!
+                } else {
+                    byte[] encodeByte = Base64.decode(temporary_diary_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+                    bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+                }
 
 
 
@@ -314,8 +313,8 @@ public class MainpageActivity extends AppCompatActivity {
                     if (!temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null" 이 아니면(값이 있다면) 닉네임을 보여주고
 
                         //임시용
-                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
-//                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+//                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
 
 
 
@@ -325,8 +324,8 @@ public class MainpageActivity extends AppCompatActivity {
                     } else if (temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null"이면 (값이 없다면) "nickname"으로 보여준다
 
                         //임시용
-                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
-//                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+//                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
 
 
 
@@ -468,8 +467,8 @@ public class MainpageActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         finish();
+        super.onPause();
     }
 
 
@@ -477,7 +476,7 @@ public class MainpageActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(MainpageActivity.this,MainpageHomeActivity.class);
-        startActivity(intent);
         finish();
+        startActivity(intent);
     }
 }

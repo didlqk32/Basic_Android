@@ -178,17 +178,6 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
 
 
 
-        // 현재 내 프로필 값을 뽑아서 밑에 싸이클러뷰에 다 집어 넣으면 안된다!!!!!! -> 조건문 만들어서 포문으로 다 돌린다음 내가 단 댓글이면 받아온 이미지랑 닉네임 적용하기?!
-        // 그럼 다른 사람 닉네임이랑 이미지는 어떻게 적용하지?!!!!
-
-
-
-
-
-
-
-
-
         for (int i = 0; i < temporary_Comments_compare_id.length; i++) {
             if (temporary_Comments_compare_title[i].equals(title) && temporary_Comments_compare_content[i].equals(content) && temporary_Comments_compare_date[i].equals(date)) {
 
@@ -212,10 +201,6 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
             }
             OtherpeopleDiary_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
         }
-
-
-
-
 
 
 
@@ -456,8 +441,6 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
 
 
 
-
-
                     //프로필 닉네임, 프로필 이미지 기입하기!!!!!!!!!!!!!!!
                     //저장되어 있는 프로필 닉네임,이미지 불러오기
                     SharedPreferences sharedPreferences = getSharedPreferences("profile_edit_file", MODE_PRIVATE);
@@ -508,13 +491,6 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
                     byte[] encodeByte = Base64.decode(my_current_profile_image, Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
                         bitmap_profile_image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
                     }
-
-
-
-
-
-
-
 
 
 
@@ -677,7 +653,7 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(OtherpeopleDiaryActivity.this, MainpageActivity.class);
-        startActivity(intent);
         finish();
+        startActivity(intent);
     }
 }

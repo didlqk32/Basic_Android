@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -97,10 +98,6 @@ public class OtherpeopleDiary_adapter extends RecyclerView.Adapter<OtherpeopleDi
                 comment_delete.setNegativeButton("지우기", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
-
 
 
 

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -687,7 +688,11 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
         if (requestCode == get_gallery_image && resultCode == RESULT_OK && data != null) {
             try {
                 InputStream in = getContentResolver().openInputStream(data.getData()); //선택한 이미지 데이터 가져오기
-                profile_bitmap = BitmapFactory.decodeStream(in); //이미지 데이터를 비트맵으로 바꾸기
+//                profile_bitmap = BitmapFactory.decodeStream(in); //이미지 데이터를 비트맵으로 바꾸기
+
+                //갤러리에서 uri로 가져왔을 때 리사이즈 해준다
+                profile_bitmap = resize(ProfileEditActivity.this,data.getData(),200);
+
                 setup_my_profileimage.setImageBitmap(profile_bitmap); //바뀐 비트맵 데이터를 뷰에 넣기
 
                 image_setup = true; // 이미지 수정을 했을 경우에는 true로 바뀜 수정 안하면 false
@@ -699,6 +704,40 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
             //ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), pictureUri);
         }
     }
+
+
+
+    //갤러리에서 uri로 가져왔을 때 리사이즈 해준다
+    private Bitmap resize(Context context, Uri uri, int resize){
+        Bitmap resizeBitmap=null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        try {
+            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options); // 1번
+
+            int width = options.outWidth;
+            int height = options.outHeight;
+            int samplesize = 1;
+
+            while (true) {//2번
+                if (width / 2 < resize || height / 2 < resize)
+                    break;
+                width /= 2;
+                height /= 2;
+                samplesize *= 2;
+            }
+
+            options.inSampleSize = samplesize;
+            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options); //3번
+            resizeBitmap=bitmap;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resizeBitmap;
+    }
+
+
 
 
     @Override

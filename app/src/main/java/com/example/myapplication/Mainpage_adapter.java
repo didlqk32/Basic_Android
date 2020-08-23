@@ -65,9 +65,9 @@ public class Mainpage_adapter extends RecyclerView.Adapter<Mainpage_adapter.Main
 
 
 
-        byte[] encodeByte = Base64.decode(mainpage_dataArrayList.get(position).getDiary_image_string(), Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
-        Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
-        holder.main_diary_image.setImageBitmap(bitmapimage); //my_profile의 해당 포지션에 해당 content 이미지를 bitmap으로 담는다
+//        byte[] encodeByte = Base64.decode(mainpage_dataArrayList.get(position).getDiary_image_string(), Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+//        Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+//        holder.main_diary_image.setImageBitmap(bitmapimage); //my_profile의 해당 포지션에 해당 content 이미지를 bitmap으로 담는다
 
 
 
@@ -77,7 +77,7 @@ public class Mainpage_adapter extends RecyclerView.Adapter<Mainpage_adapter.Main
 
 
 
-//        holder.main_diary_image.setImageBitmap(mainpage_dataArrayList.get(position).getDiary_image()); //my_profile의 해당 포지션에 해당 content 이미지를 bitmap으로 담는다
+        holder.main_diary_image.setImageBitmap(mainpage_dataArrayList.get(position).getDiary_image()); //my_profile의 해당 포지션에 해당 content 이미지를 bitmap으로 담는다
 
         holder.main_diary_nickname.setText(mainpage_dataArrayList.get(position).getNickname()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
         holder.main_diary_title.setText(mainpage_dataArrayList.get(position).getDiary_title()); //my_massage의 해당 포지션에 해당 content 내용을 담는다

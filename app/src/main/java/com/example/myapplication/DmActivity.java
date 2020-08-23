@@ -86,7 +86,7 @@ public class DmActivity extends AppCompatActivity {
 
         send_camera = findViewById(R.id.send_camera);
         send_picture = findViewById(R.id.send_picture);
-        send_emoticon = findViewById(R.id.send_emoticon);
+//        send_emoticon = findViewById(R.id.send_emoticon);
 
 
 
