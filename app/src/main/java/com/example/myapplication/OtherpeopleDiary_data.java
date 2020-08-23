@@ -1,12 +1,34 @@
 package com.example.myapplication;
 
+import android.graphics.Bitmap;
+
 public class OtherpeopleDiary_data {
     private String my_massage;
-    private int my_profile;
+    private Bitmap my_profile;
+    private String comments_id;
+    private String profile_nickname;
 
-    public OtherpeopleDiary_data(String my_massage, int my_profile) {
+    public OtherpeopleDiary_data(String my_massage, Bitmap my_profile, String comments_id, String profile_nickname) {
         this.my_massage = my_massage;
         this.my_profile = my_profile;
+        this.comments_id = comments_id;
+        this.profile_nickname = profile_nickname;
+    }
+
+    public String getProfile_nickname() {
+        return profile_nickname;
+    }
+
+    public void setProfile_nickname(String profile_nickname) {
+        this.profile_nickname = profile_nickname;
+    }
+
+    public String getComments_id() {
+        return comments_id;
+    }
+
+    public void setComments_id(String comments_id) {
+        this.comments_id = comments_id;
     }
 
     public String getMy_massage() {
@@ -17,11 +39,12 @@ public class OtherpeopleDiary_data {
         this.my_massage = my_massage;
     }
 
-    public int getMy_profile() {
+    public Bitmap getMy_profile() {
         return my_profile;
     }
 
-    public void setMy_profile(int my_profile) {
+    public void setMy_profile(Bitmap my_profile) {
         this.my_profile = my_profile;
     }
+
 }

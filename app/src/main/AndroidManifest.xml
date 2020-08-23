@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".HomeTrainingStartRestActivity"></activity>
+        <activity android:name=".kcal_information"></activity>
+        <activity android:name=".HomeTrainingStartRestActivity" />
         <activity android:name=".HomeTraningStartActivity" />
         <activity android:name=".HomeTrainingDetailActivity" />
         <activity android:name=".HomeTrainingActivity" />
@@ -28,12 +30,12 @@
         <activity android:name=".TodayDiaryCompleteActivity" />
         <activity android:name=".ProfileEditActivity">
 
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".BundleDiaryActivity">
 
@@ -56,12 +58,12 @@
         </activity>
         <activity android:name=".MainpageHomeActivity">
 
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".TodayDiaryActivity">
 
@@ -81,8 +83,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".OtherpeopleDiaryActivity"/>
-
+        <activity android:name=".OtherpeopleDiaryActivity" />
         <activity android:name=".MainpageActivity">
 
             <!-- <intent-filter> -->

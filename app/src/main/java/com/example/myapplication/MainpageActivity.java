@@ -37,7 +37,7 @@ public class MainpageActivity extends AppCompatActivity {
     private View drawerView; //메뉴바 뷰
     private ImageButton menubar_open;
     private Button logout; //로그아웃 버튼
-    LinearLayout menubar_my_profile, menubar_exercise_report; //네비게이션 레이아웃 안에 있는 요소들
+    LinearLayout menubar_my_profile, menubar_exercise_report,menubar_information_of_calorie; //네비게이션 레이아웃 안에 있는 요소들
 
     private Button home, diary, home_training;
 //    androidx.constraintlayout.widget.ConstraintLayout otherpeople_dairy_sumnail;
@@ -74,6 +74,7 @@ public class MainpageActivity extends AppCompatActivity {
         drawerView = findViewById(R.id.drawer);
         menubar_open = findViewById(R.id.menubar_open);
         menubar_exercise_report = findViewById(R.id.menubar_exercise_report); //네비게이션 메뉴바의 운동기록 버튼
+        menubar_information_of_calorie = findViewById(R.id.menubar_information_of_calorie);
         menubar_my_profile = findViewById(R.id.menubar_my_profile); //나의 프로필 연결
         logout = findViewById(R.id.logout); //로그아웃 버튼
 
@@ -93,17 +94,39 @@ public class MainpageActivity extends AppCompatActivity {
 
 
 
+
         //프로필 이미지와, 닉네임 보여주기
         // 좌측 메뉴바에서 보여줄 내용
-//        SharedPreferences sharedPreferences = getSharedPreferences("profile_edit_file", MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
-//        String receive_profile_nickname = sharedPreferences.getString("nickname", "닉네임"); //받아온 데이터 String 변수 안에 넣기
-//
-//        String receive_profile_image = sharedPreferences.getString("profile_image", "null"); //받아온 이미지 데이터 String 변수 안에 넣기
-//        byte[] encodeByte = Base64.decode(receive_profile_image, Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
-//        memu_profile_bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
-//        menubar_profile_nickname.setText(receive_profile_nickname);//닉네임 텍스트에 저장해놓은 텍스트 넣기
-//        menubar_profile_image.setImageBitmap(memu_profile_bitmap);//닉네임 이미지에 저장해놓은 이미지 넣기
+        SharedPreferences shared = getSharedPreferences("profile_edit_file", MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
 
+        String receive_profile_id = shared.getString("profile_id", "");
+        String receive_profile_nickname = shared.getString("profile_nickname", "null"); //받아온 데이터 String 변수 안에 넣기
+        String receive_profile_image = shared.getString("profile_image", "null"); //받아온 이미지 데이터 String 변수 안에 넣기
+
+        String[] temporary_profile_id = receive_profile_id.split("@"); // 프로필 저장한 아이디 배열에 데이터 저장
+        String[] temporary_profile_nickname = receive_profile_nickname.split("@");
+        String[] temporary_profile_image = receive_profile_image.split("@");
+
+
+
+        for (int i = 0; i < temporary_profile_id.length; i++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
+            if (temporary_profile_id[i].equals(logInActivity.my_id)){ //프로필 데이터중에 내 아이디로 쓴 데이터 찾기
+
+
+                if (!temporary_profile_image[i].equals("null")) {
+                    byte[] encodeByte = Base64.decode(temporary_profile_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
+                    memu_profile_bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
+                    menubar_profile_image.setImageBitmap(memu_profile_bitmap);//닉네임 이미지에 저장해놓은 이미지 넣기
+                }
+
+                if (temporary_profile_nickname[i].equals("null")){
+                    menubar_profile_nickname.setText("닉네임");
+                } else {
+                    menubar_profile_nickname.setText(temporary_profile_nickname[i]);//닉네임 텍스트에 저장해놓은 텍스트 넣기
+                }
+
+            }
+        }
 
 
 
@@ -211,6 +234,16 @@ public class MainpageActivity extends AppCompatActivity {
             }
         });
 
+
+        menubar_information_of_calorie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainpageActivity.this,kcal_information.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { //네비게이션 메뉴에서 로그아웃 선택
@@ -281,7 +314,7 @@ public class MainpageActivity extends AppCompatActivity {
                     if (!temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null" 이 아니면(값이 있다면) 닉네임을 보여주고
 
                         //임시용
-                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
 //                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
 
 

@@ -476,7 +476,7 @@
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:layout_marginHorizontal="4dp"
                     android:maxLines="2"
                     android:padding="2dp"
                     android:text="김계란이 알려주는 식단에 따른 운동 방법"

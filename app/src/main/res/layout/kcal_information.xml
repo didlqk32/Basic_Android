@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".kcal_information"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="식품 및 요리를 검색하면 \n칼로리 정보가 나옵니다"
+        android:layout_marginTop="25dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/kcal_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:padding="3dp">
+
+
+        <EditText
+            android:id="@+id/kcal_information_text"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:hint="검색해 주세요"
+            android:layout_marginVertical="3dp"
+            android:paddingLeft="10dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/kcal_information_btn"
+            android:background="#E4E4E4"/>
+
+        <Button
+            android:id="@+id/kcal_information_btn"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="#50B1A8"
+            android:text="검색"
+            android:textSize="18dp"
+            android:layout_marginVertical="3dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/kcal_information_text"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/kcal_information_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/other_diary_content" />
+
+
+
+</LinearLayout>

@@ -144,7 +144,7 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
 
 
 
-//            String 이미지르 bitmap으로 바꾸는 작업
+//            String 이미지를 bitmap으로 바꾸는 작업
             byte[] encodeByte = Base64.decode(temporary_diary_image[temporary_diary_image.length - 1], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
             Bitmap bitmapimage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); //바이트로 바꾼 이미지 비트맵으로 바꾸기
 

@@ -366,18 +366,61 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
                         receive_diary_comment_count = receive_diary_comment_count + "0" + "@"; // 다이어리가 만들어 지면 댓글 수 0 부터 시작
 
 
-                        if (ProfileEditActivity.my_profile_nickname == null) { //닉네임이 설정 안됐다면
-                            receive_diary_profile_nickname = receive_diary_profile_nickname + "null" + "@";
-                        } else {
-                            receive_diary_profile_nickname = receive_diary_profile_nickname + ProfileEditActivity.my_profile_nickname + "@";
+
+
+
+
+
+
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("profile_edit_file", MODE_PRIVATE);
+
+                        String receive_profile_id = sharedPreferences.getString("profile_id", "");
+                        String receive_profile_nickname = sharedPreferences.getString("profile_nickname", "null"); //저장된 프로필을 불러오기 위함, 저장되어 있는 값이 없으면 nickname으로 불러오기
+                        String receive_profile_image = sharedPreferences.getString("profile_image", "null"); //저장된 프로필을 불러오기 위함, 저장되어 있는 값이 없으면 null 불러오기
+
+                        String[] temporary_profile_id = receive_profile_id.split("@"); // 프로필 저장한 아이디 배열에 데이터 저장
+                        String[] temporary_profile_nickname = receive_profile_nickname.split("@");
+                        String[] temporary_profile_image = receive_profile_image.split("@");
+
+
+                        String my_current_profile_nickname = "null";
+                        String my_current_profile_image = "null";
+                        for (int i=0; i < temporary_profile_id.length; i++) { //프로필을 저장한 id갯수 만큼 반복한다,  프로필 수정
+                            if (temporary_profile_id[i].equals(logInActivity.my_id)) { // 현재 나의 아이디가 맞는지 여부
+                                my_current_profile_nickname = temporary_profile_nickname[i];
+                                my_current_profile_image = temporary_profile_image[i];
+
+                            }
                         }
+                        receive_diary_profile_nickname = receive_diary_profile_nickname + my_current_profile_nickname + "@";
+                        receive_diary_profile_image = receive_diary_profile_image + my_current_profile_image + "@";
+
+
+
+
+
+
+//                        if (ProfileEditActivity.my_profile_nickname == null) { //닉네임이 설정 안됐다면
+//
+//
+//                            receive_diary_profile_nickname = receive_diary_profile_nickname + "null" + "@";
+//                        } else {
+//                            receive_diary_profile_nickname = receive_diary_profile_nickname + ProfileEditActivity.my_profile_nickname + "@";
+//                        }
+
 
                         // 나중에 프로필에서 닉네임 바꾸면 적용 되는 곳에서도 바뀔 수 있도록 프로필 에디트 화면에서도 이 부분 수정해야한다
-                        if (ProfileEditActivity.my_profile_image == null) { //프로필 이미지가 설정 안됐다면
-                            receive_diary_profile_image = receive_diary_profile_image + "null" + "@";
-                        } else {
-                            receive_diary_profile_image = receive_diary_profile_image + ProfileEditActivity.my_profile_image + "@";
-                        }
+//                        if (ProfileEditActivity.my_profile_image == null) { //프로필 이미지가 설정 안됐다면
+//                            receive_diary_profile_image = receive_diary_profile_image + "null" + "@";
+//                        } else {
+//                            receive_diary_profile_image = receive_diary_profile_image + ProfileEditActivity.my_profile_image + "@";
+//                        }
+
+
+
+
+
 
 
                         editor.putString("diary_id", receive_diary_id); // 내 아이디는 처음 들어가면 변하지 않는다 // 로그 아웃시에는 파일 지워야 하나???

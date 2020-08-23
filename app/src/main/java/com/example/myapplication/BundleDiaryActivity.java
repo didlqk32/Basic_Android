@@ -29,6 +29,7 @@ public class BundleDiaryActivity extends AppCompatActivity {
     private RecyclerView diary_bundle_recyclerview;
     private LinearLayoutManager linearLayoutManager;
 
+
     private ImageButton todaydairy_circlepen, imageButton, search_button, calendar_button;
     private int clickcount = 1; //검색 버튼 눌렀을 때 반응하기 위한 변수
     private int year, month, day;
@@ -51,13 +52,8 @@ public class BundleDiaryActivity extends AppCompatActivity {
         calendar_view = findViewById(R.id.calendar_view);
 
 
-        todaydairy_circlepen.setOnClickListener(new View.OnClickListener() { //글쓰기로 넘어감
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BundleDiaryActivity.this, TodayDiaryActivity.class);
-                startActivity(intent);
-            }
-        });
+
+
 
         diary_bundle_recyclerview = findViewById(R.id.diary_bundle_recyclerview); //다이어리 번들 리사이클러뷰
         linearLayoutManager = new LinearLayoutManager(this);
@@ -75,6 +71,14 @@ public class BundleDiaryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        todaydairy_circlepen.setOnClickListener(new View.OnClickListener() { //글쓰기로 넘어감
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BundleDiaryActivity.this, TodayDiaryActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         search_button.setOnClickListener(new View.OnClickListener() { //검색 버튼 누름

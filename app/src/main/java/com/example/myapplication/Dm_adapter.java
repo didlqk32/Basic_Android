@@ -52,7 +52,7 @@ public class Dm_adapter extends RecyclerView.Adapter<Dm_adapter.DmViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (dataArrayList.get(position).getItemViewType()==true) { //dataArrayList.get(position).getItemViewType() 이 true 이면 view타입을 send로 한다
+        if (dataArrayList.get(position).getDm_id().equals(logInActivity.my_id)) { //dataArrayList.get(position).getItemViewType() 이 true 이면 view타입을 send로 한다
             return send;
         }
         return receive;
@@ -73,4 +73,8 @@ public class Dm_adapter extends RecyclerView.Adapter<Dm_adapter.DmViewHolder> {
     }
 
 
+    public void addDm (Dm_data dm_data){ // onBindViewHolder는 계속해서 반복해서 작업하는 곳
+        dataArrayList.add(dm_data);
+        notifyItemInserted(dataArrayList.size()-1); // 값을 position 위치에 넣어라, 갱신 용
+    }
 }

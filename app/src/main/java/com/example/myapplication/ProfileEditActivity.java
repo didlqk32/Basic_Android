@@ -280,7 +280,6 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
-
                         ArrayList<String> Arraylist_diary_profile_nickname = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
                         for (String temp : temporary_diary_profile_nickname) {
                             Arraylist_diary_profile_nickname.add(temp);
@@ -293,21 +292,14 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
-
                         for (int j = 0; j < temporary_diary_id.length; j++) { // 모든 일기 다 반복문으로 검사한다
                             if (temporary_diary_id[j].equals(logInActivity.my_id)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
 
 
 
 
-
-
-
                                 Arraylist_diary_profile_nickname.set(j, Arraylist_profile_nickname.get(i)); // ArrayList 에서 해당 포지션의 일기를 작성한 일기로 바꿈
 //                                Arraylist_diary_profile_image.set(j,);
-
-
-
 
 
 
@@ -327,11 +319,26 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
-
-
-
                         editor_diary.putString("diary_profile_nickname", temporary_nickname_change);
                         editor_diary.apply(); //동기,세이브를 완료 해라
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -383,6 +390,8 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
                         for (String temp : temporary_profile_image) {
                             Arraylist_profile_image.add(temp);
                         }
+
+
 
                         // 이미지 수정 부분
 
@@ -622,9 +631,6 @@ public class ProfileEditActivity extends AppCompatActivity implements View.OnCli
 //
 //                startActivity(intent);
 //                profile_checkcount = 1; //profile_checkcount가 0이면 프로필 수정이 없던 ,것 1이면 수정 한 것
-
-
-
 
 
 

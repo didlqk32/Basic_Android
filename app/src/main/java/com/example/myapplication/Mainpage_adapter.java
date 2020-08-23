@@ -113,7 +113,7 @@ public class Mainpage_adapter extends RecyclerView.Adapter<Mainpage_adapter.Main
                 intent.putExtra("position", position); //포지션값 넘기기
                 intent.putExtra("title", mainpage_dataArrayList.get(position).getDiary_title()); //제목값 넘기기
                 intent.putExtra("content", mainpage_dataArrayList.get(position).getDiary_content()); //내용값 넘기기
-                intent.putExtra("date", mainpage_dataArrayList.get(position).getDiary_date()); //내용값 넘기기
+                intent.putExtra("date", mainpage_dataArrayList.get(position).getDiary_date()); // 날짜값 넘기기
 
 //                intent.putExtra("date", mainpage_dataArrayList.get(position).get()); //날짜값 넘기기
 

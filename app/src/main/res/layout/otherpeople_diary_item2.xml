@@ -40,6 +40,6 @@
         android:layout_height="23dp"
         android:layout_marginLeft="7dp"
         android:src="@drawable/trash"
-        android:clickable="true"/>
-
+        android:clickable="true"
+        android:visibility="gone"/>
 </LinearLayout>

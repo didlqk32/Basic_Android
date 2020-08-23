@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +22,12 @@ import android.widget.Toast;
 //import com.google.firebase.database.FirebaseDatabase;
 //import com.google.firebase.storage.FirebaseStorage;
 //import com.google.firebase.storage.StorageReference;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,6 +58,14 @@ public class DmActivity extends AppCompatActivity {
     private String title = "";
     private String content = "";
     private String date ="";
+
+
+
+
+    private DatabaseReference myRef; //데이터 베이트 참조 객체
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +88,58 @@ public class DmActivity extends AppCompatActivity {
         send_picture = findViewById(R.id.send_picture);
         send_emoticon = findViewById(R.id.send_emoticon);
 
+
+
+
+
+
+// Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance(); // 데이터베이스 선언
+        myRef = database.getReference("message"); // "message" 를 참조한다
+
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { //여기에 데이터가 들어온다
+//                Log.e("DM",snapshot.getValue().toString());
+                Dm_data dm_data = snapshot.getValue(Dm_data.class);
+//                dm_adapter.addDm(dm_data);
+                ((Dm_adapter)dm_adapter).addDm(dm_data);
+            }
+
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
     }
+
+
 
     @Override
     protected void onStart() {
@@ -84,23 +151,7 @@ public class DmActivity extends AppCompatActivity {
         content = intent.getStringExtra("content");
         date = intent.getStringExtra("date");
 
-        send_my_dm.addTextChangedListener(new TextWatcher() { //edit text의 값이 변화했을 때 기능 구현(텍스트가 입력 되면 기능을 한다)
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { //edit text에 텍스트가 들어 갔을 때 기능 구현
-//                send_button.setVisibility(View.VISIBLE);
-//                send_camera.setVisibility(View.GONE);
-//                send_picture.setVisibility(View.GONE);
-//                send_emoticon.setVisibility(View.GONE);
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,59 +162,62 @@ public class DmActivity extends AppCompatActivity {
                 String dm_text = send_my_dm.getText().toString(); //dm_text에 edit text에서 썻던 내용을 받는다
                 String dm_time = current_dmtime_format.format(current_time); //현재 시간을 string 타입으로 넣음
 
-                Dm_data dm_data = new Dm_data(dm_text,dm_time,true); //dm_text내용을 dm_data에 담는다
-                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
-                dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
-                recyclerView.scrollToPosition(dm_adapter.getItemCount()-1); //가장 최근 채팅에 스크롤 포지션 가도록 함
 
-//                send_button.setVisibility(View.GONE);
-//                send_camera.setVisibility(View.VISIBLE);
-//                send_picture.setVisibility(View.VISIBLE);
-//                send_emoticon.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+
+
+                if (dm_text.equals("")) {
+                    Toast.makeText(DmActivity.this,"내용을 입력해 주세요",Toast.LENGTH_SHORT).show();
+                } else {
+                    Dm_data dm_data = new Dm_data(dm_text, dm_time,logInActivity.my_id); //dm_text내용을 dm_data에 담는다
+                    myRef.push().setValue(dm_data);
+                }
+
+
+
+
+
+
+
+
+
+
+//                Dm_data dm_data = new Dm_data(dm_text,dm_time,true); //dm_text내용을 dm_data에 담는다
+//                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
+//                dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 처음부터 다시 정리
+                //dm_adapter.notifyItemInserted(); //추가된 아이템만 확인
+
+                recyclerView.scrollToPosition(dm_adapter.getItemCount()-1); //가장 최근 채팅에 스크롤 포지션 가도록 함
 
 
                 send_my_dm.setText(null); //edit text 내용을 비게 만듦
 
-//        String[] str = save_dm_content.split("/");
-//        for (int i=0; i < str.length; i++) {
-//            saveArrayListy.add(str[i]);
-//        }
-//
-//        String ttt2 = null;
-//        for (int i=0; i < saveArrayListy.size(); i++){
-//            ttt2 = ttt2 + saveArrayListy.get(i)+"/";
-//        }
-//        Log.e("ttt",ttt2);
 
-
-//                if (dataArrayList.get(1)!=null) {
-//                    Toast.makeText(view.getContext(),"dd", Toast.LENGTH_SHORT).show();
-//                }
-//                send_button.setVisibility(View.GONE);
-//                send_camera.setVisibility(View.VISIBLE);
-//                send_picture.setVisibility(View.VISIBLE);
-//                send_emoticon.setVisibility(View.VISIBLE);
-
-
-//                Toast.makeText(DmActivity.this, String.valueOf(dataArrayList.size()), Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
 
         send_camera.setOnClickListener(new View.OnClickListener() {   //임시로 만든 버튼 -> 상대방이 채팅할 경우
             @Override
             public void onClick(View view) { //임시적으로 카메라 버튼에 상대방이 보낸 메세지 버튼 연결함!!!!!나중에 지워야해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                Date current_time = Calendar.getInstance().getTime(); //현재 날짜 구하기
-                SimpleDateFormat current_dmtime_format = new SimpleDateFormat("a h시 m분", Locale.KOREA);// 현재 시간을 구화기 위한 객체 선언
-                String dm_text = send_my_dm.getText().toString(); //dm_text에 edit text에서 썻던 내용을 받는다
-                String dm_time = current_dmtime_format.format(current_time); //현재 시간을 string 타입으로 넣음
+//                Date current_time = Calendar.getInstance().getTime(); //현재 날짜 구하기
+//                SimpleDateFormat current_dmtime_format = new SimpleDateFormat("a h시 m분", Locale.KOREA);// 현재 시간을 구화기 위한 객체 선언
+//                String dm_text = send_my_dm.getText().toString(); //dm_text에 edit text에서 썻던 내용을 받는다
+//                String dm_time = current_dmtime_format.format(current_time); //현재 시간을 string 타입으로 넣음
+//
+//                Dm_data dm_data = new Dm_data(dm_text,dm_time,false); //dm_text내용을 dm_data에 담는다
+//                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
+//                dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
+//                send_my_dm.setText(null); //edit text 내용을 비게 만듦
 
-                Dm_data dm_data = new Dm_data(dm_text,dm_time,false); //dm_text내용을 dm_data에 담는다
-                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
-                dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
-                send_my_dm.setText(null); //edit text 내용을 비게 만듦
-
-//                Toast.makeText(DmActivity.this, String.valueOf(dataArrayList.size()), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -171,33 +225,54 @@ public class DmActivity extends AppCompatActivity {
 
 
 
-        SharedPreferences sharedPreferences = getSharedPreferences("dm_file",MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
-        String receive_dm_content = sharedPreferences.getString("save_dm_content",""); //받아온 데이터 String 변수 안에 넣기
-        String receive_dm_current_time = sharedPreferences.getString("save_dm_current_time",""); //받아온 데이터 String 변수 안에 넣기
+//        SharedPreferences sharedPreferences = getSharedPreferences("dm_file",MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
+//        String receive_dm_content = sharedPreferences.getString("save_dm_content",""); //받아온 데이터 String 변수 안에 넣기
+//        String receive_dm_current_time = sharedPreferences.getString("save_dm_current_time",""); //받아온 데이터 String 변수 안에 넣기
+//
+////        Log.e("receive_dm_content",receive_dm_content);
+////        Log.e("receive_dm_current_time",receive_dm_current_time);
+//
+//        if (!receive_dm_content.equals("")&&!receive_dm_current_time.equals("")){
+//            String[] Array_dm_content = receive_dm_content.split("/"); //receive_dm_content 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//            String[] Array_dm_content_time = receive_dm_current_time.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
+//
+//            Log.e("Array_dm_content_time",Array_dm_content[0]);
+//
+//            for (int i=0; i < Array_dm_content.length; i++) {
+//                Dm_data dm_data = new Dm_data(Array_dm_content[i],Array_dm_content_time[i], true); //dm_text내용을 dm_data에 담는다
+//                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
+//            }
+//            dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
+//            recyclerView.scrollToPosition(dm_adapter.getItemCount()-1); //가장 최근 채팅에 스크롤 포지션 가도록 함
+//
+//        }
 
-        Log.e("receive_dm_content",receive_dm_content);
-        Log.e("receive_dm_current_time",receive_dm_current_time);
-//        Toast.makeText(DmActivity.this,receive_dm_content,Toast.LENGTH_SHORT).show();
-
-        if (!receive_dm_content.equals("")&&!receive_dm_current_time.equals("")){
-            String[] Array_dm_content = receive_dm_content.split("/"); //receive_dm_content 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-            String[] Array_dm_content_time = receive_dm_current_time.split("/"); //receive_dm_current_time 내용물을 split "/"으로 쪼개고 String 배열에 넣음
-
-            Log.e("Array_dm_content_time",Array_dm_content[0]);
-
-            for (int i=0; i < Array_dm_content.length; i++) {
-                Dm_data dm_data = new Dm_data(Array_dm_content[i],Array_dm_content_time[i], true); //dm_text내용을 dm_data에 담는다
-                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
-            }
-            dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 다시 정리
-            recyclerView.scrollToPosition(dm_adapter.getItemCount()-1); //가장 최근 채팅에 스크롤 포지션 가도록 함
 
 
 
 
-        }
+
+
+
+
+
+
+
+
 
         //DB연동하기
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -214,24 +289,15 @@ public class DmActivity extends AppCompatActivity {
 //            save_dm_booleans = save_dm_booleans + dataArrayList.get(i).getItemViewType(); //booleans는 어떻게 값을 넣지??
         }
 
-//        Log.e("onstop","나갔다");
-//        Log.e("save_dm_content",save_dm_content);
-//        Log.e("save_dm_current_time",save_dm_current_time);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("dm_file",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("save_dm_content",save_dm_content);
-        editor.putString("save_dm_current_time",save_dm_current_time);
+//        SharedPreferences sharedPreferences = getSharedPreferences("dm_file",MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("save_dm_content",save_dm_content);
+//        editor.putString("save_dm_current_time",save_dm_current_time);
+//        editor.clear();
+//        editor.apply(); //동기,세이브를 완료 해라
 
-//        editor.remove("save_dm_content"); // sharedPreferences 저장되어 있는 키 값이 "save_dm_content" 지우기
-//        editor.remove("save_dm_current_time"); // sharedPreferences 저장되어 있는 키 값이 "save_dm_content" 지우기
-//        editor.clear(); //sharedPreferences 저장되어 있는 모든 파일 지우기
-        editor.apply(); //동기,세이브를 완료 해라
 
-//        for(Object object : dataArrayList) {
-//            ttt = ttt + object + "/";
-//        }
-//        Toast.makeText(DmActivity.this, ttt, Toast.LENGTH_SHORT).show();
     }
 
     @Override

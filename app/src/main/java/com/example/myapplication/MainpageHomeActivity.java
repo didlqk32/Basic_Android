@@ -51,7 +51,7 @@ public class MainpageHomeActivity extends AppCompatActivity {
     private Button logout; //로그아웃 버튼
 
     private Button diary,otherpeople_dairy_button,home_training;
-    LinearLayout menubar_my_profile,menubar_exercise_report;
+    LinearLayout menubar_my_profile,menubar_exercise_report,menubar_information_of_calorie;
 
     private ImageView menubar_profile_image; //메뉴바 프로필 이미지
     private TextView menubar_profile_nickname; //메뉴바 프로필 닉네임3
@@ -87,6 +87,7 @@ public class MainpageHomeActivity extends AppCompatActivity {
         drawerView = findViewById(R.id.drawer);
         menubar_open = findViewById(R.id.menubar_open);
         menubar_exercise_report = findViewById(R.id.menubar_exercise_report); //메뉴바의 운동기록 버튼
+        menubar_information_of_calorie = findViewById(R.id.menubar_information_of_calorie);
         menubar_my_profile = findViewById(R.id.menubar_my_profile); //나의 프로필 연결
 
 
@@ -112,7 +113,7 @@ public class MainpageHomeActivity extends AppCompatActivity {
         getNews();
 
 
-        getNaverNews("헬스");
+        getNaverNews("불고기 칼로리");
     }
 
 
@@ -193,15 +194,20 @@ public class MainpageHomeActivity extends AppCompatActivity {
         SharedPreferences shared = getSharedPreferences("profile_edit_file", MODE_PRIVATE); //"dm_file"파일의 데이터 받아오기
 
         String receive_profile_id = shared.getString("profile_id", "");
-        String receive_profile_nickname = shared.getString("nickname", "null"); //받아온 데이터 String 변수 안에 넣기
+        String receive_profile_nickname = shared.getString("profile_nickname", "null"); //받아온 데이터 String 변수 안에 넣기
         String receive_profile_image = shared.getString("profile_image", "null"); //받아온 이미지 데이터 String 변수 안에 넣기
 
         String[] temporary_profile_id = receive_profile_id.split("@"); // 프로필 저장한 아이디 배열에 데이터 저장
         String[] temporary_profile_nickname = receive_profile_nickname.split("@");
         String[] temporary_profile_image = receive_profile_image.split("@");
 
+//        Log.e("닉네임 확인",receive_profile_nickname);
+
+
         for (int i = 0; i < temporary_profile_id.length; i++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
             if (temporary_profile_id[i].equals(logInActivity.my_id)){ //프로필 데이터중에 내 아이디로 쓴 데이터 찾기
+
+//                Log.e("닉네임 확인",temporary_profile_nickname[i]);
 
                 if (!temporary_profile_image[i].equals("null")) {
                     byte[] encodeByte = Base64.decode(temporary_profile_image[i], Base64.DEFAULT); //string으로 받은 이미지 바이트로 바꾸기
@@ -209,11 +215,11 @@ public class MainpageHomeActivity extends AppCompatActivity {
                     menubar_profile_image.setImageBitmap(memu_profile_bitmap);//닉네임 이미지에 저장해놓은 이미지 넣기
                 }
 
-//                if (temporary_profile_nickname[i].equals("null")){
-//                    menubar_profile_nickname.setText("");
-//                } else {
-//                    menubar_profile_nickname.setText(temporary_profile_nickname[i]);//닉네임 텍스트에 저장해놓은 텍스트 넣기
-//                }
+                if (temporary_profile_nickname[i].equals("null")){
+                    menubar_profile_nickname.setText("닉네임");
+                } else {
+                    menubar_profile_nickname.setText(temporary_profile_nickname[i]);//닉네임 텍스트에 저장해놓은 텍스트 넣기
+                }
 
             }
         }
@@ -252,6 +258,15 @@ public class MainpageHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) { // 메뉴바에서 운동 기록 선택
                 Intent intent = new Intent(MainpageHomeActivity.this,ExerciseReportActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        menubar_information_of_calorie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainpageHomeActivity.this,kcal_information.class);
                 startActivity(intent);
                 finish();
             }
@@ -325,10 +340,11 @@ public class MainpageHomeActivity extends AppCompatActivity {
 //                        textView.setText("Response is: "+ response.substring(0,500));
 
                         try {
+//                            Log.e("뉴스 기사",response);
                             JSONObject jsonObject = new JSONObject(response);
                             final JSONArray arrayArticles = jsonObject.getJSONArray("articles");
 
-                            final JSONObject obj = arrayArticles.getJSONObject(3);
+                            final JSONObject obj = arrayArticles.getJSONObject(1);
 
 //                            Log.e("뉴스 기사1",obj.toString());
 //                            Log.e("뉴스 기사1_제목",obj.getString("title"));
@@ -338,6 +354,7 @@ public class MainpageHomeActivity extends AppCompatActivity {
                             obj.getString("title");
                             obj.getString("description");
                             obj.getString("urlToImage");
+
                             final String ArticleUrl = obj.getString("url");
 
                             if (obj.getString("title")!=null) {
@@ -408,7 +425,7 @@ public class MainpageHomeActivity extends AppCompatActivity {
             public void run() {
                 try {
                     String text = URLEncoder.encode(searchObject, "UTF-8");
-                    String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text + "&display=" + display + "&"; // json 결과
+                    String apiURL = "https://openapi.naver.com/v1/search/encyc?query=" + text + "&display=" + display + "&"; // json 결과
                     // Json 형태로 결과값을 받아옴.
                     URL url = new URL(apiURL);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -437,6 +454,37 @@ public class MainpageHomeActivity extends AppCompatActivity {
                     br.close();
                     con.disconnect();
 
+
+
+//                    Log.e("sdfsdf",searchResult.toString());
+
+
+
+                    JSONObject jsonObject = new JSONObject(searchResult.toString());
+                    final JSONArray arrayArticles = jsonObject.getJSONArray("items");
+
+                    final JSONObject obj = arrayArticles.getJSONObject(0);
+
+//                            Log.e("뉴스 기사1",obj.toString());
+//                            Log.e("뉴스 기사1_제목",obj.getString("title"));
+//                            Log.e("뉴스 기사1_내용",obj.getString("content"));
+//                            Log.e("뉴스 기사1_이미지",obj.getString("urlToImage"));
+
+//                    Log.e("SDVKLNSDVJLKN",obj.getString("title"));
+
+                    obj.getString("title");
+                    obj.getString("description");
+                    obj.getString("urlToImage");
+//1
+
+
+
+
+
+
+
+
+
                     String data = searchResult.toString();
                     String[] array;
                     array = data.split("\"");
@@ -462,7 +510,8 @@ public class MainpageHomeActivity extends AppCompatActivity {
                         }
                     }
 
-                    Log.d("확인1", "title잘나오니: " + title[0] + title[1] + title[2]);
+//                    Log.d("확인1", "title잘나오니: " + title[0] + title[1] + title[2]);
+                    Log.e("확인1", "title잘나오니: " + title[0] + link[0] + description[0]);;
                     // title[0], link[0], bloggername[0] 등 인덱스 값에 맞게 검색결과를 변수화하였다.
 
                 } catch (Exception e) {
