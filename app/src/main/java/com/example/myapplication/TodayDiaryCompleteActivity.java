@@ -798,50 +798,231 @@ public class TodayDiaryCompleteActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //일기 데이터 받아오기
-                        SharedPreferences.Editor editor = shared.edit();
-
-                        String receive_diary_id = shared.getString("diary_id", ""); //파일에서 받은 데이터 string 변수에 넣는다
-                        String receive_diary_title = shared.getString("diary_title", "");
-                        String receive_diary_content = shared.getString("diary_content", "");
-                        String receive_diary_date = shared.getString("diary_date", "");
-                        String receive_diary_share = shared.getString("diary_share", "");
-
-                        String[] temporary_diary_id = receive_diary_id.split("@"); //string으로 되어 있는 데이터 split을 잘라서 배열에 하나씩 넣는다
-                        String[] temporary_diary_title = receive_diary_title.split("@");
-                        String[] temporary_diary_content = receive_diary_content.split("@");
-                        String[] temporary_diary_date = receive_diary_date.split("@");
-                        String[] temporary_diary_share = receive_diary_share.split("@");
-
-
-                        ArrayList<String> Arraylist_share = new ArrayList<>(); // 배열을 ArrayList로 담는 과정
-                        for (String temp : temporary_diary_share) {
-                            Arraylist_share.add(temp);
-                        }
-
-                        for (int h = 0; h < temporary_diary_id.length; h++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
-                            if (temporary_diary_id[h].equals(logInActivity.my_id) && temporary_diary_title[h].equals(title) && temporary_diary_content[h].equals(content) && temporary_diary_date[h].equals(date)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
-                                Arraylist_share.set(h,"null");
-                            }
-                        }
-
-                        if (Arraylist_share.size() != 0) {
-                            for (int j = 0; j < Arraylist_share.size(); j++) {
-                                temporary_share = temporary_share + Arraylist_share.get(j) + "@";
-                            }
-                        }
-
-                        editor.putString("diary_share", temporary_share);
-                        editor.apply(); //동기화,세이브를 완료 해라
-
-
-
-
                         if (diary_share_text.getText().toString().equals("")){
                             Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공개중이 아닙니다",Toast.LENGTH_SHORT).show();
                         } else if (diary_share_text.getText().toString().equals("(공개중)")) {
-                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 공개 취소 되었습니다",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TodayDiaryCompleteActivity.this,"일기가 비공개 되었습니다",Toast.LENGTH_SHORT).show();
+
+
+
+                            SharedPreferences shared = getSharedPreferences("Diary_data_file", MODE_PRIVATE); //일기 데이터 받아오기
+                            SharedPreferences.Editor editor = shared.edit();
+
+                            String receive_diary_id = shared.getString("diary_id", ""); //파일에서 받은 데이터 string 변수에 넣는다
+                            String receive_diary_title = shared.getString("diary_title", "");
+                            String receive_diary_content = shared.getString("diary_content", "");
+                            String receive_diary_date = shared.getString("diary_date", "");
+                            String receive_diary_share = shared.getString("diary_share", "");
+                            String receive_diary_comment_count = shared.getString("diary_comment_count", "");
+
+                            String[] temporary_diary_id = receive_diary_id.split("@"); //string으로 되어 있는 데이터 split을 잘라서 배열에 하나씩 넣는다
+                            String[] temporary_diary_title = receive_diary_title.split("@");
+                            String[] temporary_diary_content = receive_diary_content.split("@");
+                            String[] temporary_diary_date = receive_diary_date.split("@");
+                            String[] temporary_diary_share = receive_diary_share.split("@");
+                            String[] temporary_diary_comment_count = receive_diary_comment_count.split("@");
+
+
+                            ArrayList<String> Arraylist_share = new ArrayList<>(); // 배열을 ArrayList로 담는 과정
+                            for (String temp : temporary_diary_share) {
+                                Arraylist_share.add(temp);
+                            }
+
+                            ArrayList<String> Arraylist_comment_count = new ArrayList<>(); // 배열을 ArrayList로 담는 과정
+                            for (String temp : temporary_diary_comment_count) {
+                                Arraylist_comment_count.add(temp);
+                            }
+
+
+                            for (int h = 0; h < temporary_diary_id.length; h++) { //배열 크기만큼 일기 보여주기(배열 인덱스값 1당 일기 1개)
+                                if (temporary_diary_id[h].equals(logInActivity.my_id) && temporary_diary_title[h].equals(title) && temporary_diary_content[h].equals(content) && temporary_diary_date[h].equals(date)) { //현재 로그인 한 아이디와 비교 했을 때 현재 아이디로 작성한 일기만 보여주기
+                                    Arraylist_share.set(h,"null");
+                                    Arraylist_comment_count.set(h,"0");
+                                }
+                            }
+
+                            if (Arraylist_share.size() != 0) {
+                                for (int j = 0; j < Arraylist_share.size(); j++) {
+                                    temporary_share = temporary_share + Arraylist_share.get(j) + "@";
+                                }
+                            }
+
+                            String temporary_comment_count_change = "";
+                            if (Arraylist_comment_count.size() != 0) {
+                                for (int j = 0; j < Arraylist_comment_count.size(); j++) {
+                                    temporary_comment_count_change = temporary_comment_count_change + Arraylist_comment_count.get(j) + "@";
+                                }
+                            }
+
+                            editor.putString("diary_comment_count", temporary_comment_count_change);
+                            editor.putString("diary_share", temporary_share);
+                            editor.apply(); //동기화,세이브를 완료 해라
+
+
+
+
+
+
+
+
+
+
+
+
+                            //일기를 다시 비공개 하면 해당 댓글은 모두 사라진다
+
+                            //일기를 다시 비공개 하면 해당 댓글은 모두 사라진다
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("Comments_data_file", MODE_PRIVATE);
+                            SharedPreferences.Editor editorshared = sharedPreferences.edit();
+
+                            String receive_Comments_compare_id = sharedPreferences.getString("Comments_compare_id", "");
+                            String receive_Comments_compare_title = sharedPreferences.getString("Comments_compare_title", "");
+                            String receive_Comments_compare_content = sharedPreferences.getString("Comments_compare_content", "");
+                            String receive_Comments_compare_date = sharedPreferences.getString("Comments_compare_date", "");
+                            String receive_Comments_comment = sharedPreferences.getString("Comments_comment", "");
+                            String receive_Comments_profile_nickname = sharedPreferences.getString("Comments_profile_nickname", "");
+                            String receive_Comments_profile_image = sharedPreferences.getString("Comments_profile_image", "");
+
+                            String[] temporary_Comments_compare_id = receive_Comments_compare_id.split("@");
+                            String[] temporary_Comments_compare_title = receive_Comments_compare_title.split("@");
+                            String[] temporary_Comments_compare_content = receive_Comments_compare_content.split("@");
+                            String[] temporary_Comments_compare_date = receive_Comments_compare_date.split("@");
+                            String[] temporary_Comments_comment = receive_Comments_comment.split("@");
+                            String[] temporary_Comments_profile_nickname = receive_Comments_profile_nickname.split("@");
+                            String[] temporary_Comments_profile_image = receive_Comments_profile_image.split("@");
+
+
+                            ArrayList<String> Arraylist_compare_id = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
+                            for (String temp : temporary_Comments_compare_id) {
+                                Arraylist_compare_id.add(temp);
+                            }
+
+                            ArrayList<String> Arraylist_compare_title = new ArrayList<>();
+                            for (String temp : temporary_Comments_compare_title) {
+                                Arraylist_compare_title.add(temp);
+                            }
+
+                            ArrayList<String> Arraylist_compare_content = new ArrayList<>();
+                            for (String temp : temporary_Comments_compare_content) {
+                                Arraylist_compare_content.add(temp);
+                            }
+
+                            ArrayList<String> Arraylist_compare_date = new ArrayList<>();
+                            for (String temp : temporary_Comments_compare_date) {
+                                Arraylist_compare_date.add(temp);
+                            }
+
+                            ArrayList<String> Arraylist_Comments_comment = new ArrayList<>();
+                            for (String temp : temporary_Comments_comment) {
+                                Arraylist_Comments_comment.add(temp);
+                            }
+
+                            ArrayList<String> Arraylist_profile_nickname = new ArrayList<>();
+                            for (String temp : temporary_Comments_profile_nickname) {
+                                Arraylist_profile_nickname.add(temp);
+                            }
+
+                            ArrayList<String> Arraylist_profile_image = new ArrayList<>();
+                            for (String temp : temporary_Comments_profile_image) {
+                                Arraylist_profile_image.add(temp);
+                            }
+
+
+
+
+                            for (int j=temporary_Comments_compare_id.length-1; j >= 0; j --) {
+                                if (temporary_Comments_compare_title[j].equals(title) && temporary_Comments_compare_content[j].equals(content) && temporary_Comments_compare_date[j].equals(date)) {
+
+                                    Arraylist_compare_id.remove(j); // ArrayList 에서 해당 포지션 제거
+                                    Arraylist_compare_title.remove(j);
+                                    Arraylist_compare_content.remove(j);
+                                    Arraylist_compare_date.remove(j);
+                                    Arraylist_Comments_comment.remove(j);
+                                    Arraylist_profile_nickname.remove(j);
+                                    Arraylist_profile_image.remove(j);
+
+                                }
+                            }
+
+
+
+
+                            String temporary_compare_id="",temporary_compare_title="",temporary_compare_content="",temporary_compare_date="",temporary_comment="",temporary_profile_nickname="",temporary_profile_image="";
+
+
+                            if (Arraylist_compare_id.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정
+                                for (int j = 0; j < Arraylist_compare_id.size(); j++) { //기록 되어 있는 아이디 나열하기
+                                    temporary_compare_id = temporary_compare_id + Arraylist_compare_id.get(j) + "@";
+                                }
+                            }
+
+                            if (Arraylist_compare_title.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정
+                                for (int j = 0; j < Arraylist_compare_title.size(); j++) { //기록 되어 있는 아이디 나열하기
+                                    temporary_compare_title = temporary_compare_title + Arraylist_compare_title.get(j) + "@";
+                                }
+                            }
+
+                            if (Arraylist_compare_content.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정
+                                for (int j = 0; j < Arraylist_compare_content.size(); j++) { //기록 되어 있는 아이디 나열하기
+                                    temporary_compare_content = temporary_compare_content + Arraylist_compare_content.get(j) + "@";
+                                }
+                            }
+
+                            if (Arraylist_compare_date.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정
+                                for (int j = 0; j < Arraylist_compare_date.size(); j++) { //기록 되어 있는 아이디 나열하기
+                                    temporary_compare_date = temporary_compare_date + Arraylist_compare_date.get(j) + "@";
+                                }
+                            }
+
+                            if (Arraylist_Comments_comment.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정
+                                for (int j = 0; j < Arraylist_Comments_comment.size(); j++) { //기록 되어 있는 아이디 나열하기
+                                    temporary_comment = temporary_comment + Arraylist_Comments_comment.get(j) + "@";
+                                }
+                            }
+
+                            if (Arraylist_profile_nickname.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정
+                                for (int j = 0; j < Arraylist_profile_nickname.size(); j++) { //기록 되어 있는 아이디 나열하기
+                                    temporary_profile_nickname = temporary_profile_nickname + Arraylist_profile_nickname.get(j) + "@";
+                                }
+                            }
+
+                            if (Arraylist_profile_image.size() != 0) { //Arraylist 에서 값을 지우고 다시 하나의 (string)문자열로 합치는 과정
+                                for (int j = 0; j < Arraylist_profile_image.size(); j++) { //기록 되어 있는 아이디 나열하기
+                                    temporary_profile_image = temporary_profile_image + Arraylist_profile_image.get(j) + "@";
+                                }
+                            }
+
+
+                            editorshared.putString("Comments_compare_id", temporary_compare_id);
+                            editorshared.putString("Comments_compare_title", temporary_compare_title);
+                            editorshared.putString("Comments_compare_content", temporary_compare_content);
+                            editorshared.putString("Comments_compare_date", temporary_compare_date);
+                            editorshared.putString("Comments_comment", temporary_comment);
+
+                            editorshared.putString("Comments_profile_nickname", temporary_profile_nickname);
+                            editorshared.putString("Comments_profile_image", temporary_profile_image);
+                            editorshared.apply(); //동기,세이브를 완료 해라
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
+
+
+
 
                         Intent intent = new Intent(TodayDiaryCompleteActivity.this,MainpageActivity.class);
                         startActivity(intent);

@@ -31,7 +31,7 @@ public class Mainpage_adapter extends RecyclerView.Adapter<Mainpage_adapter.Main
     public class MainViewHolder extends RecyclerView.ViewHolder {
         private TextView main_diary_nickname;
         private TextView main_diary_title;
-        private TextView main_heart_count;
+        private TextView main_comment_count;
         private ImageView main_diary_image;
         private ImageView main_mydiary_check;
         androidx.constraintlayout.widget.ConstraintLayout otherpeople_dairy_sumnail;
@@ -40,7 +40,7 @@ public class Mainpage_adapter extends RecyclerView.Adapter<Mainpage_adapter.Main
             super(itemView);
             main_diary_nickname = itemView.findViewById(R.id.main_diary_nickname);
             main_diary_title = itemView.findViewById(R.id.main_diary_title);
-            main_heart_count = itemView.findViewById(R.id.main_heart_count);
+            main_comment_count = itemView.findViewById(R.id.main_comment_count);
             main_diary_image = itemView.findViewById(R.id.main_diary_image);
             main_mydiary_check = itemView.findViewById(R.id.main_mydiary_check);
 
@@ -81,7 +81,7 @@ public class Mainpage_adapter extends RecyclerView.Adapter<Mainpage_adapter.Main
 
         holder.main_diary_nickname.setText(mainpage_dataArrayList.get(position).getNickname()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
         holder.main_diary_title.setText(mainpage_dataArrayList.get(position).getDiary_title()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
-        holder.main_heart_count.setText(mainpage_dataArrayList.get(position).getHeartcount()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
+        holder.main_comment_count.setText(mainpage_dataArrayList.get(position).getCommentcount()); //my_massage의 해당 포지션에 해당 content 내용을 담는다
 
 
 

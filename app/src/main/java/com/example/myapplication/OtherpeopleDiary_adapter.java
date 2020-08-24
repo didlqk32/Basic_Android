@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,7 +27,7 @@ public class OtherpeopleDiary_adapter extends RecyclerView.Adapter<OtherpeopleDi
     final static int my_comments = 1000;
     final static int other_comments = 1001;
 
-    public OtherpeopleDiary_adapter(ArrayList<OtherpeopleDiary_data> otherArrayList, Context context,View.OnClickListener onClickListener) {
+    public OtherpeopleDiary_adapter(ArrayList<OtherpeopleDiary_data> otherArrayList, Context context) {
         this.otherArrayList = otherArrayList;
         this.context = context;
         this.onClickListener = onClickListener;
@@ -64,7 +65,7 @@ public class OtherpeopleDiary_adapter extends RecyclerView.Adapter<OtherpeopleDi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final OtherViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final OtherViewHolder holder, final int position) {
 
 
 
@@ -78,7 +79,7 @@ public class OtherpeopleDiary_adapter extends RecyclerView.Adapter<OtherpeopleDi
 
         holder.my_massage_remove.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
 
                 AlertDialog.Builder comment_delete = new AlertDialog.Builder(context); //댓글 삭제 여부 다이얼로그 생성
@@ -87,7 +88,6 @@ public class OtherpeopleDiary_adapter extends RecyclerView.Adapter<OtherpeopleDi
                 comment_delete.setMessage("댓글을 정말 지우시겠습니까?");
 
 
-                Log.e("1","1");
 
                 comment_delete.setPositiveButton("취소", new DialogInterface.OnClickListener() {
                     @Override
@@ -99,14 +99,29 @@ public class OtherpeopleDiary_adapter extends RecyclerView.Adapter<OtherpeopleDi
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                        Intent intent = new Intent(view.getContext(), OtherpeopleDiaryActivity.class); //view.getContext()는 view(현재) 클래스 context를 가져오는것
+
+                        intent.putExtra("comments_id", otherArrayList.get(position).getComments_id());
+                        intent.putExtra("comments_My_massage", otherArrayList.get(position).getMy_massage());
+                        intent.putExtra("comments_Profile_nickname", otherArrayList.get(position).getProfile_nickname());
+
+
+
+                        intent.putExtra("title", otherArrayList.get(position).getTitle());
+                        intent.putExtra("content", otherArrayList.get(position).getContent());
+                        intent.putExtra("date", otherArrayList.get(position).getDate());
+
+
+                        view.getContext().startActivity(intent);
+                        OtherpeopleDiaryActivity.removecomments = true;
 
 
 
 
 
 
-                        remove(holder.getAdapterPosition()); //해당 포지션 아이템 제거
-                        notifyItemRangeChanged(holder.getAdapterPosition(), otherArrayList.size()); //리사이클러뷰 범위 새로고침
+//                        remove(holder.getAdapterPosition()); //해당 포지션 아이템 제거
+//                        notifyItemRangeChanged(holder.getAdapterPosition(), otherArrayList.size()); //리사이클러뷰 범위 새로고침
                     }
                 });
                 comment_delete.show();

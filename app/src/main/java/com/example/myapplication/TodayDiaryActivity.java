@@ -365,7 +365,7 @@ public class TodayDiaryActivity extends AppCompatActivity implements View.OnClic
 
 
                     if (temporary_diary_share[i].equals("share")) { //현재 일기가 공유 하기 이면
-                        diary_share_text2.setText("(공유중)");
+                        diary_share_text2.setText("(공개중)");
                     }
 
 

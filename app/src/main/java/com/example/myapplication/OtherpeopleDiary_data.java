@@ -7,12 +7,42 @@ public class OtherpeopleDiary_data {
     private Bitmap my_profile;
     private String comments_id;
     private String profile_nickname;
+    private String title;
+    private String content;
+    private String date;
 
-    public OtherpeopleDiary_data(String my_massage, Bitmap my_profile, String comments_id, String profile_nickname) {
+    public OtherpeopleDiary_data(String my_massage, Bitmap my_profile, String comments_id, String profile_nickname, String title, String content, String date) {
         this.my_massage = my_massage;
         this.my_profile = my_profile;
         this.comments_id = comments_id;
         this.profile_nickname = profile_nickname;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getProfile_nickname() {

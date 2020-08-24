@@ -7,7 +7,7 @@ public class Mainpage_data {
     private String nickname;
     private String diary_title;
     private String diary_content;
-    private String Heartcount;
+    private String commentcount;
     private String diary_id;
     private String diary_date;
     private Bitmap diary_image;
@@ -16,10 +16,10 @@ public class Mainpage_data {
 
     private String diary_image_string;
 
-    public Mainpage_data(String nickname, String diary_title, String heartcount, Bitmap diary_image, String diary_content, String diary_id, String diary_date) {
+    public Mainpage_data(String nickname, String diary_title, String commentcount, Bitmap diary_image, String diary_content, String diary_id, String diary_date) {
         this.nickname = nickname;
         this.diary_title = diary_title;
-        this.Heartcount = heartcount;
+        this.commentcount = commentcount;
         this.diary_image = diary_image;
         this.diary_content = diary_content;
         this.diary_id = diary_id;
@@ -33,10 +33,10 @@ public class Mainpage_data {
 
 
 
-    public Mainpage_data(String nickname, String diary_title, String heartcount, String diary_image_string, String diary_content, String diary_id, String diary_date) {
+    public Mainpage_data(String nickname, String diary_title, String commentcount, String diary_image_string, String diary_content, String diary_id, String diary_date) {
         this.nickname = nickname;
         this.diary_title = diary_title;
-        this.Heartcount = heartcount;
+        this.commentcount = commentcount;
         this.diary_image_string = diary_image_string;
         this.diary_content = diary_content;
         this.diary_id = diary_id;
@@ -96,12 +96,12 @@ public class Mainpage_data {
         this.diary_content = diary_content;
     }
 
-    public String getHeartcount() {
-        return Heartcount;
+    public String getCommentcount() {
+        return commentcount;
     }
 
-    public void setHeartcount(String heartcount) {
-        Heartcount = heartcount;
+    public void setCommentcount(String commentcount) {
+        this.commentcount = commentcount;
     }
 
     public Bitmap getDiary_image() {

@@ -290,7 +290,7 @@ public class MainpageActivity extends AppCompatActivity {
 
 
 
-
+        //해당 댓글
 
 
         for (int i=0; i < temporary_diary_title.length; i++) { // 모든 일기를 다 반복문으로 돌려보고
@@ -312,9 +312,18 @@ public class MainpageActivity extends AppCompatActivity {
                 if (!temporary_diary_profile_nickname[i].equals("")) { //값이 "" 이면 아직 일기를 안만들었다는 뜻
                     if (!temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null" 이 아니면(값이 있다면) 닉네임을 보여주고
 
+
+
+
+
+
+
                         //임시용
 //                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
-                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+                        Mainpage_data mainpage_data = new Mainpage_data(temporary_diary_profile_nickname[i], temporary_diary_title[i], temporary_diary_comment_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+
+
+
 
 
 
@@ -323,9 +332,16 @@ public class MainpageActivity extends AppCompatActivity {
 
                     } else if (temporary_diary_profile_nickname[i].equals("null")) { //닉네임 값이 "null"이면 (값이 없다면) "nickname"으로 보여준다
 
+
+
+
+
+
                         //임시용
 //                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], temporary_diary_image[i], temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
-                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_heart_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+                        Mainpage_data mainpage_data = new Mainpage_data("nickname", temporary_diary_title[i], temporary_diary_comment_count[i], bitmapimage, temporary_diary_content[i],temporary_diary_id[i],temporary_diary_date[i]); //내용들을 bundle_diary_data에 담는다
+
+
 
 
 
