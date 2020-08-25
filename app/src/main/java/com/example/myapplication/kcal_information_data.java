@@ -6,7 +6,7 @@ public class kcal_information_data {
     private String description;
     private String thumbnail;
 
-    public kcal_information_data(String title, String link, String description, String thumbnail) {
+    public kcal_information_data(String title, String description, String thumbnail, String link) {
         this.title = title;
         this.link = link;
         this.description = description;

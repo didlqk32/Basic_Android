@@ -88,7 +88,7 @@ public class kcal_information extends AppCompatActivity {
             public void onClick(View view) {
 //                getNaverNews("바나나");
 
-                search_keyword = kcal_information_text.getText().toString() + "칼로리";
+                search_keyword = kcal_information_text.getText().toString();
 
 
                 Thread thread = new Thread(new Runnable() {
@@ -96,7 +96,6 @@ public class kcal_information extends AppCompatActivity {
                     public void run() {
                         try {
 
-                            Log.e("search_keyword",search_keyword);
 
                             final String str = getNews(search_keyword);
                             runOnUiThread(new Runnable() {  //runOnUiThread 쓰면 따로 handler 안써도 된다
@@ -104,20 +103,67 @@ public class kcal_information extends AppCompatActivity {
                                 public void run() {
 
 //                                    TextView searchResult2 = (TextView) findViewById(R.id.searchResult2);
-//                                    text_test.setText(str);
+                                    text_test.setText(str);
 
 
+//                                    str.replace("<b>","");
+//                                    str.replace("</b>","");
+                                    String[] str_array = str.split("\n");
+
+                                    ArrayList<String> Arraylist_str = new ArrayList<>();  // 배열을 ArrayList로 담는 과정
+                                    for (String temp : str_array) {
+                                        Arraylist_str.add(temp);
+                                    }
+                                    for (int j=0;j<3;j++)
+                                    Arraylist_str.remove(0);
 
 
+//                                    for (int h=0; h<Arraylist_str.size();h++)
+//                                    Log.e("배열 내용",Arraylist_str.get(h));
 
 
+                                    String dictionary_title ="";
+                                    String dictionary_link ="";
+                                    String dictionary_content ="";
+                                    String dictionary_image ="";
+                                    for (int k=0;k<Arraylist_str.size();k++){
+                                        if ((k%4)==0){
+                                            dictionary_title += Arraylist_str.get(k);
+                                        } else if ((k%4)==1) {
+                                            dictionary_link += Arraylist_str.get(k);
+                                        } else if ((k%4)==2) {
+                                            dictionary_content += Arraylist_str.get(k);
+                                        } else if ((k%4)==3) {
+                                            dictionary_image += Arraylist_str.get(k);
+                                        }
+                                    }
+
+                                    dictionary_content.replace("<b>","");
+                                    dictionary_content.replace("</b>","");
 
 
+                                    Log.e("제목",dictionary_title);
+                                    Log.e("링크",dictionary_link);
+                                    Log.e("내용",dictionary_content);
+                                    Log.e("이미지",dictionary_image);
 
 
-                                    kcal_information_data kcalinformation_data = new kcal_information_data("1","2", "3", "4");
-                                    kcalArrayList.add(0,kcalinformation_data);
+                                    kcal_information_data kcalinformation_data = new kcal_information_data(dictionary_title,dictionary_content,dictionary_image,dictionary_link);
+                                    kcalArrayList.add(kcalinformation_data);
                                     kcal_information_adapter.notifyDataSetChanged();
+
+
+//                                    for (int i=0; i < strarray.length; i++){
+//                                        kcal_information_data kcalinformation_data = new kcal_information_data("1",strarray[i], "3", "4");
+//                                        kcalArrayList.add(kcalinformation_data);
+//                                    }
+//                                    kcal_information_adapter.notifyDataSetChanged();
+
+
+//                                    kcal_information_data kcalinformation_data = new kcal_information_data("1","2", "3", "4");
+//                                    kcalArrayList.add(0,kcalinformation_data);
+//
+//                                    kcal_information_adapter.notifyDataSetChanged();
 
                                 }
                             });
@@ -145,13 +191,17 @@ public class kcal_information extends AppCompatActivity {
         String clientID = "npGw78ax5bfe8OQE3LXs";
         String clientSecret = "bj4IrqOd7F";
         StringBuffer sb = new StringBuffer();
+        StringBuffer sb_title = new StringBuffer();
+        StringBuffer sb_content = new StringBuffer();
+        StringBuffer sb_image = new StringBuffer();
+        StringBuffer sb_link = new StringBuffer();
         final int display = 1; // 보여지는 검색결과의 수
 
         try {
 
             String text = URLEncoder.encode(keyword, "UTF-8");
 
-            String apiURL = "https://openapi.naver.com/v1/search/encyc.xml?query=" + text + "&display=" + display + "&start=1";
+            String apiURL = "https://openapi.naver.com/v1/search/local.xml?query=" + text + "&display=" + display + "&start=1";
 
 
             URL url = new URL(apiURL);
@@ -177,7 +227,7 @@ public class kcal_information extends AppCompatActivity {
                         if (tag.equals("item")) ; //첫번째 검색 결과
                         else if (tag.equals("title")) {
 
-                            sb.append("제목 : ");
+//                            sb.append("제목 : ");
 
                             xpp.next();
 
@@ -196,7 +246,7 @@ public class kcal_information extends AppCompatActivity {
 
                         } else if (tag.equals("description")) {
 
-                            sb.append("내용 : ");
+//                            sb.append("내용 : ");
                             xpp.next();
 
 
@@ -212,7 +262,7 @@ public class kcal_information extends AppCompatActivity {
                             sb.append("\n");
 
                         } else if (tag.equals("thumbnail")){
-                            sb.append("이미지 : ");
+//                            sb.append("이미지 : ");
                             xpp.next();
 
 
@@ -224,8 +274,10 @@ public class kcal_information extends AppCompatActivity {
 
 //                            sb.append(xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
                             sb.append("\n");
+//                            sb.append("#");
+
                         } else if (tag.equals("link")){
-                            sb.append("링크 : ");
+//                            sb.append("링크 : ");
                             xpp.next();
 
                             if (xpp.getText()==null){

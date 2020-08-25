@@ -55,9 +55,9 @@ public class kcal_information_adapter extends RecyclerView.Adapter<kcal_informat
     @Override
     public void onBindViewHolder(@NonNull kcalViewHolder holder, int position) {
 
-        Log.e("1","2");
 
-        Log.e("아답터 안에서 확인",kcalArrayList.get(position).getTitle());
+
+//        Log.e("아답터 안에서 확인",kcalArrayList.get(position).getTitle());
         Uri uri = Uri.parse(kcalArrayList.get(position).getThumbnail()); //fresco를 이용하여 이미지 보여주기
         holder.kcl_image_item.setImageURI(uri);
 

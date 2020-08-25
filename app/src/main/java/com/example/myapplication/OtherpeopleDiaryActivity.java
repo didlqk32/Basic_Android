@@ -111,7 +111,7 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
         final String title = intent.getStringExtra("title");
         final String content = intent.getStringExtra("content");
         final String date = intent.getStringExtra("date");
-
+        final String my_id = intent.getStringExtra("my_id");
 
 
         RemoveComments(); //선택한 댓글 지우기
@@ -656,7 +656,7 @@ public class OtherpeopleDiaryActivity extends AppCompatActivity {
                 intent.putExtra("title", title); //제목값 넘기기
                 intent.putExtra("content", content); //내용값 넘기기
                 intent.putExtra("date", date); //날짜 값 넘기기
-
+                intent.putExtra("my_id", my_id); //아이디 값 넘기기
 
                 startActivity(intent);
             }

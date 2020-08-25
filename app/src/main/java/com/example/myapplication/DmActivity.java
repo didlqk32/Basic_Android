@@ -58,6 +58,7 @@ public class DmActivity extends AppCompatActivity {
     private String title = "";
     private String content = "";
     private String date ="";
+    private String my_id="";
 
 
 
@@ -93,9 +94,76 @@ public class DmActivity extends AppCompatActivity {
 
 
 
-// Write a message to the database
+
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final Intent intent = getIntent(); //intent 값을 Mainpage_adapter 에서 받아온다, Mainpage에서 클릭한 공유일기 보기 위해
+        position = intent.getIntExtra("position", -1); //Bundle_diary에서 선택한 일기의 포지션 값을 받고 처음 작성한 일기라면 초기값으로 -1을 받는다
+        title = intent.getStringExtra("title");
+        content = intent.getStringExtra("content");
+        date = intent.getStringExtra("date");
+        my_id = intent.getStringExtra("my_id"); //내 아이디가 아니고, 다이어리 작성자 아이디이다
+
+
+
+        send_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //보내기 버튼 누르면 기능 구현
+
+                Date current_time = Calendar.getInstance().getTime(); //현재 날짜 구하기
+                SimpleDateFormat current_dmtime_format = new SimpleDateFormat("a h시 m분", Locale.KOREA);// 현재 시간을 구화기 위한 객체 선언
+                String dm_text = send_my_dm.getText().toString(); //dm_text에 edit text에서 썻던 내용을 받는다
+                String dm_time = current_dmtime_format.format(current_time); //현재 시간을 string 타입으로 넣음
+
+
+
+
+
+
+                if (dm_text.equals("")) {
+                    Toast.makeText(DmActivity.this,"내용을 입력해 주세요",Toast.LENGTH_SHORT).show();
+                } else {
+                    Dm_data dm_data = new Dm_data(dm_text, dm_time,logInActivity.my_id); //dm_text내용을 dm_data에 담는다
+                    myRef.push().setValue(dm_data);
+//                    myRef.child("message").child("chat").push().setValue(dm_data); //데이터 입력하는 부분
+                }
+
+
+
+
+
+
+//                Dm_data dm_data = new Dm_data(dm_text,dm_time,true); //dm_text내용을 dm_data에 담는다
+//                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
+//                dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 처음부터 다시 정리
+                //dm_adapter.notifyItemInserted(); //추가된 아이템만 확인
+
+                recyclerView.scrollToPosition(dm_adapter.getItemCount()-1); //가장 최근 채팅에 스크롤 포지션 가도록 함
+
+
+                send_my_dm.setText(null); //edit text 내용을 비게 만듦
+
+
+            }
+        });
+
+
+        //DB연동하기
+
+
+
+        // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance(); // 데이터베이스 선언
-        myRef = database.getReference("message"); // "message" 를 참조한다
+        myRef = database.getReference("message").child(logInActivity.my_id).child(my_id); // "message" 를 참조한다
+        //내 아이디값이랑 상대방 아이디 값을 받아오자!
+
+//        myRef.child().orderByKey().equalTo().addChildEventListener()
 
 
         myRef.addChildEventListener(new ChildEventListener() {
@@ -103,6 +171,7 @@ public class DmActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { //여기에 데이터가 들어온다
 //                Log.e("DM",snapshot.getValue().toString());
                 Dm_data dm_data = snapshot.getValue(Dm_data.class);
+
 //                dm_adapter.addDm(dm_data);
                 ((Dm_adapter)dm_adapter).addDm(dm_data);
             }
@@ -137,69 +206,8 @@ public class DmActivity extends AppCompatActivity {
 
 
 
-    }
 
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        final Intent intent = getIntent(); //intent 값을 Mainpage_adapter 에서 받아온다, Mainpage에서 클릭한 공유일기 보기 위해
-        position = intent.getIntExtra("position", -1); //Bundle_diary에서 선택한 일기의 포지션 값을 받고 처음 작성한 일기라면 초기값으로 -1을 받는다
-        title = intent.getStringExtra("title");
-        content = intent.getStringExtra("content");
-        date = intent.getStringExtra("date");
-
-
-
-        send_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //보내기 버튼 누르면 기능 구현
-
-                Date current_time = Calendar.getInstance().getTime(); //현재 날짜 구하기
-                SimpleDateFormat current_dmtime_format = new SimpleDateFormat("a h시 m분", Locale.KOREA);// 현재 시간을 구화기 위한 객체 선언
-                String dm_text = send_my_dm.getText().toString(); //dm_text에 edit text에서 썻던 내용을 받는다
-                String dm_time = current_dmtime_format.format(current_time); //현재 시간을 string 타입으로 넣음
-
-
-
-
-
-
-
-
-
-
-                if (dm_text.equals("")) {
-                    Toast.makeText(DmActivity.this,"내용을 입력해 주세요",Toast.LENGTH_SHORT).show();
-                } else {
-                    Dm_data dm_data = new Dm_data(dm_text, dm_time,logInActivity.my_id); //dm_text내용을 dm_data에 담는다
-                    myRef.push().setValue(dm_data);
-                }
-
-
-
-
-
-
-
-
-
-
-//                Dm_data dm_data = new Dm_data(dm_text,dm_time,true); //dm_text내용을 dm_data에 담는다
-//                dataArrayList.add(dm_data); //리스트에 dm_data내용을 추가 한다
-//                dm_adapter.notifyDataSetChanged(); //추가된 내용을 반영하여 처음부터 다시 정리
-                //dm_adapter.notifyItemInserted(); //추가된 아이템만 확인
-
-                recyclerView.scrollToPosition(dm_adapter.getItemCount()-1); //가장 최근 채팅에 스크롤 포지션 가도록 함
-
-
-                send_my_dm.setText(null); //edit text 내용을 비게 만듦
-
-
-            }
-        });
 
 
 
@@ -220,6 +228,27 @@ public class DmActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -246,29 +275,6 @@ public class DmActivity extends AppCompatActivity {
 //            recyclerView.scrollToPosition(dm_adapter.getItemCount()-1); //가장 최근 채팅에 스크롤 포지션 가도록 함
 //
 //        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //DB연동하기
-
-
-
-
-
-
-
-
 
 
 
@@ -309,6 +315,7 @@ public class DmActivity extends AppCompatActivity {
         intent.putExtra("title", title); //제목값 넘기기
         intent.putExtra("content", content); //내용값 넘기기
         intent.putExtra("date", date); //날짜 값 넘기기
+        intent.putExtra("my_id", my_id); //아이디 값 넘기기
 
         startActivity(intent);
     }
